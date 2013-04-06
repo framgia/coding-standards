@@ -46,6 +46,16 @@ arr.each{|elem| puts elem}
 arr.each{|elem|puts elem}
 ```
 
+* Hash は基本的に1.9の省略記法で記載する
+
+```ruby
+# bad
+h = {:key => :value}
+
+# good
+h = {key: :value}
+```
+
 * ``` do ``` と仮引数の間にホワイトスペースを入れる
 
 ```ruby
@@ -293,4 +303,52 @@ if (v = next_value) == "hello" ...
 **理由**
 
 ``` == ``` メソッドとの混同を防ぐため
+
+* 変数の初期化に ``` ||= ``` の使用を推奨する。ただし、booleanの変数については、falseの値が上書きされるので注意すること。
+
+```ruby
+# set name to Bozhidar, only if it iss nil or false
+name ||= 'Bozhidar'
+
+# bad - would set enabled to true even if it was false
+enabled ||= true
+
+# good
+enabled = true if enabled.nil?
+```
+
+* メソッド名と引数の間にはホワイトスペースを入れない
+
+```ruby
+# bad
+f (3 + 2) + 1
+
+# good
+f(3 + 2) + 1
+```
+
+* block の引数で使用しないものは ``` _ ``` で受け取る
+
+```ruby
+# bad
+result = hash.map { |k, v| v + 1 }
+
+# good
+result = hash.map { |_, v| v + 1 }
+```
+
+#####名付け
+
+* メソッド名や変数名には ``` snake_case ``` を使う
+
+* クラス名やモジュール名は ``` CamelCase ``` を使う
+
+* 一般的な定数には ``` SCREAMING_SNAKE_CASE ``` を使う
+
+* boolean を返却する method は ``` Array#empty? ``` のように最後を ``` ? ``` にする
+
+* 破壊的メソッドや危険なメソッドは ``` Array#flatten! ``` のように最後を ``` ! ``` にする。破壊的メソッドは ``` Array#flatten ``` のように非破壊的メソッドを用意する。
+
+#####クラス
+
 
