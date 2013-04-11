@@ -351,4 +351,269 @@ result = hash.map { |_, v| v + 1 }
 
 #####クラス
 
+* クラス変数 ``` @@ ``` の利用は本当に必要な時以外は避ける。
 
+```ruby
+class Parent
+  @@class_var = 'parent'
+
+  def self.print_class_var
+    puts @@class_var
+  end
+end
+
+class Child < Parent
+  @@class_var = 'child'
+end
+
+Parent.print_class_var # => will print "child"
+```
+
+* クラスインスタンス変数で実装できないかを検討する。
+
+```ruby
+class Parent
+  @class_instance_var = 'parent'
+  
+  def self.print_class_instance_var
+    puts @class_instance_var
+  end
+end
+
+class Child < Parent
+  @class_instance_var = 'child'
+end
+
+Parent.print_class_var # => will print "parent"
+```
+
+* 特異メソッドを定義するときは ``` def self.method ``` や ``` def ClassName.method ``` を使用しない。
+
+```ruby
+class TestClass
+  # bad
+  def TestClass.some_method
+    # body omitted
+  end
+
+  # bad
+  def self.some_other_method
+    # body omitted
+  end
+end
+```
+
+* 特異メソッド定義や特異クラスマクロは ``` class << self ``` で記述する。
+
+```ruby
+class TestClass
+  class << self
+    attr_accessor :per_page
+    alias_method :nwo, :find_by_name_with_owner
+
+    def find_by_name_with_owner
+      # body omitted
+    end
+
+    def first_method
+      # body omitted
+    end
+
+    def second_method_etc
+      # body omitted
+    end
+  end
+end
+```
+
+* ``` public ``` メソッドは利用しない
+
+* ``` protected ``` メソッドは ``` private ``` メソッドの前に書く。その時、protected 、 private メソッドの定義は public メソッドと同じ深さのインデントにし、protected 、 private メソッドの上に空行を置き、下には置かない。
+
+```ruby
+class SomeClass
+  def public_method
+    # ...
+  end
+
+  protected
+  def protected_method
+    # ...
+  end
+
+  private
+  def private_method
+    # ...
+  end
+end
+```
+
+* private メソッドの呼び出し以外で自分自身を指す時は ``` self ``` を記載する。
+
+```ruby
+class SomeClass
+  attr_accessor :message
+
+  def set_name name
+    self.message = "Hi #{name}"
+  end
+
+  def greeting
+    puts self.message
+  end
+end
+```
+
+##### 例外
+
+* Exception をフロー制御に利用せずに、避けられる Exception は全て避ける。
+
+```ruby
+# bad
+begin
+  n / d
+rescue ZeroDivisionError
+  puts "Cannot divide by 0!"
+end
+
+# good
+if d.zero?
+  puts "Cannot divide by 0!"
+else
+  n / d
+end
+```
+
+* ``` Exception ``` クラスを ``` rescue ``` してはいけない。
+
+```ruby
+# bad
+begin
+  # an exception occurs here
+rescue
+  # exception handling
+end
+
+# still bad
+begin
+  # an exception occurs here
+rescue Exception
+  # exception handling
+end
+```
+
+* 文字列の配列を生成する際に、 ``` %w( ) ``` を積極的に利用する。
+
+```ruby
+# bad
+STATES = ['draft', 'open', 'closed']
+
+# good
+STATES = %w(draft open closed)
+```
+
+* Hash のキーは文字列を使わず、できる限りシンボルにする。
+
+```ruby
+# bad
+hash = { 'one' => 1, 'two' => 2, 'three' => 3 }
+
+# good
+hash = { one: 1, two: 2, three: 3 }
+```
+
+##### 文字列
+
+* 文字列への変数を混在する時は連結ではなく、展開を利用する。
+
+```ruby
+# bad
+email_with_name = user.name + ' <' + user.email + '>'
+
+# good
+email_with_name = "#{user.name} <#{user.email}>"
+```
+
+* ``` ' ``` は「式展開をしない」、「``` " ```が文字列に含まれる」等の理由が無い限り使用しない。
+
+```ruby
+# bad
+name = 'Bozhidar'
+
+# good
+name = "Bozhidar"
+```
+
+* 再代入する場合、``` String#+ ``` メソッドは使用しない。代わりに ``` String#<< ''' を利用する。
+
+```ruby
+# good and also fast
+html = ''
+html << '<h1>Page title</h1>'
+
+paragraphs.each do |paragraph|
+  html << "<p>#{paragraph}</p>"
+end
+```
+
+##### 正規表現
+
+* ```  $1 〜 9 ``` は利用しない。マッチした文字列を利用する場合は名前を付ける。
+
+```ruby
+# bad
+/(regexp)/ =~ string
+...
+process $1
+
+# good
+/(?<meaningful_var>regexp)/ =~ string
+...
+process meaningful_var
+```
+
+* 改行を含む文字列全体の行頭と行末を指定する時には ``` \A ``` と ``` \Z ``` を利用する。
+
+```ruby
+string = "some injection\nusername"
+string[/^username$/]   # matches
+string[/\Ausername\Z/] # don't match
+```
+
+* 複雑な正規表現パターんを記述する時には ``` x ``` オプションを積極的に利用する。ただし、それを適用すると空白文字が全て蒸しされることに注意すること。
+
+```ruby
+regexp = %r{
+  start         # some text
+  \s            # white space char
+  (group)       # first group
+  (?:alt1|alt2) # some alternation
+  end
+}x
+```
+
+##### パーセント記法
+
+* ``` %() ``` は文字列自体に ``` " ```を記載する必要がある時にのみ利用する。
+
+```ruby
+message = %(注意：'と"は区別されます)
+```
+
+* ``` %r() ``` は正規表現のパターン内に ``` / ``` を記載する必要がある時にのみ領する。
+
+```ruby
+# bad
+%r(\s+)
+
+# still bad
+%r(^/(.*)$)
+# should be /^\/(.*)$/
+
+# good
+%r(^/blog/2011/(.*)$)
+```
+
+##### その他
+
+* ``` __END___ ``` は利用しない。
