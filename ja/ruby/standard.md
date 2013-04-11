@@ -556,6 +556,22 @@ paragraphs.each do |paragraph|
 end
 ```
 
+* ヒアドキュメントを利用するときには、デリミタを代入文と同じ深さにインデントする。
+
+```ruby
+module AttrComparable
+  module ClassMethods
+    def attr_comparable *attrs
+      class_eval <<-DELIM
+        attrs.each do |attr|
+          define_method(attr.to_s<<'?'){|param| self.send(attr) == param }
+        end
+      DELIM
+    end
+  end
+#...後略
+```
+
 ##### 正規表現
 
 * ```  $1 〜 9 ``` は利用しない。マッチした文字列を利用する場合は名前を付ける。
