@@ -484,9 +484,10 @@ else
 end
 ```
 
-** 理由 **
+**理由**
 
-``` rescue ``` の引数に何も指定しないとRuntimeErrorを捕捉するので、それより大きい ``` StandardError ``` や ``` Exception ``` を捕捉してはいけない。
+``` rescue ``` の引数に何も指定しないと ``` RuntimeError ``` を捕捉するので、それより大きい ``` StandardError ``` や ``` Exception ``` を捕捉してはいけない。
+
 特に ``` Exception ``` は例外の基底クラスなので、これを ``` rescue ``` すると、（意図していないかもしれない）全ての例外が捕捉されるので禁止とする。
 
 * ``` Exception ``` クラスを ``` rescue ``` してはいけない。
