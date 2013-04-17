@@ -193,3 +193,63 @@ class User < ActiveRecord::Base
 end
 
 ```
+
+##ActiveResource
+
+* XML や JSON （もちろん HTML も）以外の既存のフォーマット以外のレスポンスを返す必要があるときは、下記のように独自のカスタムフォーマットを作成して利用する。カスタムフォーマットを実装するには、``` extension ```、``` mime_type ```、``` encode ```、``` decode ``` の4つのメソッドを定義する必要がある。
+
+```ruby
+module ActiveResource
+  module Formats
+    module Extend
+      module CSVFormat
+        extend self
+
+        def extension
+          "csv"
+        end
+
+        def mime_type
+          "text/csv"
+        end
+
+        def encode(hash, options = nil)
+          # Encode the data in the new format and return it
+        end
+
+        def decode(csv)
+          # Decode the data from the new format and return it
+        end
+      end
+    end
+  end
+end
+
+class User < ActiveResource::Base
+  self.format = ActiveResource::Formats::Extend::CSVFormat
+
+  ...
+end
+```
+
+* もしリクエストが拡張子無しで送られるようにするのであれば、``` ActiveResource::Base ``` の ``` element_path ``` と ``` collection_path ``` の2つのメソッドをオーバーライドして、extension の部分を削除すれば良い。
+
+```ruby
+class User < ActiveResource::Base
+  ...
+
+  def self.collection_path(prefix_options = {}, query_options = nil)
+    prefix_options, query_options = split_options(prefix_options) if query_options.nil?
+    "#{prefix(prefix_options)}#{collection_name}#{query_string(query_options)}"
+  end
+
+  def self.element_path(id, prefix_options = {}, query_options = nil)
+    prefix_options, query_options = split_options(prefix_options) if query_options.nil?
+    "#{prefix(prefix_options)}#{collection_name}/#{URI.parser.escape id.to_s}#{query_string(query_options)}"
+  end
+end
+```
+
+##マイグレーション
+
+
