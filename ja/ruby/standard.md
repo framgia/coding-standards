@@ -1,8 +1,8 @@
-##Ruby コーデング規約（標準スタイル編）
+#Ruby コーデング規約（標準スタイル編）
 
-####レイアウト
+##レイアウト
 
-#####エンコーディング
+##エンコーディング
 * UTF-8以外は使用しない。
 
 * 基本的にスクリプトエンコーディングのマジックコメントが必要なソースコードにしない。
@@ -14,7 +14,7 @@
 * 2バイト文字は基本的にユーザーのために記述するものであり、それはソースコードに埋め込まれずにlocaleファイル等に記述されるべきものであるため。
 
 
-#####基本
+##基本
 * インデントはホワイトスペース2個
 * ハードタブは使用しない
 * 1行の文字数は80文字以下にする
@@ -131,7 +131,7 @@ def some_method2
 end
 ```
 
-####文法
+##文法
 
 * メソッドの定義には ``` () ``` を使わない
 
@@ -232,6 +232,43 @@ if success?
   puts 'success'
 else
   puts 'failure'
+end
+```
+
+* ``` if ``` の条件に否定演算子 ``` ! ``` を用いてはいけない。その場合は ``` unless ``` を使う。ただし、 ``` && ``` や ``` || ``` と組み合わせる場合は用いても良い。その場合もド・モルガンの法則を利用する等で簡潔な記述を心がけること。
+
+```ruby
+# bad
+if !user.nil?
+  user.greeting
+end
+
+# good
+unless user.nil?
+  user.greeting
+end
+
+# better
+if user
+  user.greeting
+end
+
+# best
+user.greeting if user
+
+# OK
+if !user.nil? && !user.suspended?
+  user.greeting
+end
+
+# not bad, but a little too complex
+unless user.nil? || user.suspended?
+  user.greeting
+end
+
+# should be
+if user && user.active?
+  user.greeting
 end
 ```
 
@@ -337,7 +374,7 @@ result = hash.map { |k, v| v + 1 }
 result = hash.map { |_, v| v + 1 }
 ```
 
-#####名付け
+##名付け
 
 * メソッド名や変数名には ``` snake_case ``` を使う
 
@@ -349,7 +386,7 @@ result = hash.map { |_, v| v + 1 }
 
 * 破壊的メソッドや危険なメソッドは ``` Array#flatten! ``` のように最後を ``` ! ``` にする。破壊的メソッドを定義する際には ``` Array#flatten ``` のように非破壊的メソッドも用意する。
 
-#####クラス
+##クラス
 
 * クラス変数 ``` @@ ``` の利用は本当に必要な時以外は避ける。
 
@@ -464,7 +501,7 @@ class SomeClass
 end
 ```
 
-##### 例外
+## 例外
 
 * Exception をフロー制御に利用せずに、避けられる Exception は全て避ける。
 
@@ -528,7 +565,7 @@ hash = { 'one' => 1, 'two' => 2, 'three' => 3 }
 hash = { one: 1, two: 2, three: 3 }
 ```
 
-##### 文字列
+## 文字列
 
 * 文字列への変数を混在する時は連結ではなく、展開を利用する。
 
@@ -578,7 +615,7 @@ module AttrComparable
 #...後略
 ```
 
-##### 正規表現
+## 正規表現
 
 * ```  $1 〜 9 ``` は利用しない。マッチした文字列を利用する場合は名前を付ける。
 
@@ -614,7 +651,7 @@ regexp = %r{
 }x
 ```
 
-##### パーセント記法
+## パーセント記法
 
 * ``` %() ``` は文字列自体に ``` " ```を記載する必要がある時にのみ利用する。
 
@@ -636,6 +673,6 @@ message = %(注意：'と"は区別されます)
 %r(^/blog/2011/(.*)$)
 ```
 
-##### その他
+## その他
 
 * ``` __END___ ``` は利用しない。
