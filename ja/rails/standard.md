@@ -252,4 +252,94 @@ end
 
 ##マイグレーション
 
+=======
+* ``` schema.rb ``` （または ``` structure.sql ```）はバージョン管理する
 
+* テスト用のデータベースを作成するために ``` rake db:test:prepare ``` を用いること
+
+* デフォルト値を設定する必要があるならば、アプリケーションレイヤーではなくマイグレーションで対応すること。
+
+```ruby
+# bad - application enforced default value
+def amount
+  self[:amount] or 0
+end
+```
+
+Rails 内でのみテーブルのデフォルト値を強制するのは、とても脆弱なアプローチで、アプリケーションのバグを引き起こし兼ねないと多くの開発者に指摘されている。また、非常に小さいアプリケーション以外の殆どはデータベースを他のアプリケーションと共有しており、 Rails アプリケーションからだけにデータ整合性を負わせるのは不可能である、という事実を頭に入れておく必要がある。
+
+* 外部キー制約を強制すること。ActiveRecordは素の状態ではそれをサポートしていないが、[schema_plus](https://github.com/lomba/schema_plus)のような優れたサードパーティ製のgemがある。
+
+* テーブルやカラムを追加するよな、構成を変更する処理の記述には Rails 3.1 記法を用いること。つまり、``` up ``` や ``` down ``` メソッドではなく、``` change ``` メソッドを使うこと。
+
+```ruby
+# the old way
+class AddNameToPerson < ActiveRecord::Migration
+  def up
+    add_column :persons, :name, :string
+  end
+
+  def down
+    remove_column :person, :name
+  end
+end
+
+# the new prefered way
+class AddNameToPerson < ActiveRecord::Migration
+  def change
+    add_column :persons, :name, :string
+  end
+end
+```
+
+* モデルのクラスをマイグレーション内で使ってはいけない。モデルのクラスは常に進化するので、モデルを使っている箇所の変更により、将来のある時点でマイグレーション処理が止まってしまう可能性がある。
+
+##ビュー
+
+* ビューの中でモデルを直接呼んではいけない。コントローラーにインスタンス化させるか、ヘルパー内で利用する。
+
+* ビュー内で複雑な処理を記載しない。複雑な処理が必要であればビューヘルパーに切り出すか、モデル内で処理させる。
+
+* 同じコードを記述することを避けるために、パーシャルやレイアウトを利用する。
+
+* form は helper を用いて記述しなければならない。リンクや外部ファイルの読み込み等、ロジックや設定が含まれるものの記述も helper を使う。
+
+* form_for が利用できる時は form_tag を用いてはいけない。
+
+* [client side validation](https://github.com/bcardarella/client_side_validations)の利用を検討する。使い方は下記のとおり。
+  * ``` ClientSideValidations::Middleware::Base ``` を継承したカスタムバリデーターを宣言する。
+
+```ruby
+module ClientSideValidations::Middleware
+  class Email < Base
+    def response
+      if request.params[:email] =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+        self.status = 200
+      else
+        self.status = 404
+      end
+      super
+    end
+  end
+end
+```
+
+  * ``` public/javascripts/rails.validations.custom.js.coffee ``` ファイルを作成して、``` application.js.coffee ``` ファイルに参照を追加する。
+
+```coffee
+# app/assets/javascripts/application.js.coffee
+#= require rails.validations.custom
+```
+
+  * クライアント側のバリデーターを追加する。
+
+```coffee
+#public/javascripts/rails.validations.custom.js.coffee
+clientSideValidations.validators.remote['email'] = (element, options) ->
+  if $.ajax({
+    url: '/validators/email.json',
+    data: { email: element.val() },
+    async: false
+  }).status == 404
+    return options.message || 'invalid e-mail format'
+```
