@@ -108,6 +108,17 @@ match ':controller(/:action(/:id(.:format)))'
 render :new
 ```
 
+* 処理を行わず、View を表示するだけのアクションも省略しない。
+
+```ruby
+class HomeController < ApplicationController
+
+  def inded
+  end
+
+end
+```
+
 * GET 以外の HTTP メソッドでアクセスされる action は必ず、処理完了後、 GET メソッドでアクセスされる action へリダイレクトさせる。ただし、直接人がアクセスするものではない、 json を返却する API のようなものはその必要はない。
 
 **理由**
@@ -151,9 +162,18 @@ class Transaction < ActiveRecord::Base
 end
 ```
 
-* マクロメソッドはまとめてクラス定義の初期に書く。同種のマクロメソッド（ belongs_to と has_many 等）や同じマクロメソッドで種々の引数を持つものの引数（ validates 等）は辞書順に並べる。
+* マクロメソッドはまとめてクラス定義の初期に書く。同種のマクロメソッド（ belongs_to と has_many 等）や同じマクロメソッドで種々の引数を持つものの引数（ validates 等）は辞書順に並べる。callback は時系列に並べる。
 
-* マクロメソッドは
+* マクロメソッド等の記述順は、
+  * 定数
+  * attr_ 系メソッド
+  * 関連
+  * バリデーション
+  * callback
+  * その他
+  の順に記載する。
+
+* scope は lambda の省略記法で記述する。
 
 ```ruby
 class User < ActiveRecord::Base
@@ -191,8 +211,8 @@ class User < ActiveRecord::Base
 
   ...
 end
-
 ```
+
 
 ##ActiveResource
 
