@@ -497,4 +497,31 @@ config.action_mailer.delivery_method = :smtp
 
 * ページを作成している途中でメールを送るのは避けるべきである。それはページ読み込みの遅延や複数のメールを送った時には、リクエストタイムアウトの原因になることがある。これらの問題を解決するために、[delayed_job](https://github.com/tobi/delayed_job)を使うと良い。
 
+##バンドラー
 
+* development 環境や test 環境でのみ利用する gem は適切なグループを設定して記述する。
+
+* 本当に必要な gem のみを利用する。あまり有名でない gem を利用する時は、最初に細心の注意を払ってレビューを行うべきである。
+
+* OS 固有の gem は稼働させる OS が異なる度に Gemfile.lock を書き換えるため、OS X 固有の gem は ``` darwin ``` グループに、Linux 固有の gem は ``` linux ``` グループに記載する。
+
+```ruby
+# Gemfile
+group :darwin do
+  gem 'rb-fsevent'
+  gem 'growl'
+end
+
+group :linux do
+  gem 'rb-inotify'
+end
+```
+
+適切な gem が正しい環境で読み込まれるように、``` config/application.rb ``` に下記のように記述する。
+
+```ruby
+platform = RUBY_PLATFORM.match(/(linux|darwin)/)[0].to_sym
+Bundler.require(platform)
+```
+
+* バージョン管理システムから ``` Gemfile.lock ``` を削除してはいけない。これは確率論的に変更されるファイルではなく、どのチームメンバーが ``` bundle install ``` しても全ての gem のバージョンが揃うために必要である。
