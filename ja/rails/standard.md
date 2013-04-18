@@ -108,6 +108,17 @@ match ':controller(/:action(/:id(.:format)))'
 render :new
 ```
 
+* 処理を行わず、View を表示するだけのアクションも省略しない。
+
+```ruby
+class HomeController < ApplicationController
+
+  def inded
+  end
+
+end
+```
+
 * GET 以外の HTTP メソッドでアクセスされる action は必ず、処理完了後、 GET メソッドでアクセスされる action へリダイレクトさせる。ただし、直接人がアクセスするものではない、 json を返却する API のようなものはその必要はない。
 
 **理由**
@@ -151,9 +162,19 @@ class Transaction < ActiveRecord::Base
 end
 ```
 
-* マクロメソッドはまとめてクラス定義の初期に書く。同種のマクロメソッド（ belongs_to と has_many 等）や同じマクロメソッドで種々の引数を持つものの引数（ validates 等）は辞書順に並べる。
+* マクロメソッドはまとめてクラス定義の初期に書く。同種のマクロメソッド（ belongs_to と has_many 等）や同じマクロメソッドで種々の引数を持つものの引数（ validates 等）は辞書順に並べる。callback は時系列に並べる。
 
-* マクロメソッドは
+* マクロメソッド等の記述順は、
+  * 定数
+  * attr_ 系メソッド
+  * 関連
+  * バリデーション
+  * callback
+  * その他
+
+の順に記載する。
+
+* scope は lambda の省略記法で記述する。
 
 ```ruby
 class User < ActiveRecord::Base
@@ -191,8 +212,8 @@ class User < ActiveRecord::Base
 
   ...
 end
-
 ```
+
 
 ##ActiveResource
 
@@ -252,4 +273,255 @@ end
 
 ##マイグレーション
 
+=======
+* ``` schema.rb ``` （または ``` structure.sql ```）はバージョン管理する
 
+* テスト用のデータベースを作成するために ``` rake db:test:prepare ``` を用いること
+
+* デフォルト値を設定する必要があるならば、アプリケーションレイヤーではなくマイグレーションで対応すること。
+
+```ruby
+# bad - application enforced default value
+def amount
+  self[:amount] or 0
+end
+```
+
+Rails 内でのみテーブルのデフォルト値を強制するのは、とても脆弱なアプローチで、アプリケーションのバグを引き起こし兼ねないと多くの開発者に指摘されている。また、非常に小さいアプリケーション以外の殆どはデータベースを他のアプリケーションと共有しており、 Rails アプリケーションからだけにデータ整合性を負わせるのは不可能である、という事実を頭に入れておく必要がある。
+
+* 外部キー制約を強制すること。ActiveRecordは素の状態ではそれをサポートしていないが、[schema_plus](https://github.com/lomba/schema_plus)のような優れたサードパーティ製のgemがある。
+
+* テーブルやカラムを追加するよな、構成を変更する処理の記述には Rails 3.1 記法を用いること。つまり、``` up ``` や ``` down ``` メソッドではなく、``` change ``` メソッドを使うこと。
+
+```ruby
+# the old way
+class AddNameToPerson < ActiveRecord::Migration
+  def up
+    add_column :persons, :name, :string
+  end
+
+  def down
+    remove_column :person, :name
+  end
+end
+
+# the new prefered way
+class AddNameToPerson < ActiveRecord::Migration
+  def change
+    add_column :persons, :name, :string
+  end
+end
+```
+
+* モデルのクラスをマイグレーション内で使ってはいけない。モデルのクラスは常に進化するので、モデルを使っている箇所の変更により、将来のある時点でマイグレーション処理が止まってしまう可能性がある。
+
+##ビュー
+
+* ビューの中でモデルを直接呼んではいけない。コントローラーにインスタンス化させるか、ヘルパー内で利用する。
+
+* ビュー内で複雑な処理を記載しない。複雑な処理が必要であればビューヘルパーに切り出すか、モデル内で処理させる。
+
+* 同じコードを記述することを避けるために、パーシャルやレイアウトを利用する。
+
+* form は helper を用いて記述しなければならない。リンクや外部ファイルの読み込み等、ロジックや設定が含まれるものの記述も helper を使う。
+
+* form_for が利用できる時は form_tag を用いてはいけない。
+
+* [client side validation](https://github.com/bcardarella/client_side_validations)の利用を検討する。使い方は下記のとおり。
+  * ``` ClientSideValidations::Middleware::Base ``` を継承したカスタムバリデーターを宣言する。
+
+```ruby
+module ClientSideValidations::Middleware
+  class Email < Base
+    def response
+      if request.params[:email] =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+        self.status = 200
+      else
+        self.status = 404
+      end
+      super
+    end
+  end
+end
+```
+
+  * ``` public/javascripts/rails.validations.custom.js.coffee ``` ファイルを作成して、``` application.js.coffee ``` ファイルに参照を追加する。
+
+```coffee
+# app/assets/javascripts/application.js.coffee
+#= require rails.validations.custom
+```
+
+  * クライアント側のバリデーターを追加する。
+
+```coffee
+#public/javascripts/rails.validations.custom.js.coffee
+clientSideValidations.validators.remote['email'] = (element, options) ->
+  if $.ajax({
+    url: '/validators/email.json',
+    data: { email: element.val() },
+    async: false
+  }).status == 404
+    return options.message || 'invalid e-mail format'
+```
+
+##国際化
+
+* モデル、ビュー、コントローラーいずれの中でも特定の言語や国に依存した設定を含めてはいけない。それらの文章等は ``` config/locales ``` ディレクトリ内のロケールファイルに記述すること。
+
+* ActiveRecord モデルのラベルを翻訳する必要があるときは、 ``` activerecord ``` スコープに記載する。
+
+```yaml
+ja:
+  activerecord:
+    models:
+      user: メンバー
+    attributes:
+      user:
+        name: 姓名
+```
+
+その時、``` User.model_name.human ``` は"メンバー"と返し、``` User.human_attribute_name("name") ``` は"姓名"と返す。このような翻訳はビューの中でも使うことができる。
+
+* ActiveRecord の属性を翻訳したものと、ビューの中で使われるものとはファイルを分ける。モデルに利用するファイルは ``` models ``` フォルダーにおいて、ビューに利用するものは ``` views ``` フォルダーに保存する。
+  * ファイルを追加したらロケールファイルが読み込まれるディレクトリを ``` application.rb ``` に追加する。
+
+```ruby
+# config/application.rb
+config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+```
+
+* 日付や通貨のフォーマットのように共通で使うものは ``` locales ``` ディレクトリ直下に保存する。
+
+* 短縮表記のメソッドを使うようにする。 ``` I18n.t ``` を ``` I18n.translate ``` の代わりに使い、``` I18n.l ``` を ``` I18n.localize ``` の代わりに使う。
+
+* ビューの中では Lazy lookup を使う。このような構造のとき、
+```yaml
+ja:
+  users:
+    show:
+      title: "ユーザー情報"
+```
+``` users.show.title ``` は ``` app/views/users/show.html.haml ``` 内では
+```ruby
+= t '.title'
+```
+で取得できる。
+
+* コントローラーやモデルの中では ``` :scope ``` 指定では無く、ドット区切りのキーで値を取得する。ドット区切りの方が簡単に呼べ、階層を追いやすい。
+
+```ruby
+# use this call
+I18n.t 'activerecord.errors.messages.record_invalid'
+
+# instead of this
+I18n.t :record_invalid, :scope => [:activerecord, :errors, :messages]
+```
+
+* 詳細は [RailsGuide](http://guides.rubyonrails.org/i18n.html)に従う。
+
+##アセット
+
+asset pipeline を利用する
+
+* アプリケーション固有のスタイルシートやJavascript、画像等は ``` app/assets ``` へ入れる。
+
+* ``` lib/assets ``` はライブラリ的なファイルを入れる。ライブラリでも、アプリケーション固有に調整したものは入れない。
+
+* jQuery や bootstrap のようなサードパーティ製品は ``` vendor/asstes ``` に保存する。
+
+* 可能であれば、gem 化されたアセットを利用する。（例：[jquery-rails](https://github.com/rails/jquery-rails)）。
+
+* CSS の中に url を記載するときは asset_url を使うこと。
+
+##メイラー
+
+* メイラーは ``` SomethingMailer ``` のような名前にする。Mailerという接尾語を外せば、それがどのようなメールを送ってどのviewが関連するのかが一目瞭然なようにする。
+
+* HTML とプレインテキストの両方のテンプレートを用意する。
+
+* development 環境ではメール送信に失敗したときにエラーが起こるようにする。デフォルトでは無効になっているので気をつけること。
+
+```ruby
+# config/environments/development.rb
+config.action_mailer.raise_delivery_errors = true
+```
+
+* host オプションは必ず設定する。
+
+```ruby
+# config/environments/development.rb
+config.action_mailer.default_url_options = {host: "localhost:3000"}
+
+# config/environments/production.rb
+config.action_mailer.default_url_options = {host: 'your_site.com'}
+
+# in your mailer class
+default_url_options[:host] = 'your_site.com'
+```
+
+* メールの中でサイトへリンクさせる時には、``` _path ``` ではなく ``` _url ``` メソッドを利用する。``` _url ``` メソッドはホスト名を含み、``` _path ``` は含まないからである。
+
+```ruby
+# wrong
+You can always find more info about this course
+= link_to 'here', url_for(course_path(@course))
+
+# right
+You can always find more info about this course
+= link_to 'here', url_for(course_url(@course))
+```
+
+* From と To アドレスは正しく設定する。下記の形式を利用すること。
+
+```ruby
+# in your mailer class
+default from: 'Your Name <info@your_site.com>'
+```
+
+* テスト環境ではメール送信メソッドに ``` test ``` を忘れずに設定すること。
+
+```ruby
+# config/environments/test.rb
+config.action_mailer.delivery_method = :test
+```
+
+* development 環境や production 環境等では送信メソッドを ``` smtp ```にする。
+
+```ruby
+# config/environments/development.rb, config/environments/production.rb
+config.action_mailer.delivery_method = :smtp
+```
+
+* 外部CSSで問題が起きるメールクライアントがあるので、HTML メールを送る時は全てのstyleをインラインで指定する。しかしながら、そうするとメンテナンスしづらく、コードの重複が置きやすくなる。この問題は[premailer-rails3](https://github.com/fphilipe/premailer-rails3)や[roadie](https://github.com/Mange/roadie)がサポートしてくれる。
+
+* ページを作成している途中でメールを送るのは避けるべきである。それはページ読み込みの遅延や複数のメールを送った時には、リクエストタイムアウトの原因になることがある。これらの問題を解決するために、[delayed_job](https://github.com/tobi/delayed_job)を使うと良い。
+
+##バンドラー
+
+* development 環境や test 環境でのみ利用する gem は適切なグループを設定して記述する。
+
+* 本当に必要な gem のみを利用する。あまり有名でない gem を利用する時は、最初に細心の注意を払ってレビューを行うべきである。
+
+* OS 固有の gem は稼働させる OS が異なる度に Gemfile.lock を書き換えるため、OS X 固有の gem は ``` darwin ``` グループに、Linux 固有の gem は ``` linux ``` グループに記載する。
+
+```ruby
+# Gemfile
+group :darwin do
+  gem 'rb-fsevent'
+  gem 'growl'
+end
+
+group :linux do
+  gem 'rb-inotify'
+end
+```
+
+適切な gem が正しい環境で読み込まれるように、``` config/application.rb ``` に下記のように記述する。
+
+```ruby
+platform = RUBY_PLATFORM.match(/(linux|darwin)/)[0].to_sym
+Bundler.require(platform)
+```
+
+* バージョン管理システムから ``` Gemfile.lock ``` を削除してはいけない。これは確率論的に変更されるファイルではなく、どのチームメンバーが ``` bundle install ``` しても全ての gem のバージョンが揃うために必要である。
