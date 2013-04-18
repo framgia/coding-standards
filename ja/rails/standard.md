@@ -171,7 +171,8 @@ end
   * バリデーション
   * callback
   * その他
-  の順に記載する。
+
+の順に記載する。
 
 * scope は lambda の省略記法で記述する。
 
@@ -432,5 +433,68 @@ asset pipeline を利用する
 * 可能であれば、gem 化されたアセットを利用する。（例：[jquery-rails](https://github.com/rails/jquery-rails)）。
 
 * CSS の中に url を記載するときは asset_url を使うこと。
+
+##メイラー
+
+* メイラーは ``` SomethingMailer ``` のような名前にする。Mailerという接尾語を外せば、それがどのようなメールを送ってどのviewが関連するのかが一目瞭然なようにする。
+
+* HTML とプレインテキストの両方のテンプレートを用意する。
+
+* development 環境ではメール送信に失敗したときにエラーが起こるようにする。デフォルトでは無効になっているので気をつけること。
+
+```ruby
+# config/environments/development.rb
+config.action_mailer.raise_delivery_errors = true
+```
+
+* host オプションは必ず設定する。
+
+```ruby
+# config/environments/development.rb
+config.action_mailer.default_url_options = {host: "localhost:3000"}
+
+# config/environments/production.rb
+config.action_mailer.default_url_options = {host: 'your_site.com'}
+
+# in your mailer class
+default_url_options[:host] = 'your_site.com'
+```
+
+* メールの中でサイトへリンクさせる時には、``` _path ``` ではなく ``` _url ``` メソッドを利用する。``` _url ``` メソッドはホスト名を含み、``` _path ``` は含まないからである。
+
+```ruby
+# wrong
+You can always find more info about this course
+= link_to 'here', url_for(course_path(@course))
+
+# right
+You can always find more info about this course
+= link_to 'here', url_for(course_url(@course))
+```
+
+* From と To アドレスは正しく設定する。下記の形式を利用すること。
+
+```ruby
+# in your mailer class
+default from: 'Your Name <info@your_site.com>'
+```
+
+* テスト環境ではメール送信メソッドに ``` test ``` を忘れずに設定すること。
+
+```ruby
+# config/environments/test.rb
+config.action_mailer.delivery_method = :test
+```
+
+* development 環境や production 環境等では送信メソッドを ``` smtp ```にする。
+
+```ruby
+# config/environments/development.rb, config/environments/production.rb
+config.action_mailer.delivery_method = :smtp
+```
+
+* 外部CSSで問題が起きるメールクライアントがあるので、HTML メールを送る時は全てのstyleをインラインで指定する。しかしながら、そうするとメンテナンスしづらく、コードの重複が置きやすくなる。この問題は[premailer-rails3](https://github.com/fphilipe/premailer-rails3)や[roadie](https://github.com/Mange/roadie)がサポートしてくれる。
+
+* ページを作成している途中でメールを送るのは避けるべきである。それはページ読み込みの遅延や複数のメールを送った時には、リクエストタイムアウトの原因になることがある。これらの問題を解決するために、[delayed_job](https://github.com/tobi/delayed_job)を使うと良い。
 
 
