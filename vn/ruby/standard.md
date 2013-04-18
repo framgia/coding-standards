@@ -1,8 +1,8 @@
-##Các quy dịnh về viết code Ruby (Tập các kiểu chuẩn)
+#Các quy dịnh về viết code Ruby (Tập các kiểu chuẩn)
 
-####Giao diện (Layout)
+##Giao diện (Layout)
 
-#####Mã hóa (Encoding)
+##Mã hóa (Encoding)
 * Chỉ sử dụng UTF-8
 
 * Về cơ bản, không viết các source code yêu cầu các chú thích mã hóa script
@@ -14,7 +14,7 @@
 * Vì các ký tự hai byte về cơ bản để dùng cho người sử dụng, nên không nên nhúng chúng trong mã nguồn mà nên được mô tả trong các tập tin locale.
 
 
-#####Các chuẩn cơ bản
+##Các chuẩn cơ bản
 * Lề (indent) là 2 khoảng trắng (white space)
 * Không dùng tab
 * Viết không quá 80 chữ trong một dòng lệnh
@@ -79,7 +79,7 @@ end
 # this is good comment
 ```
 
-* Không được viết gì ở dòng comment out ``` =begin ``` 
+* Không được viết gì ở dòng comment out ``` =begin ```
 
 ```ruby
 =begin # Cách viết không đúng style
@@ -132,7 +132,7 @@ def some_method2
 end
 ```
 
-####Các tiêu chuẩn về ngữ pháp
+##Các tiêu chuẩn về ngữ pháp
 
 * Không sử dụng ``` () ``` trong định nghĩa method
 
@@ -143,7 +143,7 @@ end
 
 def method2 arg1, arg2
   # some proccesses
-end  
+end
 ```
 
 * Không được dùng ``` for ```
@@ -237,6 +237,43 @@ else
 end
 ```
 
+*  Không sử dụng phép toán phủ định ``` ! ``` trong câu điều kiện ``` if ``` (nếu cần thiết thì dùng ``` unless ```). Thế nhưng chúng ta vẫn có thể dùng trong trường hợp kết hợp với ``` && ``` hoặc ``` || ```. Trong những trường hợp này chúng ta có thể áp dụng các luật De Morgan để viết đơn giản hơn.
+
+```ruby
+# cách viết không tốt
+if !user.nil?
+  user.greeting
+end
+
+# cách viết tốt
+unless user.nil?
+  user.greeting
+end
+
+# cách viết rất tốt
+if user
+  user.greeting
+end
+
+# cách viết rất tốt
+user.greeting if user
+
+# OK
+if !user.nil? && !user.suspended?
+  user.greeting
+end
+
+# cách viết không tồi nhưng mà hơi phức tạp
+unless user.nil? || user.suspended?
+  user.greeting
+end
+
+# nên viết thế này
+if user && user.active?
+  user.greeting
+end
+```
+
 * Không đặt dấu  ``` ()  ``` trong các điều kiện của các lệnh ``` if/unless/while
 
 ```ruby
@@ -252,7 +289,7 @@ end
 ```
 
 * Nếu có 1 lệnh block thì dùng``` {} ``` và viết trên 1 dòng.
-Trường hợp có nhiều lệnh gộp thì dùng ``` do 〜 end ``` 
+Trường hợp có nhiều lệnh gộp thì dùng ``` do 〜 end ```
 Rule này cũng áp dụng cho trường hợp method chain.
 
 ``` ruby
@@ -342,20 +379,20 @@ result = hash.map { |k, v| v + 1 }
 result = hash.map { |_, v| v + 1 }
 ```
 
-#####Cách đặt tên
+##Cách đặt tên
 
 * Tên method hoặc biến số thì dùng ``` snake_case ```
 
-* Tên class hoặc module thì dùng ``` CamelCase ``` 
+* Tên class hoặc module thì dùng ``` CamelCase ```
 
-* Hằng số tổng quát dùng ``` SCREAMING_SNAKE_CASE ``` 
+* Hằng số tổng quát dùng ``` SCREAMING_SNAKE_CASE ```
 
 * Các method trả về giá trị boolean thì thêm dấu ? ở cuối như ``` Array#empty? ```
 
-* Các method hủy hoặc method nguy hiểm thì đặt ``` ! ``` ở cuối như ``` Array#flatten! ``` 
+* Các method hủy hoặc method nguy hiểm thì đặt ``` ! ``` ở cuối như ``` Array#flatten! ```
 Khi định nghĩa method hủy, method không hủy như ``` Array#flatten ``` cũng được định nghĩa.
 
-#####Class
+##Class
 
 * Trácnh sử dụng biến class ``` @@ ``` trừ khi thực sự cần thiết
 
@@ -380,7 +417,7 @@ Parent.print_class_var # => sẽ hiển thị "child"
 ```ruby
 class Parent
   @class_instance_var = 'parent'
-  
+
   def self.print_class_instance_var
     puts @class_instance_var
   end
@@ -454,7 +491,7 @@ class SomeClass
 end
 ```
 
-* Ngoài lúc gọi các private method, lúc để chỉ chính các hàm này, dùng ``` self ``` 
+* Ngoài lúc gọi các private method, lúc để chỉ chính các hàm này, dùng ``` self ```
 
 ```ruby
 class SomeClass
@@ -470,7 +507,7 @@ class SomeClass
 end
 ```
 
-#####Ngoại lệ
+##Ngoại lệ
 
 * Không dùng Exception để kiểm soat flow, những Exception có thể tránh được thì không được sử dụng
 
@@ -510,12 +547,12 @@ end
 # Cách viết đúng
 begin
   # Ngoai lệ xuất hiện ở đây
-rescue XxxException # phải chỉ định xử lý ngoại lệ cụ thể 
+rescue XxxException # phải chỉ định xử lý ngoại lệ cụ thể
   # xử lý ngoại lệ
 end
 ```
 
-* Khi tạo mảng từ chuỗi ký tự, nên tích cực sử dụng ``` %w( ) ``` 
+* Khi tạo mảng từ chuỗi ký tự, nên tích cực sử dụng ``` %w( ) ```
 
 ```ruby
 # Cách viết không đúng
@@ -525,7 +562,7 @@ STATES = ['draft', 'open', 'closed']
 STATES = %w(draft open closed)
 ```
 
-* Khi viết key của Hash, không dùng ký tự mà trong khả năng có thể sử dụng symbol 
+* Khi viết key của Hash, không dùng ký tự mà trong khả năng có thể sử dụng symbol
 
 ```ruby
 # Cách viết không đúng
@@ -535,9 +572,9 @@ hash = { 'one' => 1, 'two' => 2, 'three' => 3 }
 hash = { one: 1, two: 2, three: 3 }
 ```
 
-##### Chuỗi ký tự
+## Chuỗi ký tự
 
-* Khi kết hợp các biến thành một chuỗi, không sử dụng ghép thông thường mà sử dụng khai triển 
+* Khi kết hợp các biến thành một chuỗi, không sử dụng ghép thông thường mà sử dụng khai triển
 
 ```ruby
 # Cách viết không đúng
@@ -569,7 +606,7 @@ paragraphs.each do |paragraph|
 end
 ```
 
-*Khi sử dụng here document, delimiter được căn lề thẳng với lệnh gán. 
+*Khi sử dụng here document, delimiter được căn lề thẳng với lệnh gán.
 
 ```ruby
 module AttrComparable
@@ -585,7 +622,7 @@ module AttrComparable
 #...lược bỏ
 ```
 
-##### Biểu thức chính quy
+## Biểu thức chính quy
 
 * Không dùng ```  $1 〜 9 ```Gán tên cho chuỗi ký tự ví dụ phù hợp
 
@@ -601,7 +638,7 @@ process $1
 process meaningful_var
 ```
 
-* Khi muốn xác định bắt đầu và kết thúc của một chuỗi bao gồm cả các dòng mới, sử dụng ``` \A ``` và ``` \Z ``` 
+* Khi muốn xác định bắt đầu và kết thúc của một chuỗi bao gồm cả các dòng mới, sử dụng ``` \A ``` và ``` \Z ```
 
 ```ruby
 string = "some injection\nusername"
@@ -609,7 +646,7 @@ string[/^username$/]   # matches
 string[/\Ausername\Z/] # don't match
 ```
 
-* Tích cực sử dụng tùy chọn ``` x ``` khi viết một mẫu biểu thức chính quy phức tạp. 
+* Tích cực sử dụng tùy chọn ``` x ``` khi viết một mẫu biểu thức chính quy phức tạp.
 Tuy nhiên, khi áp dụng cần lưu ý là các ký tự trống bị bỏ qua.
 
 ```ruby
@@ -622,7 +659,7 @@ regexp = %r{
 }x
 ```
 
-##### Kí pháp phần trăm
+## Kí pháp phần trăm
 
 * Sử dụng ``` %() ``` khi cần hiển thị chính kí tự ``` " ```
 
@@ -644,6 +681,6 @@ message = %(chú ý phân biệt ' và ")
 %r(^/blog/2011/(.*)$)
 ```
 
-##### Vấn đề khác
+## Vấn đề khác
 
 * Không dùng ``` __END___ ```
