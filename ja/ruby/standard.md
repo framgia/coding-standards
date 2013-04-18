@@ -368,10 +368,20 @@ f(3 + 2) + 1
 
 ```ruby
 # bad
-result = hash.map { |k, v| v + 1 }
+result = hash.map {|k, v| v + 1}
 
 # good
-result = hash.map { |_, v| v + 1 }
+result = hash.map {|_, v| v + 1}
+```
+
+* block の仮引数は変数名に省略した単語を利用して良い。
+
+```ruby
+# good
+products.each {|product| product.maintain!}
+
+# OK
+products.each {|prod| prod.maintain!}
 ```
 
 ##名付け
@@ -675,4 +685,4 @@ message = %(注意：'と"は区別されます)
 
 ## その他
 
-* ``` __END___ ``` は利用しない。
+* ``` __END__ ``` は利用しない。
