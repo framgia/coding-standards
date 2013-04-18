@@ -398,3 +398,19 @@ I18n.t :record_invalid, :scope => [:activerecord, :errors, :messages]
 ```
 
 * 詳細は [RailsGuide](http://guides.rubyonrails.org/i18n.html)に従う。
+
+##アセット
+
+asset pipeline を利用する
+
+* アプリケーション固有のスタイルシートやJavascript、画像等は ``` app/assets ``` へ入れる。
+
+* ``` lib/assets ``` はライブラリ的なファイルを入れる。ライブラリでも、アプリケーション固有に調整したものは入れない。
+
+* jQuery や bootstrap のようなサードパーティ製品は ``` vendor/asstes ``` に保存する。
+
+* 可能であれば、gem 化されたアセットを利用する。（例：[jquery-rails](https://github.com/rails/jquery-rails)）。
+
+* CSS の中に url を記載するときは asset_url を使うこと。
+
+
