@@ -343,3 +343,58 @@ clientSideValidations.validators.remote['email'] = (element, options) ->
   }).status == 404
     return options.message || 'invalid e-mail format'
 ```
+
+##国際化
+
+* モデル、ビュー、コントローラーいずれの中でも特定の言語や国に依存した設定を含めてはいけない。それらの文章等は ``` config/locales ``` ディレクトリ内のロケールファイルに記述すること。
+
+* ActiveRecord モデルのラベルを翻訳する必要があるときは、 ``` activerecord ``` スコープに記載する。
+
+```yaml
+ja:
+  activerecord:
+    models:
+      user: メンバー
+    attributes:
+      user:
+        name: 姓名
+```
+
+その時、``` User.model_name.human ``` は"メンバー"と返し、``` User.human_attribute_name("name") ``` は"姓名"と返す。このような翻訳はビューの中でも使うことができる。
+
+* ActiveRecord の属性を翻訳したものと、ビューの中で使われるものとはファイルを分ける。モデルに利用するファイルは ``` models ``` フォルダーにおいて、ビューに利用するものは ``` views ``` フォルダーに保存する。
+  * ファイルを追加したらロケールファイルが読み込まれるディレクトリを ``` application.rb ``` に追加する。
+
+```ruby
+# config/application.rb
+config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+```
+
+* 日付や通貨のフォーマットのように共通で使うものは ``` locales ``` ディレクトリ直下に保存する。
+
+* 短縮表記のメソッドを使うようにする。 ``` I18n.t ``` を ``` I18n.translate ``` の代わりに使い、``` I18n.l ``` を ``` I18n.localize ``` の代わりに使う。
+
+* ビューの中では Lazy lookup を使う。このような構造のとき、
+```yaml
+ja:
+  users:
+    show:
+      title: "ユーザー情報"
+```
+``` users.show.title ``` は ``` app/views/users/show.html.haml ``` 内では
+```ruby
+= t '.title'
+```
+で取得できる。
+
+* コントローラーやモデルの中では ``` :scope ``` 指定では無く、ドット区切りのキーで値を取得する。ドット区切りの方が簡単に呼べ、階層を追いやすい。
+
+```ruby
+# use this call
+I18n.t 'activerecord.errors.messages.record_invalid'
+
+# instead of this
+I18n.t :record_invalid, :scope => [:activerecord, :errors, :messages]
+```
+
+* 詳細は [RailsGuide](http://guides.rubyonrails.org/i18n.html)に従う。
