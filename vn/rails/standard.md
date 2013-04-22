@@ -1,6 +1,6 @@
 #Các quy định về viết code Ruby on Rails (Tập các kiểu chuẩn)
 
-##Thiết lập (Settings)
+##Thiết lập
 
 * Những thiết lập của ứng dụng đặt trong thư mục ``` config/initializers ```. Những đoạn code được đặt trong này sẽ được chạy khi ứng dụng khởi tạo.
 
@@ -96,7 +96,7 @@ match ':controller(/:action(/:id(.:format)))'
 
 *  Cố gắng gọt giũa nội dung của controller. Trong controller chỉ nên thực hiện việc lấy những data mà bên view cần, không code business logic ở đây. (Những cái đó nên viết trong model)
 
-* コントローラーの action はそれぞれ、モデルを初期化したり検索する他は1メソッドのみを実行する位が理想的である。
+* Mỗi action trong controller thì lý tưởng là 1 method initialize model , 1 method seach , 1 method thực hiện tác vụ gì đó.
 
 * Không chia sẻ giữa controller và view từ 2 biến instance trở lên.
 
@@ -284,10 +284,9 @@ def amount
 end
 ```
 
-Rails 内でのみテーブルのデフォルト値を強制するのは、とても脆弱なアプローチで、アプリケーションのバグを引き起こし兼ねないと多くの開発者に指摘されている。また、非常に小さいアプリケーション以外の殆どはデータベースを他のアプリケーションと共有しており、 Rails アプリケーションからだけにデータ整合性を負わせるのは不可能である、という事実を頭に入れておく必要がある。
+Việc thiết lập giá trị mặc định của các bảng chỉ trong ứng dụng là cách làm tạm bợ, có thể sinh ra lỗi trong ứng dụng. Hơn nữa, ngoại trừ những ứng dụng khá nhỏ thì hầu như các ứng dụng đều chia sẻ database với các ứng dụng khác, thế nên nếu chỉ thiết lập trong ứng dụng thì tính nhất quán của dữ liệu sẽ không còn được đảm bảo.
 
-* 外部キー制約を強制すること。ActiveRecordは素の状態ではそれをサポートしていないが、[schema_plus](https://github.com/lomba/schema_plus)のような優れたサードパーティ製のgemがある。
-* Mặc dù ActiveRecord không hỗ trợ điều này nhưng mà có thể dùng gem của bên thứ 3 như [schema_plus](https://github.com/lomba/schema_plus).
+* Quy định ràng buộc khoá ngoài. Mặc dù ActiveRecord không hỗ trợ điều này nhưng mà có thể dùng gem của bên thứ 3 như [schema_plus](https://github.com/lomba/schema_plus).
 
 * Để thay đổi cấu trúc bảng như thêm column thì viết theo cách mới của Rails 3.1. Tóm lại, không sử dụng ``` up ``` hoặc ``` down ``` mà sử dụng ``` change ```.
 
@@ -311,8 +310,7 @@ class AddNameToPerson < ActiveRecord::Migration
 end
 ```
 
-* モデルのクラスをマイグレーション内で使ってはいけない。モデルのクラスは常に進化するので、モデルを使っている箇所の変更により、将来のある時点でマイグレーション処理が止まってしまう可能性がある。
-* Trong migration không sử dụng model class. Tại vì model class thì rất dễ bị thay đổi, thêm vào, khi đó xử lý của migration trước đây có thể bị ảnh hưởng.
+* Không sử dụng class của model trong migration. Tại vì model class thì rất dễ bị thay đổi, khi đó xử lý của migration trước đây có thể bị ảnh hưởng.
 
 ##View
 
@@ -364,11 +362,11 @@ clientSideValidations.validators.remote['email'] = (element, options) ->
     return options.message || 'invalid e-mail format'
 ```
 
-##Quốc tế hoá 国際化
+##Đa ngôn ngữ
 
-* モデル、ビュー、コントローラーいずれの中でも特定の言語や国に依存した設定を含めてはいけない。それらの文章等は ``` config/locales ``` ディレクトリ内のロケールファイルに記述すること。
+* Không đặt các thiết lập phụ thuộc vào ngôn ngữ, quốc gia vào model, controller, view. Những thiết lập này đặt trong ``` config/locales ```.
 
-* ActiveRecord モデルのラベルを翻訳する必要があるときは、 ``` activerecord ``` スコープに記載する。
+* Khi cần dịch các nhãn (label) của ActiveRecord model thì viết vào ``` activerecord ``` scope như dưới đây.
 
 ```yaml
 ja:
@@ -380,44 +378,44 @@ ja:
         name: 姓名
 ```
 
-その時、``` User.model_name.human ``` は"メンバー"と返し、``` User.human_attribute_name("name") ``` は"姓名"と返す。このような翻訳はビューの中でも使うことができる。
+Khi đó, ``` User.model_name.human ``` sẽ trả về "メンバー", ``` User.human_attribute_name("name") ``` sẽ trả về "姓名". Kiểu dịch như thế này cũng có thể sử dụng được trong view.
 
-* ActiveRecord の属性を翻訳したものと、ビューの中で使われるものとはファイルを分ける。モデルに利用するファイルは ``` models ``` フォルダーにおいて、ビューに利用するものは ``` views ``` フォルダーに保存する。
-  * ファイルを追加したらロケールファイルが読み込まれるディレクトリを ``` application.rb ``` に追加する。
+* Chia những đoạn dịch các thuộc tính của ActiveRecord và những đoạn được dùng trong view thành các file riêng biệt. File nào được dùng trong model thì đặt trong thư mục ``` models ```, file nào được dùng trong view đặt trong thư mục ``` views ```.
+
+  * Sửa lại file ``` application.rb ``` để load các file trong locales khi thêm file vào thư mục này.
 
 ```ruby
 # config/application.rb
 config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
 ```
 
-* 日付や通貨のフォーマットのように共通で使うものは ``` locales ``` ディレクトリ直下に保存する。
+* Đặt những thứ dùng chung như các định dạng của ngày tháng, tiền tệ ngay bên trong thư mục ``` locales ```.
 
-* 短縮表記のメソッドを使うようにする。 ``` I18n.t ``` を ``` I18n.translate ``` の代わりに使い、``` I18n.l ``` を ``` I18n.localize ``` の代わりに使う。
+* Sử dụng những method tên ngắn hơn. Sử dụng ``` I18n.t ``` thay cho ``` I18n.translate ```, ``` I18n.l ``` thay cho  ``` I18n.localize ```.
 
-* ビューの中では Lazy lookup を使う。このような構造のとき、
+* Sử dụng Lazy lookup trong view. Ví dụ nếu chúng ta có cấu trúc như sau:
 ```yaml
 ja:
   users:
     show:
       title: "ユーザー情報"
 ```
-``` users.show.title ``` は ``` app/views/users/show.html.haml ``` 内では
+thì giá trị của ``` users.show.title ``` có thể lấy được trong ``` app/views/users/show.html.haml ``` bằng cách viết ngắn gọn như sau:
 ```ruby
 = t '.title'
 ```
-で取得できる。
 
-* コントローラーやモデルの中では ``` :scope ``` 指定では無く、ドット区切りのキーで値を取得する。ドット区切りの方が簡単に呼べ、階層を追いやすい。
+* Trong controller và model thì không dùng ``` :scope ``` mà thay vào đấy ta dùng dấu chấm (.) để lấy các giá trị mình muốn. Việc dùng dấu chấm sẽ đơn giản hơn và dễ hiểu hơn.
 
 ```ruby
-# use this call
+# sử dụng cách viết này
 I18n.t 'activerecord.errors.messages.record_invalid'
 
-# instead of this
+# thay cho cách viết dưới đây
 I18n.t :record_invalid, :scope => [:activerecord, :errors, :messages]
 ```
 
-* Cụ thể theo như [RailsGuide](http://guides.rubyonrails.org/i18n.html).
+* Thông tin chi tiết có thể tham khảo tại [RailsGuide](http://guides.rubyonrails.org/i18n.html).
 
 ##Asset
 
@@ -523,4 +521,4 @@ platform = RUBY_PLATFORM.match(/(linux|darwin)/)[0].to_sym
 Bundler.require(platform)
 ```
 
-* Không xoá ``` Gemfile.lock ``` trong version management system. これは確率論的に変更されるファイルではなく、どのチームメンバーが ``` bundle instal    l ``` しても全ての gem のバージョンが揃うために必要である。
+* Không xoá ``` Gemfile.lock ``` trong version management system. File này nhằm đảm bảo môi trường phát triển của developer nào cũng chạy gem cùng phiên bản khi ``` bundle install ```.
