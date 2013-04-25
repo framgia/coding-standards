@@ -373,10 +373,20 @@ f(3 + 2) + 1
 
 ```ruby
 # Cách viết không đúng
-result = hash.map { |k, v| v + 1 }
+result = hash.map {|k, v| v + 1}
 
 # Cách viết đúng
-result = hash.map { |_, v| v + 1 }
+result = hash.map {|_, v| v + 1}
+```
+
+* Dùng từ giản lược của tên đối số để đặt tên cho đối số tạm thời trong block
+
+```ruby
+# Cách viết đúng
+products.each {|product| product.maintain!}
+
+# OK
+products.each {|prod| prod.maintain!}
 ```
 
 ##Cách đặt tên
