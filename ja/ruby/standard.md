@@ -145,6 +145,11 @@ def method2 arg1, arg2
 end  
 ```
 
+* メソッドの呼び出しには ``` () ``` を使わない。ただし、以下の場合は適宜 ``` () ``` を使っても良い。
+  * 引数に演算子が着いている、またはメソッド前後に演算子が着いている。ハッシュが引数の時も含む。
+  * 引数が2個以上である。
+
+
 * ``` for ``` は使用禁止
 
 ```ruby
@@ -384,6 +389,23 @@ products.each {|product| product.maintain!}
 products.each {|prod| prod.maintain!}
 ```
 
+* 変数の初期値として 空の Array 、空の Hash を代入する場合には ``` Array.new ```、``` Hash.new ``` と記述する。
+
+```ruby
+#bad
+@users = []
+
+#good
+@users = Array.new
+
+#also good
+@months_of_birth_date = User.all.inject([]){|months, user| months << user.birth_date.month}
+```
+
+**理由**
+
+オブジェクトの新規作成という意図が明確であるため、「初期化」という意図が伝わりやすい。
+
 ##名付け
 
 * メソッド名や変数名には ``` snake_case ``` を使う
@@ -513,7 +535,11 @@ end
 
 ## 例外
 
-* Exception をフロー制御に利用せずに、避けられる Exception は全て避ける。
+* Exception をフロー制御に利用せずに、避けられる Exception は全て避ける。大域脱出には ``` throw / catch ``` を利用してよい。
+
+**理由**
+
+Exception を発生させると StackTraceを生成するために高い負荷が掛かる。正常処理の中で無用に StackTrace を生成するようなことをしてはいけない。
 
 ```ruby
 # bad
