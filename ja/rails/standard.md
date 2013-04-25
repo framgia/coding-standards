@@ -100,7 +100,7 @@ match ':controller(/:action(/:id(.:format)))'
 
 * 2個以上のインスタンス変数をコントローラーとviewの間で共有してはいけない。
 
-* 大域脱出を行って良いのはコントローラーの action 内のみとする。
+* モデル等が発生させた Exception はコントローラーが必ず処理をする。コントローラーは Exception を受け取ったらステータスコード 400 以上をクライアントに通知することで、 Exception の発生を通知しなければならない。
 
 * render の引数は シンボルとする。
 
@@ -124,6 +124,18 @@ end
 **理由**
 
 ユーザーのリフレッシュ操作による多重処理を防止するため。
+
+* コールバックにメソッド名では無く、処理を設定する時には、ブロックでは無く、``` lambda ``` で記述する。
+
+```ruby
+#bad
+
+  before_filter{@users = User.all}
+
+#good
+
+  before_filter ->{@users = User.all}
+```
 
 ##モデル
 
@@ -174,7 +186,7 @@ end
 
 の順に記載する。
 
-* scope は lambda の省略記法で記述する。
+* scope は lambda の省略記法で記述する。この場合も1行の長さが80文字以上になる場合は適宜改行する等して、80文字以内に納めるようにする。
 
 ```ruby
 class User < ActiveRecord::Base
@@ -214,6 +226,7 @@ class User < ActiveRecord::Base
 end
 ```
 
+* ``` default_scope ``` は論理削除状態を表現する以外の目的で使ってはならない。また、その時も ``` order ``` を使ってはいけない。
 
 ##ActiveResource
 
