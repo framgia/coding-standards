@@ -169,10 +169,23 @@ end
 ```ruby
 # bad - don't do this if you can modify the schema
 class Transaction < ActiveRecord::Base
-  self.table_name = 'order'
+  @table_name = :order
   ...
 end
 ```
+
+* どうしても必要で ``` primary_key ``` や ``` table_name ``` を明示的に指定するときは、クラス変数を直接書き換える。これらの定義はマクロメソッドの前に記述する。
+
+```ruby
+class Transaction < ActiveRecord::Base
+  @primary_key= :order_id
+  @table_name = :order
+  ...
+end
+```
+
+**理由**
+クラスのプロパティを書き換えていることを明示的に示すため。本来行うべきでない処理を行っていることを明示的に示すため。
 
 * マクロメソッドはまとめてクラス定義の初期に書く。同種のマクロメソッド（ belongs_to と has_many 等）や同じマクロメソッドで種々の引数を持つものの引数（ validates 等）は辞書順に並べる。callback は時系列に並べる。
 
