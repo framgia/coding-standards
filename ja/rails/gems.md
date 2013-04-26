@@ -104,6 +104,8 @@
   default forms. It has a great DSL for building forms and no opinion on
   markup.
 
+* [email-spec](https://github.com/bmabey/email-spec) - RSpec や Cucumber で email のテストを行いやすくする。
+
 ##非推奨 gem
 
 これらの gem は問題を抱えているか、他に優れた代替 gem があるものである。これらの gem の使用は避けるべきである。
