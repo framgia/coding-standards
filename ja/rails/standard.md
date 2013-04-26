@@ -340,6 +340,21 @@ end
 
 * form_for が利用できる時は form_tag を用いてはいけない。
 
+* ``` <% ``` 、 ``` <%= ``` と ``` %> ``` の内側にホワイトスペースを1つ入れる。
+
+```ruby
+#bad
+<%foo%>
+<% bar%>
+<%=bar%>
+<%=bar %>
+
+#good
+<% foo %>
+<%= bar %>
+```
+
+
 * [client side validation](https://github.com/bcardarella/client_side_validations)の利用を検討する。使い方は下記のとおり。
   * ``` ClientSideValidations::Middleware::Base ``` を継承したカスタムバリデーターを宣言する。
 
