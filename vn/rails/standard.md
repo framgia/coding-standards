@@ -338,6 +338,21 @@ end
 
 * Không sử dụng form_tag khi mà có thể sử dụng form_for.
 
+* Thêm 1 space bên trong các ``` <% ``` , ``` <%= ``` と ``` %> ```.
+
+```ruby
+#Cách viết không tốt
+<%foo%>
+<% bar%>
+<%=bar%>
+<%=bar %>
+
+#Cách viết tốt
+<% foo %>
+<%= bar %>
+ ```
+
+
 * Cân nhắc sử dụng [client side validation](https://github.com/bcardarella/client_side_validations). Cách sử dụng như dưới đây.
   * Khai báo custom validator kế thừa ``` ClientSideValidations::Middleware::Base ```
 
