@@ -100,7 +100,7 @@ match ':controller(/:action(/:id(.:format)))'
 
 * Không chia sẻ giữa controller và view từ 2 biến instance trở lên.
 
-* Cái hay của global exeption là có thể xử lý chỉ trong action của controller.
+* Controller cần xử lý ngoại lệ xuất hiện tại model. Cần phải thông báo việc xuất hiện ngoại lệ bằng cách gửi đến client code 400 trở lên.
 
 * Để tham số của render là symbol.
 
@@ -124,6 +124,18 @@ end
 **Lý do**
 
 Ngăn chặn việc phát sinh nhiều xử lý khi mà người dùng thao tác refresh.
+
+* Không dùng tên method trong các hàm callback và cũng không dùng block để thiết lập các xử lý mà nên dùng ``` lamda ```
+
+```ruby
+#cách viết không tốt
+
+  before_filter{@users = User.all}
+
+#cách viết tốt
+
+  before_filter ->{@users = User.all}
+```
 
 ##Model
 
@@ -172,7 +184,7 @@ end
   * các macro callback
   * những macro khác
 
-* scope thì viết theo cách ngắn gọn của lambda
+* scope thì viết theo cách ngắn gọn của lambda. Nếu trong 1 dòng mà quá 80 kí tự thì nên cắt xuống dòng mới thích hợp để cho 1 dòng chỉ nên ít hơn 80 kí tự.
 
 ```ruby
 class User < ActiveRecord::Base
@@ -211,6 +223,8 @@ class User < ActiveRecord::Base
   ...
 end
 ```
+
+* Không dùng ``` default_scope ``` ngoài việc liên quan đến xoá logic. Ngoài ra trong trường hợp này không được dùng ``` order ```.
 
 ##ActiveResource
 
