@@ -17,7 +17,6 @@
 ##Các chuẩn cơ bản
 * Lề (indent) là 2 khoảng trắng (white space)
 * Không dùng tab
-* Viết không quá 80 chữ trong một dòng lệnh
 * Không để khoảng trắng ở cuối dòng
 * Trước và sau các toán tử, dấu hai chấm, sau dấu phẩy và dấu chấm phẩy, để 1 khoảng trắng.
 * Trước dấu phẩy và dấu chấm phẩy không để khoảng trắng.
@@ -28,6 +27,43 @@ sum = 1
 a, b = 1, 2
 1 > 2 ? true : false; puts 'Hi'
 ```
+
+* Trong một dòng không viết quá 80 kí tự
+* Nếu dài hơn 80 kí tự thì xuống dòng mới theo quy tắc sau.
+  * Nếu xuống dòng khi đang ở giữa chuỗi method thì xuống dòng trước dấu ``` . ``` （dot) và đem dấu chấm xuống đầu dòng mới
+
+  ```ruby
+    "one string".something_long_long_method(arg1)
+      .other_cool_long_method(arg2)
+      .another_awsome_long_method(arg3)
+  ```
+
+  * Nếu xuống dòng khi định nghĩa method thì để tránh xảy ra lỗi Syntax Error nên dùng ``` () ```
+
+  ```ruby
+    def long_method_name(parameter_1, parameter_2, parameter_3, parameter_4,
+      parameter_5, parameter_6, options)
+  ```
+
+  * Nếu cần phải xuống dòng trong phép gán thì nhất định trong hàng đầu tiên phải có vế trái và 1 phần vế phải (theo quy tắc này có thể 1 hàng sẽ nhiều hơn 80 kí tự nhưng mà trong trường hợp này thi cho phép)
+
+  ```ruby
+    # Cách viết không tốt. Nhìn thế này lại tưởng hàng dưới là gọi method sort_statements
+    @statements =
+      sort_statements(params[:order], @statements, params[:type_order])
+
+    # Cách viết tốt
+    @statements = sort_statements(params[:order],
+      @statements, params[:type_order])
+
+    # Cũng tốt
+    @statements = sort_statements(params[:order],
+      @statements, params[:type_order])
+
+    # Không tốt nhưng mà OK (suy nghĩ tạo tên đơn giản hơn, súc tích hơn)
+    @one_too_long_name_variable_for_explanation = one_too_long_name_method_for_explanation(
+      param_1, param_2)
+  ```
 
 * Trước và sau các dấu [] () {} không để khoảng trắng
 
@@ -134,7 +170,8 @@ end
 
 ##Các tiêu chuẩn về ngữ pháp
 
-* Không sử dụng ``` () ``` trong định nghĩa method
+* Không sử dụng ``` () ``` trong định nghĩa method, Thế nhưng trong trường hợp dưới đây có thể dùng ``` () ```
+  * Tham số của method quá nhiều nên xuống dòng để đảm bảo không quá 80 kí tự.
 
 ```ruby
 def method1
@@ -149,6 +186,7 @@ end
 * Không dùng ``` () ``` khi gọi các method. Thế nhưng vẫn có thể dùng trong các trường hợp dưới đây.
   * Có các toán tử bên trong tham số. Hoặc là có toán tử ngay sau method. Hoặc tham số là hash.
   * Có từ 2 tham số trở lên.
+  * Tham số của method quá nhiều nên phải xuống dòng để đảm bảo không quá 80 kí tự.
 
 * Không được dùng ``` for ```
 
