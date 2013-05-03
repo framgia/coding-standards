@@ -146,6 +146,10 @@ def method2 arg1, arg2
 end
 ```
 
+* Không dùng ``` () ``` khi gọi các method. Thế nhưng vẫn có thể dùng trong các trường hợp dưới đây.
+  * Có các toán tử bên trong tham số. Hoặc là có toán tử ngay sau method. Hoặc tham số là hash.
+  * Có từ 2 tham số trở lên.
+
 * Không được dùng ``` for ```
 
 ```ruby
@@ -389,6 +393,23 @@ products.each {|product| product.maintain!}
 products.each {|prod| prod.maintain!}
 ```
 
+* Trong trường hợp tạo biến số như Mảng rỗng hay Hash rỗng thì dùng ``` Array.new ```, ``` Hash.new ```.
+
+```ruby
+#Cách viết không đúng
+  @users = []
+
+#Cách viết đúng
+  @users = Array.new
+
+#Cũng đúng
+  @months_of_birth_date = User.all.inject([]){|months, user| months << user.birth_date.month}
+```
+
+**Lý do**
+
+Thể hiện rõ ý đồ tạo object mới, nên nhìn vào dễ hiểu hơn.
+
 ##Cách đặt tên
 
 * Tên method hoặc biến số thì dùng ``` snake_case ```
@@ -519,7 +540,11 @@ end
 
 ##Ngoại lệ
 
-* Không dùng Exception để kiểm soat flow, những Exception có thể tránh được thì không được sử dụng
+* Không dùng ngoại lệ để kiểm soát flow, những ngoại lệ có thể tránh được thì nên tránh.大域脱出には ``` throw / catch ``` を利用してよい
+
+**Lý do**
+
+Khi mà phát sinh ngoại lệ thì tốn nhiều chi phí để tạo ra StackTrace. Trong xử lý bình thường thì cần tránh việc tạo ra StackTrace.
 
 ```ruby
 # Cách viết không đúng
