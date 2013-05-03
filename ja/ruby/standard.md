@@ -17,7 +17,6 @@
 ##基本
 * インデントはホワイトスペース2個
 * ハードタブは使用しない
-* 1行の文字数は80文字以下にする
 * 行の最後に無駄なホワイトスペースは付けない
 * 演算子の前後、コロンの前後、カンマの後ろとセミコロンの後ろににホワイトスペースを1個置く
 * カンマ、セミコロンの前にはホワイトスペースは置かない
@@ -27,6 +26,43 @@ sum = 1
 a, b = 1, 2
 1 > 2 ? true : false; puts 'Hi'
 ```
+
+* 1行の文字数は80文字以下にする
+* 80文字を超える時は、以下のルールで改行を入れる
+  * メソッドチェーンを途中で改行するときは ``` . ``` （ドット）を改行後の先頭に持ってくる
+
+  ```ruby
+    "one string".something_long_long_method(arg1)
+      .other_cool_long_method(arg2)
+      .another_awsome_long_method(arg3)
+  ```
+
+  * メソッドの定義を途中で改行するときは Syntax Error にならないよう適宜 ``` () ``` を用いて改行をする
+
+  ```ruby
+    def long_method_name(parameter_1, parameter_2, parameter_3, parameter_4,
+      parameter_5, parameter_6, options)
+  ```
+
+  * 代入処理を途中で折り返すときには、1行の中で必ず左辺と右辺を記載すること（このルールを遵守すると、1行80文字を超える可能性があるが、その場合のみ80文字を超えて良いものとする）
+
+  ```ruby
+    # bad "sort_statements(" の行が単純なメソッド呼び出しに見えるため不適切
+    @statements =
+      sort_statements(params[:order], @statements, params[:type_order])
+
+    # good
+    @statements = sort_statements(params[:order],
+      @statements, params[:type_order])
+
+    # also good
+    @statements = sort_statements(params[:order],
+      @statements, params[:type_order])
+
+    # not good but OK (consider make name more concisely)
+    @one_too_long_name_variable_for_explanation = one_too_long_name_method_for_explanation(
+      param_1, param_2)
+  ```
 
 * [] () {} 全ての前後にホワイトスペースは置かない
 
@@ -133,7 +169,8 @@ end
 
 ##文法
 
-* メソッドの定義には ``` () ``` を使わない
+* メソッドの定義には ``` () ``` を使わない。ただし以下の場合は適宜 ``` () ``` を使っても良い。
+  * メソッドの引数が多い等で80文字に納まらず、改行をする。
 
 ```ruby
 def method1
@@ -148,7 +185,7 @@ end
 * メソッドの呼び出しには ``` () ``` を使わない。ただし、以下の場合は適宜 ``` () ``` を使っても良い。
   * 引数に演算子が着いている、またはメソッド前後に演算子が着いている。ハッシュが引数の時も含む。
   * 引数が2個以上である。
-
+  * メソッドの引数が多い等で80文字に納まらず、改行をする。
 
 * ``` for ``` は使用禁止
 
