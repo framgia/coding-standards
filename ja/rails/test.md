@@ -112,3 +112,385 @@
 * Cpybara のマッチャーは ``` should_not ``` を肯定で使うのでは無く、否定のマッチャーを利用すること。そうすることで ajax のアクションで設定したタイムアウトの間、再試行するようになる。
 [Capybara の README により詳しい説明がある。](https://github.com/jnicklas/capybara)
 
+##RSpec
+
+* 1つの example に期待結果を1つだけ書く。
+
+```ruby
+# bad
+describe ArticlesController do
+  #...
+
+  describe "GET new" do
+    before {get :new}
+    it do
+      assigns[:article].should be_a_new Article
+      response.should render_template :new
+    end
+  end
+
+  # ...
+end
+
+# good
+describe ArticlesController do
+  #...
+
+  describe "GET new" do
+    before {get :new}
+    subject {response}
+    it {should render_template :new}
+  end
+
+end
+```
+
+* `describe` と `context` は必要に応じて自由に使ってよい
+  * `describe` はクラス、モジュール、メソッド（コントローラーのアクション等）ごとにグルーピングするのに使う。ビュー等の場合はこの規則に従わない。
+  * `context` は example の条件をグルーピングするのに使う。その example が特定の開発タスクに紐付く場合、その開発タスクを context にする。
+
+* `describe` のブロック名は下記のようにする
+  * メソッド以外は説明を記載する
+  * インスタンスメソッドの場合は "#method" のように "#" を使う
+  * クラスメソッドの場合は ".method" のように "." を使う
+
+  ```ruby
+    class Article
+      def summary
+        #...
+      end
+
+      def self.latest
+        #...
+      end
+    end
+
+    # the spec...
+    describe Article do
+      describe "#summary" do
+        #...
+      end
+
+      describe ".latest" do
+        #...
+      end
+    end
+  ```
+
+* テスト用のオブジェクトを作成するときは [factory_girl](https://github.com/thoughtbot/factory_girl) を使う。
+* モックやスタブは必要に応じて利用する
+* モデルのモックを作るときには、`as_null_object` メソッドを使う。それを使うことで、期待するメッセージだけを出力することができ、他の全てのメッセージを無視することができる。
+
+  ```ruby
+    # mocking a model
+    article = mock_model(Article).as_null_object
+
+    # stubbing a method
+    Article.stub(:find).with(article.id).and_return(article)
+  ```
+
+* example でデータを作成するとき、遅延評価にするため、`before(:each)` の代わりに `let` を使う。
+
+  ```ruby
+    # use this:
+    let(:article) {FactoryGirl.create :article}
+
+    # ... instead of this:
+    before(:each) {@article = FactoryGirl.create :article}
+  ```
+
+* `should` を使うときは必ず `subject` を使う
+
+  ```ruby
+    describe Article do
+      subject {FactoryGirl.create :article}
+      it {should be_published}
+    end
+  ```
+
+* `it` の引数に文字列を設定してはいけない。
+**理由**
+言葉で説明しなくても何を定義しているか自己説明的に spec を書くべきであるので。
+
+* `specify` を使ってはいけない。
+* `its` が利用可能なときは、必ず使う。
+
+  ```ruby
+    # bad
+    describe Article do
+      subject {FactoryGirl.create :article}
+      it {creation_date.should eq Date.today}
+    end
+
+    # good
+    describe Article do
+      subject {FactoryGirl.create :article}
+      its(:creation_date) {should eq Date.today}
+    end
+  ```
+
+* いくつかのテストで共有される spec グループを作りたいときは `shared_examples` を使う。
+
+  ```ruby
+    # bad
+    describe Array do
+      subject {Array.new [7, 2, 4]}
+      context "initialized with 3 items" do
+        its(:size) {should eq 3 }
+      end
+    end
+
+    describe Set do
+      subject {Set.new [7, 2, 4]}
+      context "initialized with 3 items" do
+        its(:size) {should eq 3}
+      end
+    end
+
+    #good
+    shared_examples "a collection" do
+      subject {described_class.new([7, 2, 4])}
+      context "initialized with 3 items" do
+        its(:size) {should eq 3}
+      end
+    end
+
+    describe Array do
+      it_behaves_like "a collection"
+    end
+
+    describe Set do
+      it_behaves_like "a collection"
+    end
+  ```
+
+###Models
+* 自分自身に対する spec の中で自分自身のモデルをモックにしてはいけない。
+* モックで無いオブジェクトを作成するときには factory_girl を利用する。
+* 自分以外のモデルや、子オブジェクトはモックにしても良い。
+* factory されたモデルが valid であることを確認する example を作成すること。
+
+  ```ruby
+    describe Article do
+      subject {FactoryGirl :article}
+      it {should be_valid}
+    end
+  ```
+
+* validation が失敗することを確認するときに `be_valid`を使ってはいけない。validation を確認するとき、どの属性でエラーが発生したかを特定するため、 `have(x).errors_on` メソッドを使うこと。
+
+  ```ruby
+    # bad
+    describe "#title" do
+      subject {FactoryGirl.create :article}
+      before {subject.title = nil}
+      it {should_not be_valid}
+    end
+
+    # prefered
+    describe "#title" do
+      subject {FactoryGirl.create :article}
+      before {subject.title = nil}
+      it {should have(1).error_on(:title)}
+    end
+  ```
+
+* validation する必要のある全ての属性それぞれ個別に `describe` を追加する。
+* モデルの属性がユニークであることをテストする時は、他のオブジェクトは、`another_object` という名前にする。
+
+  ```ruby
+    describe Article do
+      describe '#title' do
+        subject {FactoryGirl.build :article}
+        before {@another_article = FactroyGirl.create :article}
+        it {should have(1).error_on(:title)}
+      end
+    end
+  ```
+
+###Views
+
+* ビューの spec のディレクトリ `spec/views` の構造は、`app/views` の構造と一致させる。例えば、`pp/views/users` の spec は `spec/views/users` 内に配置されているものと同じにする。
+* ビューの spec の命名規則はビュー名の最後に `_spec.rb` を付けたものにする。例えば `_form.html.haml` に対応する spec は `_form.html.haml_spec.rb` とする。
+* `spec_helper.rb` は様々な spec ファイルから必要とされるもののみを記述する。
+* 外側の describe ブロックは `app/views` の部分を取り除いたビューのパスを指定する。これは引数を指定せずに `render` メソッドを呼んだときに使われる。
+
+  ```ruby
+    # spec/views/articles/new.html.haml_spec.rb
+    require "spec_helper"
+
+    describe "articles/new.html.haml" do
+      # ...
+    end
+  ```
+
+* ビューの spec 内では常にモデルはモックを使う。ビューの目的はあくまで、情報を表示することのみである。
+* `assign` メソッドを使って、本来コントローラーが設定して、ビューで使うインスタンス変数を指定する。
+
+  ```ruby
+    # spec/views/articles/edit.html.haml_spec.rb
+    describe "articles/edit.html.haml" do
+    subject {rendered}
+    let(:article) {mock_model(Article).as_new_record.as_null_object}
+    before do
+      assign :article, article
+      render
+    end
+    it do
+      should have_selector "form", method: "post", action: articles_path do |form|
+        form.should have_selector "input", type: "submit"
+      end
+    end
+  ```
+
+* Capybara の肯定表現を `should_not` と組み合わせるのではなく、否定表現を `should` するようにする。
+
+  ```ruby
+    # bad
+    page.should_not have_selector "input", type: "submit"
+    page.should_not have_xpath "tr"
+
+    # good
+    page.should have_no_selector "input", type: "submit"
+    page.should have_no_xpath "tr"
+  ```
+
+* ビューがヘルパーメソッドを使うときは、それらを stub にしなければならない。ヘルパーメソッドを stub にするには `template` オブジェクト上で行う。
+
+  ```ruby
+    # app/helpers/articles_helper.rb
+    class ArticlesHelper
+      def formatted_datei date
+        # ...
+      end
+    end
+
+    # app/views/articles/show.html.haml
+    = "Published at: #{formatted_date @article.published_at}"
+
+    # spec/views/articles/show.html.haml_spec.rb
+    describe "articles/show.html.haml" do
+      subject {rendered}
+      before do
+        article = mock_model Article, published_at: Date.new(2012, 01, 01)
+        assign :article, article
+        template.stub(:formatted_date).with(article.published_at).and_return("01.01.2012")
+        render
+      end
+      it {should have_content "Published at: 01.01.2012"}
+    end
+  ```
+
+* ヘルパーの spec はビューの spec と分けて、`spec/helpers` ディレクトリに入れる。
+
+###Controllers
+
+* モデルはそれ自体を mock にして、メソッドを stub にする。コントローラーをテストするときにモデルの生成に依存されてはいけない。
+* コントローラーが責任を持つべき、下記ふるまいのみをテストする
+  * 指定したメソッドが実行されているか
+  * アクションから返るデータ、インスタンス変数にアサインされているか等
+  * アクションの結果、正しくテンプレートを render しているか、リダイレクトしているか等
+
+  ```ruby
+    # Example of a commonly used controller spec
+    # spec/controllers/articles_controller_spec.rb
+    # We are interested only in the actions the controller should perform
+    # So we are mocking the model creation and stubbing its methods
+    # And we concentrate only on the things the controller should do
+
+    describe ArticlesController do
+      # The model will be used in the specs for all methods of the controller
+      let(:article) {mock_model Article}
+
+      describe "POST create" do
+        before {Article.stub(:new).and_return(article)}
+
+        it do
+          expect(Article).to receive(:new).with(title: "The New Article Title").and_return(article)
+          post :create, message: { title: "The New Article Title" }
+        end
+
+        it do
+          expect(article).to receive(:save)
+          post :create
+        end
+
+        it do
+          article.stub(:save)
+          post :create
+          expect(response).to redirect_to(action: :index)
+        end
+      end
+    end
+  ```
+
+* コントローラーのアクションのふるまいが受け取る params によって変化するときは context を利用する。
+
+```ruby
+# A classic example for use of contexts in a controller spec is creation or update when the object saves successfully or not.
+
+describe ArticlesController do
+  let(:article) {mock_model Article}
+
+  describe "POST create" do
+    before {Article.stub(:new).and_return(article)}
+
+    it do
+      expect(Article).to receive(:new).with(title: "The New Article Title").and_return(article)
+      post :create, article: { title: "The New Article Title" }
+    end
+
+    it do
+      expect(article).to receive :save
+      post :create
+    end
+
+    context "when the article saves successfully" do
+      before do
+       article.stub(:save).and_return(true)
+       post :create
+      end
+
+      it {expect(flash[:notice]).to eq("The article was saved successfully.")}
+
+      it {expect(response).to redirect_to(action: "index")}
+    end
+
+    context "when the article fails to save" do
+      before do
+        article.stub(:save).and_return(false)
+        post :create
+      end
+
+      it {expect(assigns[:article]).to be article}
+
+      it {expect(response).to render_template("new")}
+    end
+  end
+end
+```
+
+###Mailers
+
+* メイラーの spec 内でのモデルは全て mock にする。メイラーがモデルに依存してはいけない。
+* メイラーの spec は下記を確かめる。
+  * 件名が正しいか
+  * 受取人のメールアドレスが正しいか
+  * 正しい送信者メールアドレスが設定されているか
+  * メールが正しい情報を含んでいるか
+
+  ```ruby
+    describe SubscriberMailer do
+      let(:subscriber) {mock_model(Subscription, email: "johndoe@test.com", name: "John Doe")}
+
+      describe "successful registration email" do
+        subject {SubscriptionMailer.successful_registration_email(subscriber)}
+
+        its(:subject) {should eq "Successful Registration!"}
+        its(:from) {should eq ["info@your_site.com"]}
+        its(:to) {should eq [subscriber.email]}
+
+        its("body.encoded") {should match(subscriber.name)}
+      end
+    end
+  ```
