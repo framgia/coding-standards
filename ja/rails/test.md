@@ -71,7 +71,7 @@
       |invalid email |is not a valid e-mail |
     ```
 
-* シナリオのステップは `step_definitions` ディレクトリ下の ` .rb ` ファイルに記述する。名前の規約は `[description]_steps.rb` とする。ステップは基準を作って別々のファイルに振り分けるようにする。`home_page_steps.rb` のように、それぞれのごとフィーチャーに1つのファイルに分けても良いし、 `articles_steps.rb` のように特定の対象に対して、全てのフィーチャーを1つのファイルに分けても良い。
+* シナリオのステップは `step_definitions` ディレクトリ下の ` .rb ` ファイルに記述する。名前の規約は `[description]_steps.rb` とする。ステップは基準を作って別々のファイルに振り分けるようにする。`home_page_steps.rb` のように、それぞれのフィーチャーごとに1つのファイルに分けても良いし、 `articles_steps.rb` のように特定の対象に対して、全てのフィーチャーを1つのファイルに分けても良い。
 
 * 繰り返しを避けるために、複数行にまとめた引数を用意する。
 
@@ -109,8 +109,8 @@
       }
     end
     ```
-* Cpybara のマッチャーは ``` should_not ``` を肯定で使うのでは無く、否定のマッチャーを利用すること。そうすることで ajax のアクションで設定したタイムアウトの間、再試行するようになる。
-[Capybara の README により詳しい説明がある。](https://github.com/jnicklas/capybara)
+* Capybara のマッチャーは ``` should_not ``` を肯定で使うのでは無く、否定のマッチャーを利用すること。そうすることで ajax のアクションで設定したタイムアウトの間、再試行するようになる。
+[Capybara の README に、より詳しい説明がある。](https://github.com/jnicklas/capybara)
 
 ##RSpec
 
@@ -147,7 +147,8 @@ end
 
 * `describe` と `context` は必要に応じて自由に使ってよい
   * `describe` はクラス、モジュール、メソッド（コントローラーのアクション等）ごとにグルーピングするのに使う。ビュー等の場合はこの規則に従わない。
-  * `context` は example の条件をグルーピングするのに使う。その example が特定の開発タスクに紐付く場合、その開発タスクを context にする。
+  * ある example が特定の開発タスクに紐付く場合、その開発タスクを describe にする。
+  * `context` は example の条件をグルーピングするのに使う。
 
 * `describe` のブロック名は下記のようにする
   * メソッド以外は説明を記載する
@@ -177,7 +178,7 @@ end
     end
   ```
 
-* テスト用のオブジェクトを作成するときは [factory_girl](https://github.com/thoughtbot/factory_girl) を使う。
+* テスト用のオブジェクトを作成するときには [factory_girl](https://github.com/thoughtbot/factory_girl) を使う。
 * モックやスタブは必要に応じて利用する
 * モデルのモックを作るときには、`as_null_object` メソッドを使う。それを使うことで、期待するメッセージだけを出力することができ、他の全てのメッセージを無視することができる。
 
@@ -189,7 +190,7 @@ end
     Article.stub(:find).with(article.id).and_return(article)
   ```
 
-* example でデータを作成するとき、遅延評価にするため、`before(:each)` の代わりに `let` を使う。
+* example でデータを作成するとき、遅延評価にするために、`before(:each)` の代わりに `let` を使う。
 
   ```ruby
     # use this:
@@ -199,7 +200,7 @@ end
     before(:each) {@article = FactoryGirl.create :article}
   ```
 
-* `should` を使うときは必ず `subject` を使う
+* `should` を使うときには必ず `subject` を使う
 
   ```ruby
     describe Article do
@@ -213,7 +214,7 @@ end
 言葉で説明しなくても何を定義しているか自己説明的に spec を書くべきであるので。
 
 * `specify` を使ってはいけない。
-* `its` が利用可能なときは、必ず使う。
+* `its` が利用可能なときには、必ず使う。
 
   ```ruby
     # bad
@@ -229,7 +230,7 @@ end
     end
   ```
 
-* いくつかのテストで共有される spec グループを作りたいときは `shared_examples` を使う。
+* いくつかのテストで共有される spec グループを作りたいときには `shared_examples` を使う。
 
   ```ruby
     # bad
@@ -277,7 +278,7 @@ end
     end
   ```
 
-* validation が失敗することを確認するときに `be_valid`を使ってはいけない。validation を確認するとき、どの属性でエラーが発生したかを特定するため、 `have(x).errors_on` メソッドを使うこと。
+* validation が失敗することを確認するときに `be_valid`を使ってはいけない。validation を確認するときには、どの属性でエラーが発生したかを特定するために、 `have(x).errors_on` メソッドを使うこと。
 
   ```ruby
     # bad
@@ -295,8 +296,8 @@ end
     end
   ```
 
-* validation する必要のある全ての属性それぞれ個別に `describe` を追加する。
-* モデルの属性がユニークであることをテストする時は、他のオブジェクトは、`another_object` という名前にする。
+* validation する必要のある全ての属性それぞれについて個別に `describe` を追加する。
+* モデルの属性がユニークであることをテストする時には、他のオブジェクトを `another_object` という名前にする。
 
   ```ruby
     describe Article do
@@ -310,10 +311,10 @@ end
 
 ###Views
 
-* ビューの spec のディレクトリ `spec/views` の構造は、`app/views` の構造と一致させる。例えば、`pp/views/users` の spec は `spec/views/users` 内に配置されているものと同じにする。
-* ビューの spec の命名規則はビュー名の最後に `_spec.rb` を付けたものにする。例えば `_form.html.haml` に対応する spec は `_form.html.haml_spec.rb` とする。
+* ビューの spec のディレクトリ `spec/views` の構造を`app/views` の構造と一致させる。例えば、`app/views/users` 内の各ディレクトリおよび各specが `spec/views/users` 内に配置されている各ディレクトリおよび各テンプレートファイルに対応するようにする。
+* ビューの spec の命名規則については、ビュー名の最後に `_spec.rb` を付けることとする。例えば `_form.html.haml` に対応する spec は `_form.html.haml_spec.rb` とする。
 * `spec_helper.rb` は様々な spec ファイルから必要とされるもののみを記述する。
-* 外側の describe ブロックは `app/views` の部分を取り除いたビューのパスを指定する。これは引数を指定せずに `render` メソッドを呼んだときに使われる。
+* 最も外側の describe ブロックには `app/views` の部分を取り除いたビューのパスを指定する。これは引数を指定せずに `render` メソッドを呼んだときに使われる。
 
   ```ruby
     # spec/views/articles/new.html.haml_spec.rb
@@ -324,8 +325,8 @@ end
     end
   ```
 
-* ビューの spec 内では常にモデルはモックを使う。ビューの目的はあくまで、情報を表示することのみである。
-* `assign` メソッドを使って、本来コントローラーが設定して、ビューで使うインスタンス変数を指定する。
+* ビューの spec 内で使うモデルには、常にモックを使う。ビューの役割は、あくまで情報を表示することである。
+* 本来コントローラーによって設定されて、ビューで使われるようなインスタンス変数は、`assign` メソッドを使って設定する。
 
   ```ruby
     # spec/views/articles/edit.html.haml_spec.rb
@@ -355,7 +356,7 @@ end
     page.should have_no_xpath "tr"
   ```
 
-* ビューがヘルパーメソッドを使うときは、それらを stub にしなければならない。ヘルパーメソッドを stub にするには `template` オブジェクト上で行う。
+* ビューの spec でヘルパーメソッドを使うときには、それらを stub にしなければならない。ヘルパーメソッドは `template` オブジェクト上で stub にする。
 
   ```ruby
     # app/helpers/articles_helper.rb
@@ -385,8 +386,8 @@ end
 
 ###Controllers
 
-* モデルはそれ自体を mock にして、メソッドを stub にする。コントローラーをテストするときにモデルの生成に依存されてはいけない。
-* コントローラーが責任を持つべき、下記ふるまいのみをテストする
+* コントローラの spec 内でモデルクラスのインスタンスを扱う場合には mock を使用し、モデルが持つメソッドのふるまいは stub で定義する。コントローラーの spec の実行結果がモデルの実装に左右されてはいけないため。
+* コントローラーが責任を持つべき、以下のふるまいのみをテストする。
   * 指定したメソッドが実行されているか
   * アクションから返るデータ、インスタンス変数にアサインされているか等
   * アクションの結果、正しくテンプレートを render しているか、リダイレクトしているか等
@@ -406,8 +407,8 @@ end
         before {Article.stub(:new).and_return(article)}
 
         it do
-          expect(Article).to receive(:new).with(title: "The New Article Title").and_return(article)
-          post :create, message: { title: "The New Article Title" }
+          expect(Article).to receive(:new).with(title: "The New Article Title").and_return article
+          post :create, message: {title: "The New Article Title"}
         end
 
         it do
@@ -424,7 +425,7 @@ end
     end
   ```
 
-* コントローラーのアクションのふるまいが受け取る params によって変化するときは context を利用する。
+* 受け取る params などによってコントローラーのアクションのふるまいが変化するときには context を利用する。
 
 ```ruby
 # A classic example for use of contexts in a controller spec is creation or update when the object saves successfully or not.
@@ -437,7 +438,7 @@ describe ArticlesController do
 
     it do
       expect(Article).to receive(:new).with(title: "The New Article Title").and_return(article)
-      post :create, article: { title: "The New Article Title" }
+      post :create, article: {title: "The New Article Title"}
     end
 
     it do
