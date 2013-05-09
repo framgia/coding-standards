@@ -4,7 +4,7 @@
 
 ####[標準スタイル](./ruby/standard.md)
 ####[参考サイト](./ruby/references.md)
-  
+
 ## Ruby on Rails
 
 ####[標準スタイル](./rails/standard.md)
@@ -17,3 +17,6 @@
 ## CSS
 
 ## Javascript
+
+####[標準スタイル](./javascript/standard.md)
+####[参考サイト](./javascript/references.md)
