@@ -226,6 +226,8 @@ end
 
 * Không dùng ``` default_scope ``` ngoài việc liên quan đến xoá logic. Ngoài ra trong trường hợp này không được dùng ``` order ```.
 
+* Một khi đã dùng `has_many` hoặc `has_one` đối với một model thì nhất định phải khai báo `belongs_to` với model tương ứng.
+
 ##ActiveResource
 
 * Trong trường hợp cần trả về response theo định dạng khác ngoài XML hay là JSON thì có thể tự tạo ra định dạng khác theo như dưới đây. Để tạo ra một định dạng khác thì cần phải định nghĩa 4 method là ``` extension ```、``` mime_type ```、``` encode ```、``` decode ```
