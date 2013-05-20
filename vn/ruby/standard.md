@@ -656,8 +656,7 @@ email_with_name = user.name + ' <' + user.email + '>'
 # Cách viết đúng
 email_with_name = "#{user.name} <#{user.email}>"
 ```
-
-* Với dấu ``` ' ``` thì nếu không có các lý do như "không dùng khai triển thức" hay "dấu``` " ```có mặt trong chuỗi ký tự" thì không dùng.
+* Chỉ dùng dấu ``` ' ``` khi không có khai triển, dấu ``` " ``` và dấu `\` khi trong chuỗi kí tự.
 
 ```ruby
 # Cách viết không đúng
