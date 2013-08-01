@@ -753,6 +753,29 @@ message = %(chú ý phân biệt ' và ")
 %r(^/blog/2011/(.*)$)
 ```
 
+## 値の比較
+
+* 変数と実数、定数等を比較するときは左辺に実数、右辺に変数とする。
+
+```ruby
+greeting = "Hello!"
+
+# bad
+if greeting == "Hola!"
+  ...
+end
+
+# good
+if "Hola!" == greeting
+  ...
+end
+```
+
+** 理由 **
+
+`==` を誤って `=` と記述した際に代入されずに SyntaxError として検知できるため。
+
+
 ## Vấn đề khác
 
 * Không dùng ``` __END___ ```
