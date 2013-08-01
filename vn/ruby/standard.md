@@ -753,28 +753,27 @@ message = %(chú ý phân biệt ' và ")
 %r(^/blog/2011/(.*)$)
 ```
 
-## 値の比較
+## So sánh giá trị
 
-* 変数と実数、定数等を比較するときは左辺に実数、右辺に変数とする。
+* Khi so sánh biến số với một giá trị khác như số thực hay hằng số thì viết biến số sang bên phải
 
 ```ruby
 greeting = "Hello!"
 
-# bad
+# Cách viết không tốt
 if greeting == "Hola!"
   ...
 end
 
-# good
+# Cách viết tốt
 if "Hola!" == greeting
   ...
 end
 ```
 
-** 理由 **
+** Lý do **
 
-`==` を誤って `=` と記述した際に代入されずに SyntaxError として検知できるため。
-
+Khi mà nhầm `==` thành bằng `=` thì phép so sánh sẽ không được gán mà trả về SyntaxError
 
 ## Vấn đề khác
 
