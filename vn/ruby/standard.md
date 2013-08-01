@@ -753,6 +753,28 @@ message = %(chú ý phân biệt ' và ")
 %r(^/blog/2011/(.*)$)
 ```
 
+## So sánh giá trị
+
+* Khi so sánh biến số với một giá trị khác như số thực hay hằng số thì viết biến số sang bên phải
+
+```ruby
+greeting = "Hello!"
+
+# Cách viết không tốt
+if greeting == "Hola!"
+  ...
+end
+
+# Cách viết tốt
+if "Hola!" == greeting
+  ...
+end
+```
+
+** Lý do **
+
+Khi mà nhầm `==` thành bằng `=` thì phép so sánh sẽ không được gán mà trả về SyntaxError
+
 ## Vấn đề khác
 
 * Không dùng ``` __END___ ```
