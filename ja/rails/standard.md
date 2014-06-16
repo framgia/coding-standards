@@ -100,6 +100,32 @@ match ':controller(/:action(/:id(.:format)))'
 
 * 2個以上のインスタンス変数をコントローラーとviewの間で共有してはいけない。
 
+* コントローラにおけるメインのリソースを示すインスタンス変数には、そのリソースのオブジェクトをアサインすること。例えば、ArticlesController内の `@article` には `Article` クラスのインスタンスをアサインする。 `@articles` には、そのコレクションをアサインする。
+
+```ruby
+# bad
+class ArticlesController < ApplicationController
+  def index
+    @articles = Article.all.pluck [:id, :title]
+  end
+
+  def show
+    @article = "This is an article."
+  end
+end
+
+# good
+class ArticlesController < ApplicationController
+  def index
+    @articles = Article.all
+  end
+
+  def show
+    @article = Article.find params[:id]
+  end
+end
+```
+
 * モデル等が発生させた Exception はコントローラーが必ず処理をする。コントローラーは Exception を受け取ったらステータスコード 400 以上をクライアントに通知することで、 Exception の発生を通知しなければならない。
 
 * render の引数は シンボルとする。
