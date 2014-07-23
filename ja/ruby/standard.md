@@ -44,26 +44,6 @@ a, b = 1, 2
       parameter_5, parameter_6, options)
   ```
 
-  * 代入処理を途中で折り返すときには、1行の中で必ず左辺と右辺を記載すること（このルールを遵守すると、1行80文字を超える可能性があるが、その場合のみ80文字を超えて良いものとする）
-
-  ```ruby
-    # bad "sort_statements(" の行が単純なメソッド呼び出しに見えるため不適切
-    @statements =
-      sort_statements(params[:order], @statements, params[:type_order])
-
-    # good
-    @statements = sort_statements(params[:order],
-      @statements, params[:type_order])
-
-    # also good
-    @statements = sort_statements(params[:order],
-      @statements, params[:type_order])
-
-    # not good but OK (consider make name more concisely)
-    @one_too_long_name_variable_for_explanation = one_too_long_name_method_for_explanation(
-      param_1, param_2)
-  ```
-
 * [] () {} 全ての前後にホワイトスペースは置かない
 
 ```ruby
@@ -144,15 +124,20 @@ when Time.now.hour > 21
 else
   song.play
 end
+```
 
-kind = case year
-       when 1850..1889 then 'Blues'
-       when 1890..1909 then 'Ragtime'
-       when 1910..1929 then 'New Orleans Jazz'
-       when 1930..1939 then 'Swing'
-       when 1940..1950 then 'Bebop'
-       else 'Jazz'
-       end
+* ただし、```case``` の左に何かがある場合には、```when``` の行のインデントを ```case``` の行に対して 1 つ下げる。
+```ruby
+foo = case
+  when song.name == 'Misty'
+    puts 'Not again!'
+  when song.duration > 120
+    puts 'Too long!'
+  when Time.now.hour > 21
+    puts "It's too late"
+  else
+    song.play
+  end
 ```
 
 * ``` def ``` の後には空行を入れる。
