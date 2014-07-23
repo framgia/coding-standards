@@ -139,7 +139,7 @@ render :new
 ```ruby
 class HomeController < ApplicationController
 
-  def inded
+  def index
   end
 
 end
