@@ -127,10 +127,6 @@ Style/ConstantName:
   Description: "Constants should use SCREAMING_SNAKE_CASE."
   Enabled: true
 
-Style/CyclomaticComplexity:
-  Description: "Avoid complex methods."
-  Enabled: true
-
 Style/DefWithParentheses:
   Description: "Use def with parentheses when there are arguments."
   Enabled: true
