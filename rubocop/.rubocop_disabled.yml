@@ -40,3 +40,6 @@ Style/ParameterLists:
   Description: "Avoid parameter lists longer than three or four parameters."
   Enabled: false
 
+Style/CyclomaticComplexity:
+  Description: "Avoid complex methods."
+  Enabled: false
