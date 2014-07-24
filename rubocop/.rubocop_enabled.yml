@@ -349,10 +349,6 @@ Style/OpMethod:
   Description: "When defining binary operators, name the argument other."
   Enabled: true
 
-Style/ParameterLists:
-  Description: "Avoid parameter lists longer than three or four parameters."
-  Enabled: true
-
 Style/ParenthesesAroundCondition:
   Description: >-
                  Don't use parentheses around the condition of an
