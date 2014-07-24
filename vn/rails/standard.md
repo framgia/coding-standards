@@ -358,6 +358,8 @@ end
 
 * Không gọi trực tiếp model trong view, mà phải sử dụng thông qua controller hoặc helper.
 
+* Tuy nhiên vẫn có ngoại lệ cho phép trực tiếp gọi Model trong View như một master cho các thẻ như thẻ Select.
+
 * Không viết các xử lý phức tạp trong view. Những xử lý phức tạp thì nên đặt trong các view helper hoặc trong model.
 
 * Sử dụng partial hoặc layout để tránh việc viết lại code
