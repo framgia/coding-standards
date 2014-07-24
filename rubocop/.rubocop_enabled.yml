@@ -97,10 +97,6 @@ Style/ClassCheck:
   Description: "Enforces consistent use of `Object#is_a?` or `Object#kind_of?`."
   Enabled: true
 
-Style/ClassLength:
-  Description: "Avoid classes longer than 100 lines of code."
-  Enabled: true
-
 Style/ClassMethods:
   Description: "Use self when defining module/class methods."
   Enabled: true
@@ -283,10 +279,6 @@ Style/MethodDefParentheses:
   Description: >-
                  Checks if the method definitions have or don"t have
                  parentheses.
-  Enabled: true
-
-Style/MethodLength:
-  Description: "Avoid methods longer than 10 lines of code."
   Enabled: true
 
 Style/MethodName:

@@ -27,3 +27,11 @@ Style/EmptyLiteral:
 Style/ClassAndModuleChildren:
   Description: "Checks style of children classes and modules."
   Enabled: false
+
+Style/ClassLength:
+  Description: "Avoid classes longer than 100 lines of code."
+  Enabled: false
+
+Style/MethodLength:
+  Description: "Avoid methods longer than 10 lines of code."
+  Enabled: false
