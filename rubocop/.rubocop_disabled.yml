@@ -35,3 +35,8 @@ Style/ClassLength:
 Style/MethodLength:
   Description: "Avoid methods longer than 10 lines of code."
   Enabled: false
+
+Style/ParameterLists:
+  Description: "Avoid parameter lists longer than three or four parameters."
+  Enabled: false
+
