@@ -53,3 +53,10 @@ Style/AlignArray:
 Style/UnneededPercentQ:
   Description: "Checks for %q/%Q when single quotes or double quotes would do."
   Enabled: false
+
+#################### Lint ################################
+### Warnings
+Lint/AssignmentInCondition:
+  Description: "Don't use assignment in conditions."
+  Enabled: false
+
