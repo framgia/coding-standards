@@ -100,6 +100,32 @@ match ':controller(/:action(/:id(.:format)))'
 
 * Không chia sẻ giữa controller và view từ 2 biến instance trở lên.
 
+* Đối với biến instance biểu thị resource chính ở Controller, hãy gán vào object của resource đó. Ví dụ, đối với `@article` ở bên trong ArticlesController thì gán instance của class `Article` vào. Với `@articles` thì gán collection của nó vào.
+
+```ruby
+# Không tốt
+class ArticlesController < ApplicationController
+  def index
+    @articles = Article.all.pluck [:id, :title]
+  end
+
+  def show
+    @article = "This is an article."
+  end
+end
+
+# Tốt
+class ArticlesController < ApplicationController
+  def index
+    @articles = Article.all
+  end
+
+  def show
+    @article = Article.find params[:id]
+  end
+end
+```
+
 * Controller cần xử lý ngoại lệ xuất hiện tại model. Cần phải thông báo việc xuất hiện ngoại lệ bằng cách gửi đến client code 400 trở lên.
 
 * Để tham số của render là symbol.
