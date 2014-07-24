@@ -54,6 +54,10 @@ Style/UnneededPercentQ:
   Description: "Checks for %q/%Q when single quotes or double quotes would do."
   Enabled: false
 
+Style/AccessorMethodName:
+  Description: Check the naming of accessor methods for get_/set_.
+  Enabled: false
+
 #################### Lint ################################
 ### Warnings
 Lint/AssignmentInCondition:
