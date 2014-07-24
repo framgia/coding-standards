@@ -45,26 +45,6 @@ a, b = 1, 2
       parameter_5, parameter_6, options)
   ```
 
-  * Nếu cần phải xuống dòng trong phép gán thì nhất định trong hàng đầu tiên phải có vế trái và 1 phần vế phải (theo quy tắc này có thể 1 hàng sẽ nhiều hơn 80 kí tự nhưng mà trong trường hợp này thi cho phép)
-
-  ```ruby
-    # Cách viết không tốt. Nhìn thế này lại tưởng hàng dưới là gọi method sort_statements
-    @statements =
-      sort_statements(params[:order], @statements, params[:type_order])
-
-    # Cách viết tốt
-    @statements = sort_statements(params[:order],
-      @statements, params[:type_order])
-
-    # Cũng tốt
-    @statements = sort_statements(params[:order],
-      @statements, params[:type_order])
-
-    # Không tốt nhưng mà OK (suy nghĩ tạo tên đơn giản hơn, súc tích hơn)
-    @one_too_long_name_variable_for_explanation = one_too_long_name_method_for_explanation(
-      param_1, param_2)
-  ```
-
 * Trước và sau các dấu [] () {} không để khoảng trắng
 
 ```ruby
@@ -145,15 +125,20 @@ when Time.now.hour > 21
 else
   song.play
 end
+```
 
-kind = case year
-       when 1850..1889 then 'Blues'
-       when 1890..1909 then 'Ragtime'
-       when 1910..1929 then 'New Orleans Jazz'
-       when 1930..1939 then 'Swing'
-       when 1940..1950 then 'Bebop'
-       else 'Jazz'
-       end
+* Tuy nhiên, trong trường hợp ở bên trái của ```case``` có gì đó, thì indent của dòng có ```when``` lùi vào một khoảng so với dòng của ```case```.
+```ruby
+foo = case
+  when song.name == 'Misty'
+    puts 'Not again!'
+  when song.duration > 120
+    puts 'Too long!'
+  when Time.now.hour > 21
+    puts “It's too late”
+  else
+    song.play
+  end
 ```
 
 * Sau ``` def ``` đặt 1 khoảng trắng
