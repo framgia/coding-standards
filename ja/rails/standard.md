@@ -156,15 +156,15 @@ end
 ```ruby
 # bad
 
-  before_filter{@users = User.all} # brock
+  before_action{@users = User.all} # brock
 
 # good
 
-  before_filter :methodname # method name
+  before_action :methodname # method name
 
 # also good
 
-  before_filter ->{@users = User.all} # lambda
+  before_action ->{@users = User.all} # lambda
 ```
 
 ##モデル
