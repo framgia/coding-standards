@@ -151,16 +151,20 @@ end
 
 ユーザーのリフレッシュ操作による多重処理を防止するため。
 
-* コールバックにメソッド名では無く、処理を設定する時には、ブロックでは無く、``` lambda ``` で記述する。
+* コールバックの記述には、メソッド名か ```lambda``` を使うこと。ここにブロックを使ってはいけない。
 
 ```ruby
-#bad
+# bad
 
-  before_filter{@users = User.all}
+  before_filter{@users = User.all} # brock
 
-#good
+# good
 
-  before_filter ->{@users = User.all}
+  before_filter :methodname # method name
+
+# also good
+
+  before_filter ->{@users = User.all} # lambda
 ```
 
 ##モデル
