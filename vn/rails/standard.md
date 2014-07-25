@@ -151,19 +151,19 @@ end
 
 Ngăn chặn việc phát sinh nhiều xử lý khi mà người dùng thao tác refresh.
 
-* Không dùng tên method trong các hàm callback và cũng không dùng block để thiết lập các xử lý mà nên dùng ``` lamda ```
+* Trong hàm callback nên sử dụng tên method hoặc ```lamda```. Không được sử dụng block ở đây.
 
 
 ```ruby
-#cách viết không tốt
+# cách viết không tốt
 
   before_action{@users = User.all} # brock
 
-#cách viết tốt
+# cách viết tốt
 
   before_action :methodname # method name
 
-#cách viết tốt
+# cách viết cũng tốt
 
   before_action ->{@users = User.all} # lambda
 ```
