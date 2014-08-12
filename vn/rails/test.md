@@ -113,38 +113,30 @@ Format này hay được dùng nhưng không phải là bắt buộc, có thể 
 
 * Đối với 1 example thì chỉ nên kỳ vọng 1 kết quả đạt được.
 
-```ruby
-# Cách viết không tốt
-describe ArticlesController do
-  #...
+   ```ruby
+   # Cách viết không tốt
+   describe ArticlesController do
+     describe "GET new" do
+       before {get :new}
+       it do
+         assigns[:article].is_expected.to be_a_new Article
+         response.is_expected.to render_template :new
+       end
+     end
+   end
 
-  describe "GET new" do
-    before {get :new}
-    it do
-      assigns[:article].should be_a_new Article
-      response.should render_template :new
-    end
-  end
-
-  # ...
-end
-
-# Cách viết tốt
-describe ArticlesController do
-  #...
-
-  describe "GET new" do
-    before {get :new}
-    subject {response}
-    it {should render_template :new}
-  end
-
-end
-```
+   # Cách viết tốt
+   describe ArticlesController do
+     describe "GET new" do
+       before {get :new}
+       subject {response}
+       it {is_expected.to render_template :new}
+     end
+   end
+   ```
 
 * Có thể sử dụng `describe` và `context` tự do khi cần thiết.
   * Sử dụng `describe` để nhóm theo class, module, method (hay theo action của controller). Trong trường hợp view thì không cần tuân theo quy tắc này.
-  * Trong trường hợp example gắn liền với một task nào đấy thì tạo describe cho task ấy.
   * Sử dụng `context` để nhóm các điều kiện của example.
 
 * Đặt tên block của `describe` như sau
@@ -187,7 +179,7 @@ end
     Article.stub(:find).with(article.id).and_return(article)
   ```
 
-* Khi tạo data trong example, sử dụng `let` thay cho `before(:each)` để lazy evaluation.
+* Khi tạo data trong example, sử dụng `let` để lazy evaluation. Cấm việc sử dụng biến instance để thay cho `let`.
 
   ```ruby
     # sứ dụng cách này
@@ -197,35 +189,51 @@ end
     before(:each) {@article = FactoryGirl.create :article}
   ```
 
-* Một khi sử dụng `should` thì nhất định phải có `subject`
+* Khi sử dụng `expect` hoặc `is_expected` thì nhất định phải sử dụng `subject`.
 
   ```ruby
     describe Article do
       subject {FactoryGirl.create :article}
-      it {should be_published}
+      it {is_expected.to be_published}
     end
   ```
 
-* Không truyền chuỗi ký tự vào tham số của `it`
-**Lý do**
-Thay vì dùng từ ngữ để giải thích nên viết spec để có thể tự giải thích nội dung.
+* Ở bên trong `it` có thể sử dụng `expect` và `is_expected`. Không được sử dụng `specify` hoặc `should`.
+* Không được lấy chuỗi kí tự là tham số của `it`. Nên viết spec dạng tự giải thích.
 
-* Không sử dụng `specify`.
-* Một khi có thể sử dụng `its` thì nhất định phải dùng.
+   ```ruby
+   # Không tốt
+   describe Article do
+     subject {FactoryGirl.create :article}
+     it "is an Article" do
+       subject.is_expected.to be_an Article
+     end
+end
+
+   # Tốt
+   describe Article do
+      subject {FactoryGirl.create :article}
+      it {is_expected.to be_an Article}
+   end
+```
+* Không được sử dụng `its`.
 
   ```ruby
     # Không tốt
     describe Article do
       subject {FactoryGirl.create :article}
-      it {creation_date.should eq Date.today}
+      its(:created_at) {is_expected.to eq Date.today}
     end
 
-    # Tốt
+    # Không tốt
     describe Article do
       subject {FactoryGirl.create :article}
-      its(:creation_date) {should eq Date.today}
+      it {expect(subject.created_at).to eq Date.today}
     end
   ```
+
+* Nên dùng method chain chỉ một lần với tham số của `expect`.
+
 
 * Sử dụng `shared_examples` trong trường hợp muốn nhóm spec được chia sẻ tại nhiều test.
 
@@ -234,14 +242,14 @@ Thay vì dùng từ ngữ để giải thích nên viết spec để có thể t
     describe Array do
       subject {Array.new [7, 2, 4]}
       context "initialized with 3 items" do
-        its(:size) {should eq 3 }
+        it {expect(subject.size).to eq 3 }
       end
     end
 
     describe Set do
       subject {Set.new [7, 2, 4]}
       context "initialized with 3 items" do
-        its(:size) {should eq 3}
+        it {expect(subject.size).to eq 3}
       end
     end
 
@@ -249,7 +257,7 @@ Thay vì dùng từ ngữ để giải thích nên viết spec để có thể t
     shared_examples "a collection" do
       subject {described_class.new([7, 2, 4])}
       context "initialized with 3 items" do
-        its(:size) {should eq 3}
+        it {expect(subject.size).to eq 3}
       end
     end
 
@@ -271,37 +279,37 @@ Thay vì dùng từ ngữ để giải thích nên viết spec để có thể t
   ```ruby
     describe Article do
       subject {FactoryGirl :article}
-      it {should be_valid}
+      it {is_expected.to be_valid}
     end
   ```
 
-* Không sử dụng `be_valid` để kiểm tra việc validation thất bại hay không. Khi kiểm tra validation thì để chỉ rõ lỗi xảy ra ở thuộc tính nào nên dùng method `have(x).errors_on`.
+* Không sử dụng `.not_to be_valid` để kiểm tra xem validation có thất bại hay không. Để kiểm tra validation thì phải sử dụng method `have(x).errors_on` để xác định xem loại lỗi nào đã xảy ra.
 
   ```ruby
     # Không tốt
     describe "#title" do
       subject {FactoryGirl.create :article}
       before {subject.title = nil}
-      it {should_not be_valid}
+      it {is_expected.not_to be_valid}
     end
 
     # Tốt
     describe "#title" do
       subject {FactoryGirl.create :article}
       before {subject.title = nil}
-      it {should have(1).error_on(:title)}
+      it {is_expected.to have(1).error_on(:title)}
     end
   ```
 
 * Thêm `describe` riêng biệt cho các thuộc tính cần validation.
-* Khi mà test xem thuộc tính nào đấy của model của đảm bảo tính duy nhất hay không thì tên của đối tượng khác đặt là `another_object`.
+* Khi test xem loại của model có phải là unique hay không, dùng `another_[tên object]` để đặt tên cho các object khác.
 
   ```ruby
     describe Article do
-      describe '#title' do
+      describe "#title" do
         subject {FactoryGirl.build :article}
         before {@another_article = FactroyGirl.create :article}
-        it {should have(1).error_on(:title)}
+        it {is_expected.to have(1).error_on(:title)}
       end
     end
   ```
@@ -335,22 +343,22 @@ Thay vì dùng từ ngữ để giải thích nên viết spec để có thể t
       render
     end
     it do
-      should have_selector "form", method: "post", action: articles_path do |form|
-        form.should have_selector "input", type: "submit"
+      is_expected.to have_selector "form", method: "post", action: articles_path do |form|
+        form.is_expected.to have_selector "input", type: "submit"
       end
     end
   ```
 
-* Không kết hợp nội dung khẳng định của Capybara với `should_not`, mà nên dùng `should` với nội dung phủ định.
+* Không kết hợp nội dung khẳng định của Capybara với `.not_to`, mà nên dùng `.to` với nội dung phủ định.
 
   ```ruby
     # Không tốt
-    page.should_not have_selector "input", type: "submit"
-    page.should_not have_xpath "tr"
+    page.is_expected.not_to have_selector "input", type: "submit"
+    page.is_expected.not_to have_xpath "tr"
 
     # Tốt
-    page.should have_no_selector "input", type: "submit"
-    page.should have_no_xpath "tr"
+    page.is_expected.to have_no_selector "input", type: "submit"
+    page.is_expected.to have_no_xpath "tr"
   ```
 
 * Khi sử dụng helper method trong spec của view thì phải dùng stub. Stub helper method trên đối tượng `template`.
@@ -375,7 +383,7 @@ Thay vì dùng từ ngữ để giải thích nên viết spec để có thể t
         template.stub(:formatted_date).with(article.published_at).and_return("01.01.2012")
         render
       end
-      it {should have_content "Published at: 01.01.2012"}
+      it {is_expected.to have_content "Published at: 01.01.2012"}
     end
   ```
 
@@ -399,23 +407,24 @@ Thay vì dùng từ ngữ để giải thích nên viết spec để có thể t
     describe ArticlesController do
       # The model will be used in the specs for all methods of the controller
       let(:article) {mock_model Article}
+      let(:input) {"The New Article Title"}
 
       describe "POST create" do
-        before {Article.stub(:new).and_return(article)}
+        before do
+          Article.stub(:new).and_return(article)
+          article.stub(:save)
+          post :create, message: {title: input}
+        end
 
         it do
-          expect(Article).to receive(:new).with(title: "The New Article Title").and_return article
-          post :create, message: {title: "The New Article Title"}
+          expect(Article).to receive(:new).with(title: input).and_return article
         end
 
         it do
           expect(article).to receive(:save)
-          post :create
         end
 
         it do
-          article.stub(:save)
-          post :create
           expect(response).to redirect_to(action: :index)
         end
       end
@@ -425,48 +434,46 @@ Thay vì dùng từ ngữ để giải thích nên viết spec để có thể t
 * Khi mà behavior của action thay đổi thay đổi tuỳ theo params nhận được thì sử dụng context.
 
 ```ruby
-# A classic example for use of contexts in a controller spec is creation or update when the object saves successfully or not.
+   # A classic example for use of contexts in a controller spec is creation or update when the object saves successfully or not.
 
-describe ArticlesController do
-  let(:article) {mock_model Article}
+   describe ArticlesController do
+      let(:article) {mock_model Article}
+      let(:input) {"The New Article Title"}
 
-  describe "POST create" do
-    before {Article.stub(:new).and_return(article)}
+      describe "POST create" do
+        before do
+          Article.stub(:new).and_return(article)
+          post :create, article: {title: input}
+        end
 
-    it do
-      expect(Article).to receive(:new).with(title: "The New Article Title").and_return(article)
-      post :create, article: {title: "The New Article Title"}
-    end
+        it do
+          expect(Article).to receive(:new).with(title: input).and_return(article)
+        end
 
-    it do
-      expect(article).to receive :save
-      post :create
-    end
+        it do
+          expect(article).to receive :save
+        end
 
-    context "when the article saves successfully" do
-      before do
-       article.stub(:save).and_return(true)
-       post :create
+        context "when the article saves successfully" do
+          before do
+           article.stub(:save).and_return(true)
+          end
+
+          it {expect(flash[:notice]).to eq("The article was saved successfully.")}
+          it {expect(response).to redirect_to(action: "index")}
+        end
+
+        context "when the article fails to save" do
+          before do
+            article.stub(:save).and_return(false)
+          end
+
+          it {expect(assigns[:article]).to be article}
+          it {expect(response).to render_template("new")}
+        end
       end
-
-      it {expect(flash[:notice]).to eq("The article was saved successfully.")}
-
-      it {expect(response).to redirect_to(action: "index")}
-    end
-
-    context "when the article fails to save" do
-      before do
-        article.stub(:save).and_return(false)
-        post :create
-      end
-
-      it {expect(assigns[:article]).to be article}
-
-      it {expect(response).to render_template("new")}
-    end
-  end
-end
-```
+   end
+   ```
 
 ###Mailers
 
@@ -482,13 +489,11 @@ end
       let(:subscriber) {mock_model(Subscription, email: "johndoe@test.com", name: "John Doe")}
 
       describe "successful registration email" do
-        subject {SubscriptionMailer.successful_registration_email(subscriber)}
+        subject(:mail) {SubscriptionMailer.successful_registration_email(subscriber)}
 
-        its(:subject) {should eq "Successful Registration!"}
-        its(:from) {should eq ["info@your_site.com"]}
-        its(:to) {should eq [subscriber.email]}
-
-        its("body.encoded") {should match(subscriber.name)}
+        it {expect(mail.subject).to eq "Successful Registration!"}
+        it {expect(mail.from).to eq ["info@your_site.com"]}
+        it {expect(mail.to).to eq [subscriber.email]}
       end
     end
   ```
