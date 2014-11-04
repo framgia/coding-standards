@@ -229,6 +229,30 @@ end
 
 の順に記載する。
 
+#### Scope
+* scope の命名には、レコードデータの集合に対する子集合を表す名前を付ける。
+* `[モデル名の複数形] which are [scope名]` として自然言語として読めるようにする。
+* 引数がある場合にも、引数を含めて自然言語のように読めるようにする。
+* モデルを表す単語（Userモデルのスコープだったら "user"）をできるだけ含まないようにする。
+
+```ruby
+# bad
+class User < ActiveRecord::Base
+  scope :active_users, ->{where activated: true}
+end
+class Post < ActiveRecord::Base
+  scope :by_author, ->author{where author_id: author.id}
+end
+
+# good
+class User < ActiveRecord::Base
+  scope :active, ->{where activated: true}
+end
+class Post < ActiveRecord::Base
+  scope :posted_by, ->author{where author_id: author.id}
+end
+```
+
 * scope は lambda の省略記法で記述する。この場合も1行の長さが80文字以上になる場合は適宜改行する等して、80文字以内に納めるようにする。
 
 ```ruby
