@@ -215,6 +215,33 @@ end
   * các macro callback
   * những macro khác
 
+#### Scope
+* Đặt tên scope thể hiện việc lấy một tập hợp con trong tập hợp bản ghi cha. 
+* Hãy đặt tên scope sao cho có thể hiểu được một cách tự nhiên như sau 
+`[số nhiều của tên model] có đặc tính [tên scope]`. 
+(Ví dụ: với việc đặt tên scope là `active` trong model user có thể hiểu 
+            Hãy lấy ra các `[users] có đặc tính [active]`.)
+* Trong trường hợp có đối số, hãy kết hợp tên scope và đối số sao cho thật tự nhiên và dễ hiểu. 
+* Cố gắng tránh việc đặt tên scope có bao gồm tên model. 
+
+```ruby
+# Không tốt
+class User < ActiveRecord::Base
+  scope :active_users, ->{where activated: true}
+end
+class Post < ActiveRecord::Base
+  scope :by_author, ->author{where author_id: author.id}
+end
+
+# Tốt
+class User < ActiveRecord::Base
+  scope :active, ->{where activated: true}
+end
+class Post < ActiveRecord::Base
+  scope :posted_by, ->author{where author_id: author.id}
+end
+```
+
 * scope thì viết theo cách ngắn gọn của lambda. Nếu trong 1 dòng mà quá 80 kí tự thì nên cắt xuống dòng mới thích hợp để cho 1 dòng chỉ nên ít hơn 80 kí tự.
 
 ```ruby
