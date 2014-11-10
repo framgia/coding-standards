@@ -1,4 +1,4 @@
-# This is the default configuration file. Enabling and disabling is configured
+# This is rubocop configuration file for Framgia's coding style. Enabling and disabling is configured
 # in separate files. This file adds all other parameters apart from Enabled.
 
 # Put the following files into the same directory as this file.
