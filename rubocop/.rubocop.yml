@@ -1,6 +1,7 @@
 # This is the default configuration file. Enabling and disabling is configured
 # in separate files. This file adds all other parameters apart from Enabled.
 
+# Put the following files into the same directory as this file.
 inherit_from:
   - .rubocop_enabled.yml
   - .rubocop_disabled.yml
