@@ -599,6 +599,12 @@ config.action_mailer.delivery_method = :smtp
 
 ##バンドラー
 
+* Gemfile には ruby バージョンを記載すること。
+
+```ruby
+ruby "2.1.5"
+```
+
 * development 環境や test 環境でのみ利用する gem は適切なグループを設定して記述する。
 
 * 本当に必要な gem のみを利用する。あまり有名でない gem を利用する時は、最初に細心の注意を払ってレビューを行うべきである。
@@ -608,12 +614,12 @@ config.action_mailer.delivery_method = :smtp
 ```ruby
 # Gemfile
 group :darwin do
-  gem 'rb-fsevent'
-  gem 'growl'
+  gem "rb-fsevent"
+  gem "growl"
 end
 
 group :linux do
-  gem 'rb-inotify'
+  gem "rb-inotify"
 end
 ```
 
