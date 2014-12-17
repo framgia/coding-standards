@@ -50,12 +50,37 @@ a, b = 1, 2
       parameter_5, parameter_6, options)
   ```
 
+* 長い文字列リテラルのせいで 80文字を越えてしまう場合のみ、80文字を越えることを許可する
+
+  ```ruby
+  # ok
+  foo = "This is a very very long string that can't be broken down and may contain #{variable}"
+  ```
+
 * [] () {} 全ての前後にホワイトスペースは置かない
 
 ```ruby
 a = [1, 2, 3] #"[" の左のスペースは = の後ろのもの
 [1, 2, 3].each{|num| puts num * 2}
 def method(a, b, c)
+```
+
+* 改行を含む長い文字列にはヒアドキュメントを使う。ただし、短いメッセージを定義する時や、メソッドチェーンしたいときには、文字列リテラルを使っても良い。
+```ruby
+  # good
+      foo = <<-EOS
+From this valley they say you are going,
+We will miss your bright eyes and sweet smile,
+For they say you are taking the sunshine
+That has brightened our pathways a while.
+      EOS
+
+  # ok
+      foo = "Hi, Johnny.
+How are you?"
+
+  # bad
+      foo = "From this valley they say you are going,\nWe will miss your bright eyes and sweet smile,\nFor they say you are taking the sunshine\nThat has brightened our pathways a while."
 ```
 
 * 仮引数の後にホワイトスペースを入れる
