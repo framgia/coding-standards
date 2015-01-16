@@ -11,14 +11,13 @@ AllCops:
   # Include gemspec and Rakefile
   Include:
     - '**/*.gemspec'
-    - '**/Rakefile'
   Exclude:
     - 'vendor/**/*'
     - 'config/unicorn.rb'
     - 'bin/*'
     - 'db/*'
     - 'spec/*'
-    - 'config/*'
+    - 'config/**/*'
   # By default, the rails cops are not run. Override in project or home
   # directory .rubocop.yml files, or by giving the -R/--rails option.
   RunRailsCops: false
@@ -113,7 +112,7 @@ Style/AlignParameters:
     - with_first_parameter
     - with_fixed_indentation
 
-Style/BlockNesting:
+Metrics/BlockNesting:
   Max: 3
 
 Style/BracesAroundHashParameters:
@@ -157,7 +156,7 @@ Style/ClassCheck:
     - is_a?
     - kind_of?
 
-Style/ClassLength:
+Metrics/ClassLength:
   CountComments: false  # count full line comments?
   Max: 100
 
@@ -186,7 +185,7 @@ Style/CommentAnnotation:
     - REVIEW
 
 # Avoid complex methods.
-Style/CyclomaticComplexity:
+Metrics/CyclomaticComplexity:
   Max: 6
 
 # Multi-line method chaining should be done with leading dots.
@@ -201,6 +200,21 @@ Style/EmptyLineBetweenDefs:
   # If true, this parameter means that single line method definitions don't
   # need an empty line between them.
   AllowAdjacentOneLineDefs: false
+
+Style/EmptyLinesAroundBlockBody:
+  EnforcedStyle: no_empty_lines
+  SupportedStyles:
+    - no_empty_lines
+
+Style/EmptyLinesAroundClassBody:
+  EnforcedStyle: no_empty_lines
+  SupportedStyles:
+    - no_empty_lines
+
+Style/EmptyLinesAroundModuleBody:
+  EnforcedStyle: no_empty_lines
+  SupportedStyles:
+    - no_empty_lines
 
 # Checks whether the source file has a utf-8 encoding comment or not
 Style/Encoding:
@@ -268,7 +282,7 @@ Style/LambdaCall:
     - call
     - braces
 
-Style/LineLength:
+Metrics/LineLength:
   Max: 80
   AllowURI: true
   Exclude:
@@ -299,7 +313,7 @@ Style/MethodDefParentheses:
     - require_parentheses
     - require_no_parentheses
 
-Style/MethodLength:
+Metrics/MethodLength:
   CountComments: false  # count full line comments?
   Max: 10
 
@@ -312,7 +326,7 @@ Style/MethodName:
 Style/NumericLiterals:
   MinDigits: 5
 
-Style/ParameterLists:
+Metrics/ParameterLists:
   Max: 5
   CountKeywordArgs: true
 

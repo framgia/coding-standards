@@ -28,19 +28,19 @@ Style/ClassAndModuleChildren:
   Description: "Checks style of children classes and modules."
   Enabled: false
 
-Style/ClassLength:
+Metrics/ClassLength:
   Description: "Avoid classes longer than 100 lines of code."
   Enabled: false
 
-Style/MethodLength:
+Metrics/MethodLength:
   Description: "Avoid methods longer than 10 lines of code."
   Enabled: false
 
-Style/ParameterLists:
+Metrics/ParameterLists:
   Description: "Avoid parameter lists longer than three or four parameters."
   Enabled: false
 
-Style/CyclomaticComplexity:
+Metrics/CyclomaticComplexity:
   Description: "Avoid complex methods."
   Enabled: false
 
