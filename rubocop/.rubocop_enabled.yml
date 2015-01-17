@@ -48,7 +48,7 @@ Style/BlockComments:
   Description: "Do not use block comments."
   Enabled: true
 
-Style/BlockNesting:
+Metrics/BlockNesting:
   Description: "Avoid excessive block nesting"
   Enabled: true
 
@@ -153,8 +153,16 @@ Style/EmptyLinesAroundAccessModifier:
   Description: "Keep blank lines around access modifiers."
   Enabled: true
 
-Style/EmptyLinesAroundBody:
+Style/EmptyLinesAroundBlockBody:
   Description: "Keeps track of empty lines around expression bodies."
+  Enabled: true
+
+Style/EmptyLinesAroundClassBody:
+  Description: "Keeps track of empty lines around expression classes."
+  Enabled: true
+
+Style/EmptyLinesAroundModuleBody:
+  Description: "Keeps track of empty lines around expression modules."
   Enabled: true
 
 Style/EmptyLiteral:
@@ -253,7 +261,7 @@ Style/LineEndConcatenation:
                  line end.
   Enabled: true
 
-Style/LineLength:
+Metrics/LineLength:
   Description: "Limit lines to 80 characters."
   Enabled: true
 
