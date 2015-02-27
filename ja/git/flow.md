@@ -4,14 +4,14 @@
 
 ### 前提
 * Github（または Bitbucket）上にセントラルリポジトリを作成済である。
-* セントラルリポジトリのデフォルトブランチが develop になっている。
+* セントラルリポジトリのデフォルトブランチが master になっている。
 * 各開発者が、セントラルリポジトリを Fork できる。
 * レビュワーとマージ権限を持つ人が決まっている。
 
 ### 原則
 * 1プルリクエストにつき、1チケット 1コミット とする。
 * コミットのタイトルは `refs #[チケット番号] [チケットのタイトル]` とする（例: `refs #1234 キャッシュが落ちない`）。
-* ローカルの develop ブランチでコードを変更してはいけない。必ず作業ブランチ上で行うこと。
+* ローカルの master ブランチでコードを変更してはいけない。必ず作業ブランチ上で行うこと。
 
 ### 準備
 
@@ -32,15 +32,15 @@
 
 以降、セントラルリポジトリ を `upstream`、 Forkedリポジトリを `origin` と呼ぶ。
 
-1. ローカルの develop ブランチを upstream の develop ブランチと同期する。
+1. ローカルの master ブランチを upstream の master ブランチと同期する。
     ```
-    $ git checkout develop
-    $ git pull upstream develop
+    $ git checkout master
+    $ git pull upstream master
     ```
 
-1. ローカルで develop ブランチから作業ブランチを作成する。ブランチ名はタスク番号（例: `task/1234`）などにする。
+1. ローカルで master ブランチから作業ブランチを作成する。ブランチ名はタスク番号（例: `task/1234`）などにする。
     ```
-    $ git checkout develop # <--- 既に develop ブランチ上にいれば不要
+    $ git checkout master # <--- 既に master ブランチ上にいれば不要
     $ git checkout -b task/1234
     ```
 
@@ -51,18 +51,18 @@
     $ git rebase -i [作業内での最初のコミットよりひとつ前のハッシュ値]
     ```
 
-1. ローカルの develop ブランチに移動し、このブランチを最新にする
+1. ローカルの master ブランチに移動し、このブランチを最新にする
 
     ```
-    $ git checkout develop
-    $ git pull upstream develop
+    $ git checkout master
+    $ git pull upstream master
     ```
 
-1. 作業ブランチに戻り、作業ブランチを develop ブランチにリベースする。
+1. 作業ブランチに戻り、作業ブランチを master ブランチにリベースする。
 
     ```
     $ git checkout task/1234
-    $ git rebase develop
+    $ git rebase master
     ```
     **リベース中にコンフリクトのエラーが発生した場合には、後述の「リベース中にコンフリクトが発生したとき」の手順を実行する。**
 
@@ -72,7 +72,7 @@
     $ git push origin task/1234
     ```
 
-1. Github（Bitbucket）上で、origin に push済の `task/1234` ブランチから、upstream の `develop` ブランチ に pull request を送る。CIツールを使用するプロジェクトでは、このタイミングでテストが自動実行される。
+1. Github（Bitbucket）上で、origin に push済の `task/1234` ブランチから、upstream の `master` ブランチ に pull request を送る。CIツールを使用するプロジェクトでは、このタイミングでテストが自動実行される。
 
 1. pull request の ページの URLをチャットワークに貼り、レビュワーにコードレビューを依頼する。
 
@@ -92,7 +92,7 @@
 
 リベース中にコンフリクトが発生すると、以下のように表示される（このとき、無名ブランチに自動的に移動している）。
 ```
-$ git rebase develop
+$ git rebase master
 First, rewinding head to replay your work on top of it...
 Applying: refs #1234 キャッシュが落ちない
 Using index info to reconstruct a base tree...
