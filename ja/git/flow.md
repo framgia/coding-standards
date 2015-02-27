@@ -72,7 +72,7 @@
     $ git push origin task/1234
     ```
 
-1. Github（Bitbucket）上で、origin に push済の `task/1234` ブランチから、upstream の `master` ブランチ に pull request を送る。CIツールを使用するプロジェクトでは、このタイミングでテストが自動実行される。
+1. Github（Bitbucket）上で、origin に push済の `task/1234` ブランチから、upstream の `master` ブランチ に pull request を送る。
 
 1. pull request の ページの URLをチャットワークに貼り、レビュワーにコードレビューを依頼する。
 
