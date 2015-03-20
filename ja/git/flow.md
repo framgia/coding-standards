@@ -17,13 +17,13 @@
 
 1. Github（Bitbucket）上で、セントラルリポジトリを自分のアカウントに Fork する（この節では、Fork によって作成されたリポジトリを Forkedリポジトリ と呼ぶ）。
 
-1. Forkedリポジトリをローカルに clone する。このとき、Forkedリポジトリが `origin` という名前で自動的に登録される。
-    ```
+2. Forkedリポジトリをローカルに clone する。このとき、Forkedリポジトリが `origin` という名前で自動的に登録される。
+    ```sh
     $ git clone [ForkedリポジトリのURL]
     ```
 
-1. clone によって作成されたディレクトリに入り、セントラルリポジトリを `upstream` という名前で登録する。
-    ```
+3. clone によって作成されたディレクトリに入り、セントラルリポジトリを `upstream` という名前で登録する。
+    ```sh
     $ cd [作成されたディレクトリ]
     $ git remote add upstream [セントラルリポジトリのURL]
     ```
@@ -33,65 +33,63 @@
 以降、セントラルリポジトリ を `upstream`、 Forkedリポジトリを `origin` と呼ぶ。
 
 1. ローカルの master ブランチを upstream の master ブランチと同期する。
-    ```
+    ```sh
     $ git checkout master
     $ git pull upstream master
     ```
 
-1. ローカルで master ブランチから作業ブランチを作成する。ブランチ名はタスク番号（例: `task/1234`）などにする。
-    ```
+2. ローカルで master ブランチから作業ブランチを作成する。ブランチ名はタスク番号（例: `task/1234`）などにする。
+    ```sh
     $ git checkout master # <--- 既に master ブランチ上にいれば不要
     $ git checkout -b task/1234
     ```
 
-1. 作業する（自由に commit して良い）。
+3. 作業する（自由に commit して良い）。
 
-1. 作業中に複数回 commit していたら、5.で push する前に rebase -i でコミットをひとつにまとめる。
-    ```
+4. 作業中に複数回 commit していたら、5.で push する前に rebase -i でコミットをひとつにまとめる。
+    ```sh
     $ git rebase -i [作業内での最初のコミットよりひとつ前のハッシュ値]
     ```
 
-1. ローカルの master ブランチに移動し、このブランチを最新にする
-
-    ```
+5. ローカルの develop ブランチに移動し、このブランチを最新にする
+    ```sh
     $ git checkout master
     $ git pull upstream master
     ```
 
-1. 作業ブランチに戻り、作業ブランチを master ブランチにリベースする。
-
-    ```
+6. 作業ブランチに戻り、作業ブランチを master ブランチにリベースする。
+    ```sh
     $ git checkout task/1234
     $ git rebase master
     ```
     **リベース中にコンフリクトのエラーが発生した場合には、後述の「リベース中にコンフリクトが発生したとき」の手順を実行する。**
 
-1. origin に push する。
+7. origin に push する。
 
-    ```
+    ```sh
     $ git push origin task/1234
     ```
 
-1. Github（Bitbucket）上で、origin に push済の `task/1234` ブランチから、upstream の `master` ブランチ に pull request を送る。
+8. Github（Bitbucket）上で、origin に push済の `task/1234` ブランチから、upstream の `master` ブランチ に pull request を送る。
 
-1. pull request の ページの URLをチャットワークに貼り、レビュワーにコードレビューを依頼する。
+9. pull request の ページの URLをチャットワークに貼り、レビュワーにコードレビューを依頼する。
 
     9.1. レビュワーから修正依頼を出されたら、3. 〜 6. の作業を行う。
 
     9.2 同じリモートブランチに push -f （強制 push） する。
-    ```
+    ```sh
     $ git push origin task/1234 -f
     ```
 
     9.3 再度チャットワークに同じURLを貼り付け、レビューを依頼する。
 
-1. 2人以上のレビュワーのOKが出たら、最後にOKを出したレビュワーがマージする。
-1. 1に戻る。
+10. 2人以上のレビュワーのOKが出たら、最後にOKを出したレビュワーがマージする。
+11. 1に戻る。
 
 ### リベース中にコンフリクトが発生したとき
 
 リベース中にコンフリクトが発生すると、以下のように表示される（このとき、無名ブランチに自動的に移動している）。
-```
+```sh
 $ git rebase master
 First, rewinding head to replay your work on top of it...
 Applying: refs #1234 キャッシュが落ちない
@@ -112,10 +110,9 @@ To check out the original branch and stop rebasing, run "git rebase --abort".
 1. 手動ですべてのコンフリクト（コード中で <<< と >>> に囲まれている部分）を解消する。
 リベースを中止したいときには、`git rebase --abort` する。
 
-1. すべてのコンフリクトを解消できたら、リベースを続行する。
+2. すべてのコンフリクトを解消できたら、リベースを続行する。
 
-    ```
+    ```sh
     $ git add .
     $ git rebase --continue
     ```
-
