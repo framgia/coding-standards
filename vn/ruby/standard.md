@@ -234,16 +234,25 @@ end
 
 * Khi có thể dùng ``` && ``` và ``` || ``` thay thế ``` and ``` và ``` or ``` thì nên dùng.
 
-* Nếu chỉ có 1 lệnh ``` if 〜 end ``` thì viết trên 1 dòng và để điều kiện ra phía sau.
+*  ``` if 〜 end ``` hoặc ``` unless 〜 end ``` có thể được giản lược bằng cách đặt ``` if ``` hoặc ``` unless ``` xuống cuối câu.
+* Sử dụng thể giản lược khi có thể viết câu trên cùng 1 dòng tối đa 80 ký tự.
 
 ```ruby
 # Cách viết không đúng
 if some_condition
-  do_something
+  foo = "This is a short string"
 end
 
 # Cách viết đúng
-do_something if some_condition
+foo = "This is a short string" if some_condition
+
+# Cách viết không đúng
+foo = "This is a very very long string that can not be broken down and may contain #{variable}" unless some_condition
+
+# Cách viết đúng
+unless some_condition
+  foo = "This is a very very long string that can not be broken down and may contain #{variable}"
+end
 ```
 
 * Không được dùng ``` unless ``` với ``` else ```

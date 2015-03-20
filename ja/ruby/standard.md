@@ -263,16 +263,25 @@ end
 
 * ``` and ``` と ``` or ``` は ``` && ``` と ``` || ``` で代用できる場合は代用する
 
-* 1行で ``` if 〜 end ``` が納まる場合は後置にする
+* 1行で ``` if 〜 end ``` または ``` unless 〜 end ``` が納まる場合は後置にする。
+* 後置の ```if``` や ```unless``` は、それらの右辺と左辺を含めて一行80文字以内に収まるときのみ使って良い。
 
 ```ruby
 # bad
 if some_condition
-  do_something
+  foo = "This is a short string"
 end
 
 # good
-do_something if some_condition
+foo = "This is a short string" if some_condition
+
+# bad
+foo = "This is a very very long string that can not be broken down and may contain #{variable}" unless some_condition
+
+# good
+unless some_condition
+  foo = "This is a very very long string that can not be broken down and may contain #{variable}"
+end
 ```
 
 * ``` unless ``` は ``` else ``` と共に使ってはいけない
