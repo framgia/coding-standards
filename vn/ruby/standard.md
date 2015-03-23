@@ -45,6 +45,13 @@ a, b = 1, 2
       parameter_5, parameter_6, options)
   ```
 
+Cho phép 1 dòng có quá 80 ký tự trong trường hợp nguyên nhân là do chuỗi string literal dài.
+
+  ```ruby
+  # ok
+  foo = "This is a very very long string that can't be broken down and may contain #{variable}"
+  ```
+
 * Trước và sau các dấu [] () {} không để khoảng trắng
 
 ```ruby
@@ -52,6 +59,26 @@ a = [1, 2, 3] #Khoảng trắng bên trái của ký tự "[" là khoảng trắ
 [1, 2, 3].each{|num| puts num * 2}
 def method(a, b, c)
 ```
+
+* Sử dụng here document với chuỗi string dài có bao gồm xuống dòng. 
+ Tuy nhiên, cho phép sử dụng string literal khi định nghĩa đoạn message ngắn hoặc dùng method chain.
+```ruby
+  # good
+      foo = <<-EOS
+From this valley they say you are going,
+We will miss your bright eyes and sweet smile,
+For they say you are taking the sunshine
+That has brightened our pathways a while.
+      EOS
+
+  # ok
+      foo = "Hi, Johnny.
+How are you?"
+
+  # bad
+      foo = "From this valley they say you are going,\nWe will miss your bright eyes and sweet smile,\nFor they say you are taking the sunshine\nThat has brightened our pathways a while."
+```
+
 
 * Đặt khoảng trắng vào sau các đối số
 
