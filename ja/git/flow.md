@@ -51,7 +51,7 @@
     $ git rebase -i [作業内での最初のコミットよりひとつ前のハッシュ値]
     ```
 
-5. ローカルの develop ブランチに移動し、このブランチを最新にする
+5. ローカルの master ブランチに移動し、このブランチを最新にする
     ```sh
     $ git checkout master
     $ git pull upstream master
