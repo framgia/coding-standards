@@ -559,9 +559,9 @@ class TestClass
 end
 ```
 
-* Không dùng ``` public ``` method
+* Với block những public methods, thì ko cần khai báo ``` public ``` ở trước như cách làm với các block private/protected bên dưới.
 
-* Viết ``` protected ``` method trước ``` private ``` method. Lúc đó,khi định nghĩa các protected, private method, căn lề trùng với public method và đặt dòng trắng trên các protected 、 private method này, không đặt dòng trắng ở bên dưới.
+* Viết ``` protected ``` methods trước ``` private ``` methods. Lúc đó, khi định nghĩa các protected, private method, căn lề trùng với public method và đặt dòng trắng trên các protected, private methods này, không đặt dòng trắng ở bên dưới.
 
 ```ruby
 class SomeClass
