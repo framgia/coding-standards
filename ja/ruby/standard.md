@@ -557,7 +557,7 @@ class TestClass
 end
 ```
 
-* ``` public ``` メソッドは利用しない
+* ``` public ``` メソッドについては クラス定義の先頭に持ってきて、 publicのキーワードで宣言しない
 
 * ``` protected ``` メソッドは ``` private ``` メソッドの前に書く。その時、protected 、 private メソッドの定義は public メソッドと同じ深さのインデントにし、protected 、 private メソッドの上に空行を置き、下には置かない。
 
