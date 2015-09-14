@@ -7,11 +7,14 @@
 ####[git](./ja/README.md#git)
 
 ##[Tiếng Việt](./vn/README.md)
+####[PHP](./vn/README.md#php)
 ####[Ruby](./vn/README.md#ruby)
 ####[Ruby on Rails](./vn/README.md#ruby-on-rails)
-####[PHP](./vn/README.md#php)
-####[Javascript](./vn/README.md#javascript)
+####[git](./vn/README.md#git)
 
 ##[English](./eng/README.md)
 ####[PHP](./eng/README.md#php)
+####[Ruby](./eng/README.md#ruby)
+####[Ruby on Rails](./eng/README.md#ruby-on-rails)
+####[Swift](./eng/README.md#swift)
 ####[HTML-CSS](./eng/html_css/standard.md)
