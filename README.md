@@ -9,8 +9,9 @@
 ##[Tiếng Việt](./vn/README.md)
 ####[Ruby](./vn/README.md#ruby)
 ####[Ruby on Rails](./vn/README.md#ruby-on-rails)
+####[PHP](./vn/README.md#php)
 ####[Javascript](./vn/README.md#javascript)
 
 ##[English](./eng/README.md)
-####[PHP](./eng/php/standard.md)
+####[PHP](./eng/README.md#php)
 ####[HTML-CSS](./eng/html_css/standard.md)
