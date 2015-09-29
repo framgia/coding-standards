@@ -21,6 +21,12 @@ Các bản gốc bằng tiếng Anh có thể được tham khảo tại reposit
 ####[PSR-2 Coding Style Guide](./php/PSR-2.md)
 ####[Others](./php/others.md)
 
+## Android
+
+####[Cấu trúc của một Dự Án](./android/standard.md)
+####[Coding Style Guide](./android/codingstyleguide.md)
+####[Others](./android/others.md)
+
 ## HTML
 
 ## CSS
