@@ -14,6 +14,7 @@
 ####[git](./vn/README.md#git)
 
 ##[English](./eng/README.md)
+####[Android](./eng/README.md#android)
 ####[PHP](./eng/README.md#php)
 ####[Ruby](./eng/README.md#ruby)
 ####[Ruby on Rails](./eng/README.md#ruby-on-rails)

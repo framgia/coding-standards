@@ -1,11 +1,11 @@
 # Coding Style Guide
-Tài liệu xây dựng trên tài liệu tham khảo và [Android Code Style Guidelines](https://source.android.com/source/code-style.html)
+This document is based on other reference documents and [Android Code Style Guidelines](https://source.android.com/source/code-style.html)
 
 ## 1. Java language rules
 
-### 1.1 Đừng bỏ qua trường hợp ngoại lệ
+### 1.1 Don't ignore Exception
 
-Bạn không bao giờ được làm như sau:
+Remember you must never do like this:
 
 ```java
 void setServerPort(String value) {
@@ -14,18 +14,15 @@ void setServerPort(String value) {
     } catch (NumberFormatException e) { }
 }
 ```
+You must handle every Excpetion in your code in some way.
 
-Theo bạn nghĩ nó có thể không bao giờ xảy ra, nhưng một ngày nào đó bạn của bạn sẽ gặp vấn đề này. Bạn phải buộc xử lý nó theo một số cách.
-
-* Ném ngoại lệ lên cho người gọi phương thức
-
+* Throw Expection up to the caller of your method
 ```java
 void setServerPort(String value) throws NumberFormatException {
     serverPort = Integer.parseInt(value);
 }
 ```
-* Ném lại ngoại lệ với lớp trừu tượng của bạn
-
+* Throw a new exception that's appropriate to your level of abstraction
 ```java
 void setServerPort(String value) throws ConfigurationException {
     try {
@@ -35,8 +32,7 @@ void setServerPort(String value) throws ConfigurationException {
     }
 }
 ```
-* Thay thế một giá trị thích hợp, như giá trị mặc định chẳng hạn
-
+* Substitute an appropriate value in the catch {} block
 ```java
 void setServerPort(String value) {
     try {
@@ -47,7 +43,7 @@ void setServerPort(String value) {
 }
 ```
 
-* Ném ngoại lệ vào một RuntimeException mới. Nhưng bạn chắc chắn rằng bạn muốn làm điều này, vì nó sẽ gây lỗi ứng dụng
+* Catch the Exception and throw a new RuntimeException. This is quite risky, because It can cause crash error. 
 
 ```java
 void setServerPort(String value) {
@@ -58,8 +54,7 @@ void setServerPort(String value) {
     }
 }
 ```
-
-* Cuối cùng bạn sẽ loại bỏ nó nhưng phải có một lý do chính đáng
+* Last resort : You can ignore it if you are confident that everything will be good, but you must comment an appropriate reason.
 
 ```java
 void setServerPort(String value) {
@@ -72,7 +67,9 @@ void setServerPort(String value) {
 }
 ```
 
-### 1.2 Không được bắt ngoại lệ chung
+### 1.2 Don't Catch Generic Exception
+
+You should not do like this.
 
 ```java
 try {
@@ -85,33 +82,32 @@ try {
 }
 ```
 
-Xem thêm tại [đây](https://source.android.com/source/code-style.html#dont-catch-generic-exception)
+For [more](https://source.android.com/source/code-style.html#dont-catch-generic-exception) information.
 
-### 1.3 Không sử dụng finalizers
+### 1.3 Don't Use finalizers
 
-Xem tại đây [Android code style guidelines](https://source.android.com/source/code-style.html#dont-use-finalizers)
+Reference to [Android code style guidelines](https://source.android.com/source/code-style.html#dont-use-finalizers)
 
 ### 1.4 Fully qualify imports
 
-Không tốt: `import foo.*;`
+BAD : `import foo.*;`
 
-Tốt: `import foo.Bar;`
+GOOD : `import foo.Bar;`
 
-Xem thêm [tại đây](https://source.android.com/source/code-style.html#fully-qualify-imports)
+For mor information [click here](https://source.android.com/source/code-style.html#fully-qualify-imports)
 
 ## 2 Java style rules
 
-### 2.1 Định nghĩa và đặt tên
+### 2.1 Java Style Rules
 
-Các trường cần được định nghĩa ở đầu file và tuân theo cú pháp đặt tên như sau.
+Field names need to be defined at first and follow this conventions.
 
+* Non-public, non-static field names start with m.
+* Static field names start with s.
+* Other fields start with a lower case letter.
+* Public static final fields (constants) are ALL_CAPS_WITH_UNDERSCORES.
 
-* Private, non-static tên trường bắt đầu bằng chữ __m__.
-* static tên trường bắt đầu bằng chữ s __s__.
-* Các trường hợp khác bắt đầu bằng chữ viết thường(lower case).
-* Public static final đây là một hằng số chúng sẽ sử dụng cú pháp ALL_CAPS_WITH_UNDERSCORES.
-
-Ví dụ:
+Example:
 
 ```java
 public class MyClass {
@@ -126,7 +122,7 @@ public class MyClass {
 
 ### 2.2 Treat Acronyms as Words
 
-Đặt tên biến, phương thức và lớp. Cần viết tắn như lời nói.
+Naming varibales, methods, classes like this.
 
 | Good           | Bad            |
 | -------------- | -------------- |
@@ -135,9 +131,9 @@ public class MyClass {
 | `String url`     | `String URL`     |
 | `long id`        | `long ID`        |
 
-### 2.3 Sử dụng khoảng trống(trắng)
+### 2.3 Use Spaces for Indentation
 
-Sử dụng 4 khoảng trống cho một khối:
+Use 4 space indents for blocks.
 
 ```java
 if (x == 1) {
@@ -145,14 +141,15 @@ if (x == 1) {
 }
 ```
 
-Sử dụng 8 khoảng trống cho việc xuống dòng
-
+Use 8 space indents for line wraps, including function calls and assignments.
 ```java
 Instrument i =
         someLongExpression(that, wouldNotFit, on, one, line);
 ```
 
-### 2.4 Sử dụng ngoặc kép chuẩn trong Java
+### 2.4 Use Standard Brace Style in Java
+
+Braces is on the same lines with the code before them. 
 
 ```java
 class MyClass {
@@ -168,34 +165,35 @@ class MyClass {
 }
 ```
 
-Trong một số trường hợp ___không sử dụng ngoặc kép___
+If the entire conditional fit on one line, you can put it all one line.
 
 ```java
 if (condition) body();
 ```
-Không nên 
 
+You should not do this
 ```java
 if (condition)
-    body();  // không tốt!
+    body();  // bad!
 ```
 
-### 2.5 Tiêu chuẩn mặc định chú thích (annotations) trong Java
+### 2.5 Use Standard Java Annotations
 
-Theo hướng dẫn trong Android code style guide, Tiêu chuẩn cho chú thích được xác định như sau:
+As the instrunction of Android code style guide, standard for Annotations is as following :
 
-* `@Override`: Phải được sử dụng bất cứ khi nào muốn ghi đè một phương thức từ lớp cha. Ví dụ bạn cần sử dụng phương thức onCreate từ lớp cha Activity thì bạn cần phải ghi đè nó @Override
-* `@ SuppressWarnings `: Chú thích này chỉ sử dụng khi mà không thể loại bỏ một cảnh báo
+* `@Override`: This annotation must be used whenever a method overrides the declaration or implementation from a super-class. For example, if you use onCreate from class Activity, you must also annotate that the method @Overrides the parent class's method.
 
-### 2.6 Giới hạn phạm vi của biến
+* `@ SuppressWarnings `: This annotation is used when it is imposible to eliminate a warning.
 
-Phạm vi của biến nên giữ một cách tối thiểu. Bởi nếu làm điều đó thì code của bạn dễ đọc, dễ sửa chữa và giảm thiểu lỗi. Mỗi biến cần khái báo trong khối bên trong nhất mà có ứng dụng có thể sử dụng nó.
+### 2.6 Limit Variable Scope
 
-Biến cục bộ sẽ tồn tại khi lần đầu tiên chúng ta sử dụng. và các biết cục bộ cần phải khai báo. Nếu chưa đủ thông tin để khởi tạo bạn cần chờ đến khi có thể làm. [Xem thêm](https://source.android.com/source/code-style.html#limit-variable-scope)
+The scope of local variables should be kept to a minimum as possible. If you can do it, your code will be very clear, easy to read, fix and maintain and also reduce bugs. Variable should be declared in the inner-most block that application can use it.
 
-### 2.7 Hướng dẫn Log
+Local Variables should be declared when they are used for the first time. If you don't have enough information to initialize a viriable, you should wait until you have enough information. [For more information](https://source.android.com/source/code-style.html#limit-variable-scope)
 
-`Log` là một class in ra kết quả lỗi hoặc thông tin nào đó giúp lập trình viên gỡ rối vấn đề:
+### 2.7 How to Log
+
+`Log` is a class that print out error messages to help developer to identify problems:
 
 * `Log.v(String tag, String msg)` (verbose)
 * `Log.d(String tag, String msg)` (debug)
@@ -203,27 +201,27 @@ Biến cục bộ sẽ tồn tại khi lần đầu tiên chúng ta sử dụng.
 * `Log.w(String tag, String msg)` (warning)
 * `Log.e(String tag, String msg)` (error)
 
-Như một quy định chung, chúng ta khai báo một TAG ở mỗi một file:
+As a general rule, we need to use class name as a TAG at each file : 
 
 ```java
 public class MyClass {
     private static final String TAG = "MyClass";
 
     public myMethod() {
-        Log.e(TAG, "Thông báo lỗi");
+        Log.e(TAG, "Error message");
     }
 }
 ```
 
-Và bạn muốn hủy Log khi `Release` và chỉ muốn hiện khi `Debug`:
+If you want to show Log on `Debug` and disbale Log on `Release`:
 
 ```java
 if (BuildConfig.DEBUG) Log.d(TAG, "Giá trị của bạn X là " + x);
 ```
 
-### 2.8 Thứ tự member trong class
+### 2.8 Class member ordering
 
-Nó không phải là giải pháp đúng duy nhất, nhưng nó là gợi ý tốt nên sử dụng:
+This is not the only correct solution, but it is recommended to use the following order : 
 
 1. Constants 
 2. Fields 
@@ -233,7 +231,7 @@ Nó không phải là giải pháp đúng duy nhất, nhưng nó là gợi ý t�
 6. Private methods
 7. Inner classes or interfaces
 
-Ví dụ:
+For example:
 
 ```java
 
@@ -264,7 +262,7 @@ public class MainActivity extends Activity {
 
 ```
 
-Trong android, tốt nhất lên theo thứ tự vòng đời của Activity or Fragment.
+In Android, It is better to order following the component's lifecycle:
 
 ```java
 public class MainActivity extends Activity {
@@ -285,28 +283,27 @@ public class MainActivity extends Activity {
 }
 ```
 
-### 2.9 Thứ tự tham số trong các phương thức
+### 2.9 Parameter ordering in methods
 
-Trong lập trình Android, khá phổ biến khi một phương thức cần có một `Context`. Nếu bạn viết phương thức `Context` phải là tham số đầu tiên.
+In Android, it is common to define methods that take a `Context`. 
+If you write a method, `Context` should be the first parameter. 
+And `callback` always should be the last parameter.
 
-Và `callback` luôn là tham số cuối cùng.
-
-Ví dụ:
+For example:
 
 ```java
-
-// Context luôn đầu tiên
+// Context always be first
 public User loadUser(Context context, int userId);
 
-// Callbacks luôn cuối cùng
+// Callbacks always be last
 public void loadUserAsync(Context context, int userId, UserCallback callback);
-
 ```
 
 ### 2.10 String constants, naming and values
 
-Rất nhiều các yêu tố trong Android như SharedPreferences, Bundle, Intent sử dụng cặp key-value
-Khi sử dụng các thành phần này bạn cần định nghĩa các keys như là `static final`:
+Many elements of the Android such as SharedPreferences, Bundle or Intent use a key-value pair.
+
+When using one of these components, you must define the keys as a `static final` :
 
 | Element            | Field Name Prefix |
 | -----------------  | ----------------- |
@@ -316,28 +313,24 @@ Khi sử dụng các thành phần này bạn cần định nghĩa các keys nh�
 | Intent Extra       | `EXTRA_`            |
 | Intent Action      | `ACTION_`           |
 
-Ví dụ:
+For example :
 
 ```java
-
-// Giá trị của biến giống như tên để tránh sự trùng lặp
+// Value of the field is the same as the name to avoid duplication
 static final String PREF_EMAIL = "PREF_EMAIL";
 static final String BUNDLE_AGE = "BUNDLE_AGE";
 static final String ARGUMENT_USER_ID = "ARGUMENT_USER_ID";
 
-
-// Intent, tên của Action Broadcast nên sử dụng đẩy đủ tên gói như là một giá trị
+// Intent should use full package name as value
 static final String EXTRA_SURNAME = "com.myapp.extras.EXTRA_SURNAME";
 static final String ACTION_OPEN_USER = "com.myapp.action.ACTION_OPEN_USER";
-
-
 ```
 
-### 2.11 Đối số trong Activity và Fragment
+### 2.11 Argument in Activity and Fragment
 
-Khi truyền dữ liệu qua `Activity` hoặc `Framgment` thông qua `Intent` hoặc `Bundle`, các keys và giá trị phải tuân theo __[Mục 2.10](#210-string-constants-naming-and-values)__ và cần khai báo `public  static`.
+When passing date into an `Activity` or `Framgment` by `Intent` or `Bundle`, keys must follow the rules __[2.10](#210-string-constants-naming-and-values)__ and need to declare `public  static`.
 
-Trường hợp gửi một user trong activity, gọi `getProfileIntent()`
+In case of passing a user into activity, call `getProfileIntent()`
 
 ```java
 public static Intent getProfileIntent(Context context, User user) {
@@ -347,7 +340,7 @@ public static Intent getProfileIntent(Context context, User user) {
 }
 ```
 
-Cho trường hợp dùng fragment.
+In case of using fragment.
 
 ```java
 public static UserFragment newInstance(User user) {
@@ -359,27 +352,27 @@ public static UserFragment newInstance(User user) {
 }
 ```
 
-### 2.12 Giới hạn độ dài dòng
+### 2.12 Line length limit
 
-Độ dài của một dòng code không vượt quá __100 ký tự__. Nếu quá giới hạn bạn có 2 cách để giảm chiều dại lại:
+Code lines should not exceed  __100 characters__. If it exceeds limit, you have 2 ways to recude the length:
 
-* Đẩy ra biến địa phương hoặc phương thức (khuyến khích).
-* Áp dụng line-wrapping để chia thành phần thành nhiều dòng nhỏ.
+* Extract a local variable or method.
+* Use line-wrapping to divine into multiple lines.
 
-Có hai trường hợp mà bạn có thể dài hơn 100 ký tự:
+There are 2 exceptions in which you can exceed more than 100 characters.
 
-* Dòng không thể phân chia, ví dụ chiều dài của URLs
-* `package` và `import` 
+* Lines can not split e.g: URLs
+* `package` and `import` statement 
 
 #### 2.12.1 Line-wrapping strategies
 
-Không có một công thức và lý thuyết nào giải thích việc xuống dòng, Nhưng có vài quy tắc có thể áp dụng chung như sau.
+There isnt't any rules for line-wrap. However, there are some rules that can be used in some common cases. 
 
-__Trường hợp phương thức dài__
+__Method chain case__
 
-Khi có nhiều phương thức gọi trên một dòng, ví dụ như khi dụng `Builders` -> mọi phương thức sẽ được gọi trên một dòng và ngăn khi sau dấu `.`
+When there are many methods are chained in the same lines, for example when using `Builders` -> every methods will be called into one line and break the line before the `.`
 
-Ví dụ: 
+Example: 
 
 ```java
 
@@ -388,7 +381,7 @@ Picasso.with(context).load("https://farm6.staticflickr.com/5595/14899879106_f502
 
 ```
 
-Thành
+Become 
 
 ```java
 
@@ -399,30 +392,24 @@ Picasso.with(context)
 
 ```
 
-__Tham số dài__
+__Long parameters case__
 
-Khi các phương thức có nhiều tham số, và các tham số rất dài thì ta có thể ngăn các các dòng sau dấu `,`
+When a method has many parameters, and its parameters are very long, we should break line using `,`
 
 ```java
-
 loadPicture(context, "https://farm6.staticflickr.com/5595/14899879106_f5028bd19d_k.jpg", mImageViewProfilePicture, clickListener, "Title of the picture");
-
-
 ```
 
 ```java
-
 loadPicture(context,
  		"https://farm6.staticflickr.com/5595/14899879106_f5028bd19d_k.jpg",
  		mImageViewProfilePicture, clickListener,
  		"Title of the picture");
-
-
 ```
 
 ### 2.13 RxJava chains styling
 
-Các `operator` Rx buộc phải xuống dòng và trên một dòng mới trước `.`
+`operator` Rx must go into new line and have new line before `.`
 
 ```java
 public Observable<Location> syncLocations() {
@@ -444,11 +431,11 @@ public Observable<Location> syncLocations() {
 
 ## 3 XML style rules
 
-### 3.1 Sử dụng thẻ tự đóng
+### 3.1 Use self closing tags
 
-Khi một phần tử XML không có nội dung, bạn cần phải tự đóng thẻ
+WHen an XML element doesn't have any content, you must use self closing tags.
 
-Nên: 
+Should: 
 
 ```xml
 
@@ -459,7 +446,7 @@ Nên:
    
 ```
 
-Không nên 
+Should not 
 
 ```xml
 
@@ -471,13 +458,13 @@ Không nên
    
 ```
 
-### 3.2 Đặt tên resources
+### 3.2 Naming resources
 
-Resource IDs và tên cần khai báo theo lowercase_underscore
+Resource IDs and names need to be declared in lowercase_underscore
 
-#### 3.2.1 Đặt tên ID
+#### 3.2.1 Naming ID
 
-Các ID nên bắt đầu bằng tên phần tử và chữ thường gạch chân. Ví dụ:
+ID should be prefixed with name of element and use underscore. For example :
 
 | Element              | Prefix              |
 | -----------------    | -----------------   |
@@ -489,7 +476,7 @@ Các ID nên bắt đầu bằng tên phần tử và chữ thường gạch ch�
 | `LinearLayout `      | `linear_`           |
 
 
-Ví dụ ImageView:
+For example ImageView:
 
 ```xml
 
@@ -501,8 +488,7 @@ Ví dụ ImageView:
 
 ```
 
-Trong một số trường hợp bạn sử dụng thư viện `annotation` thì bạn có thể khai báo như là khai báo biến
-
+In some cases, you use `annotation` library, you can declare as a variable
 
 ```xml
 
@@ -514,9 +500,9 @@ Trong một số trường hợp bạn sử dụng thư viện `annotation` thì
 
 ```
 
-Đôi khi trong một trường hợp cố định nào đó ta có thể loại bỏ __Action và Tên Object__
+In some special cases, you can skip  __Action and Object Name__
 
-Ví dụ dưới đây về một list item (từ gói thư viện hỗ trợ của Android)
+For example about item list. 
 
 ```java
 
@@ -557,23 +543,23 @@ Ví dụ dưới đây về một list item (từ gói thư viện hỗ trợ c�
 
 #### 3.2.2 Strings
 
-Tên chuối bắt đầu bằng một định danh. Ví dụ `registration_email_hint` hoặc `registration_name_hint`. 
-Hoặc nếu không thì theo quy luật sau:
+String names start with a prefix. For example `registration_email_hint` or `registration_name_hint`. 
+If a string doesn't belong to any section, follow rules here:
 
-| Tiền tố             | Mô tả                           |
+| Prefix             | Description                           |
 | -----------------  | --------------------------------------|
-| `error_`             | Cho thông báo lỗi                   |
-| `msg_`               | Cho một thông báo or in nhắn         |       
-| `title_`             | Cho tiêu đề, vd tiêu đề dialog, activity         | 
-| `action_`            | Hành vi như `Lưu`, `Sửa` , `Xóa`  |
+| `error_`             | An error message                   |
+| `msg_`               | A information message         |       
+| `title_`             | A title e.g: dialog, activity title         | 
+| `action_`            | An action `Save`, `Edit` , `Delete`  |
 
 #### 3.2.3 Styles and Themes
 
-Khai báo theo kiểu __UpperCamelCase__.
+Declare in __UpperCamelCase__.
 
-#### 3.2.4 Thứ tự thuộc tính
+#### 3.2.4 Attributes ordering
 
-Như một quy luật chung thì bạn nên nhóm các thuộc tính giống nhau lại.
+As a common rules you should group similar attributes together.
 
 1. View Id
 2. Style

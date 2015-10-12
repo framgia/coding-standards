@@ -1,5 +1,11 @@
 # Framgia Coding Standard
 
+## Android
+
+####[Project structure](./android/standard.md)
+####[Coding Style Guide](./android/codingstyleguide.md)
+####[Others](./android/others.md)
+
 ## PHP
 
 ####[PSR-1 Basic Coding Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md)
