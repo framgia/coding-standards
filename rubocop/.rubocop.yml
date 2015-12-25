@@ -283,7 +283,7 @@ Style/LambdaCall:
     - braces
 
 Metrics/LineLength:
-  Max: 80
+  Max: 120
   AllowURI: true
   Exclude:
     - config/routes.rb
@@ -360,11 +360,6 @@ Style/RaiseArgs:
 Style/RedundantReturn:
   # When true allows code like `return x, y`.
   AllowMultipleReturnValues: false
-
-Style/RegexpLiteral:
-  # The maximum number of (escaped) slashes that a slash-delimited regexp is
-  # allowed to have. If there are more slashes, a %r regexp shall be used.
-  MaxSlashes: 0
 
 Style/Semicolon:
   # Allow ; to separate several expressions on the same line.

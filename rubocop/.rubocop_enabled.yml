@@ -52,7 +52,7 @@ Metrics/BlockNesting:
   Description: "Avoid excessive block nesting"
   Enabled: true
 
-Style/Blocks:
+Style/BlockDelimiters:
   Description: >-
                 Avoid using {...} for multi-line blocks (multiline chaining is
                 always ugly).
@@ -541,7 +541,7 @@ Style/UnneededCapitalW:
   Description: "Checks for %W when interpolation is not needed."
   Enabled: true
 
-Style/UnneededPercentX:
+Style/CommandLiteral:
   Description: "Checks for %x when `` would do."
   Enabled: true
 
