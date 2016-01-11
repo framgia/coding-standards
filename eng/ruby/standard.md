@@ -14,7 +14,7 @@
 * 2-bytes characters should not be in source code, they should be in locale files.
 
 
-##Các chuẩn cơ bản
+##Basic
 * Indentation is 2 white spaces
 * Do not use tab
 * Do not leave trailing white spaces
