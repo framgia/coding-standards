@@ -10,7 +10,7 @@ Flow tham khảo: [A successful Git branching model](http://nvie.com/posts/a-suc
 
 ### Nguyên tắc
 * Mỗi pull-request tương ứng với một ticket và chỉ có một commit trong đó。
-* Nội dung của commit là `refs #[Số ticket] [Nội dung ticket]` （Ví dụ: `refs #1234 Sửa lỗi cache`）。
+* Nội dung của commit là `refs [Loại ticket] #[Số ticket] [Nội dung ticket]` （Ví dụ: `refs bug #1234 Sửa lỗi cache`）。
 * Tại môi trường local(trên máy lập trình viên), tuyệt đối không được thay đổi code khi ở branch master。Nhất định phải thao tác trên branch khởi tạo để làm task。
 
 ### Chuẩn bị
