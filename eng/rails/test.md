@@ -192,15 +192,6 @@ We can separate steps into files using standard type. We can separate each featu
     before(:each) {@article = FactoryGirl.create :article}
   ```
 
-* Must use `expect` or `is_expected` with `subject`.
-
-  ```ruby
-    describe Article do
-      subject {FactoryGirl.create :article}
-      it {is_expected.to be_published}
-    end
-  ```
-
 * Inside `it` we can use `expect` and `is_expected`. Do not use `specify` or `should`.
 * Do not use strings to be parameters of `it`. Write spec self explanatory.
 
