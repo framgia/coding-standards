@@ -4,6 +4,47 @@ Some other conventions
 The following are some other conventions that are not defined clearly in PSR.
 
 - Use the newest PHP version if possible.
+- When declaring array, item list can be split across multiple lines. Then the following rules must be followed:
+  - The first item must be put in a new line.
+  - There must be only one item per line. Each subsequent line is indented once.
+  - There must be a comma at the last line.
+  - The mark of ending array declaration (`]` for `[]` or `)` for `array()`) must be put in a new line.
+
+```php
+// Bad
+$a = [$foo,
+    $bar
+];
+
+// Bad
+$a = [
+    $foo, $bar,
+    $baz,
+];
+
+// Bad
+$a = [
+    $foo,
+    $bar
+];
+
+// Bad
+$a = [
+    $foo,
+    $bar,];
+
+// Bad
+$a = [$foo, $bar,];
+
+// Good
+$a = [
+    $foo,
+    $bar,
+];
+
+$a = [$foo, $bar];
+```
+
 - When using PHP >= 5.4, use array short syntax. (`[]` instead of `array()`)
 ```php
 // Good
