@@ -106,7 +106,7 @@ Xem thêm [tại đây](https://source.android.com/source/code-style.html#fully-
 Các trường cần được định nghĩa ở đầu file và tuân theo cú pháp đặt tên như sau.
 
 
-* Private, non-static tên trường bắt đầu bằng chữ __m__.
+* Non-public, non-static tên trường bắt đầu bằng chữ __m__.
 * static tên trường bắt đầu bằng chữ s __s__.
 * Các trường hợp khác bắt đầu bằng chữ viết thường(lower case).
 * Public static final đây là một hằng số chúng sẽ sử dụng cú pháp ALL_CAPS_WITH_UNDERSCORES.
