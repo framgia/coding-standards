@@ -1,0 +1,5 @@
+*.iml
+.idea/vcs.xml
+.idea/coding-standards.iml
+.idea/modules.xml
+.idea/workspace.xml
