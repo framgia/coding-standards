@@ -1,6 +1,6 @@
-#Các quy định về viết code Ruby on Rails (Tập các kiểu chuẩn)
+# Các quy định về viết code Ruby on Rails (Tập các kiểu chuẩn)
 
-##Thiết lập
+## Thiết lập
 
 * Những thiết lập của ứng dụng đặt trong thư mục ``` config/initializers ```. Những đoạn code được đặt trong này sẽ được chạy khi ứng dụng khởi tạo.
 
@@ -12,7 +12,7 @@
 
 * Trong trường hợp tạo môi trường mới như staging thì cố gắng thiết lập gần giống môi trường production
 
-##Routing
+## Routing
 
 * Khi cần phải thêm action vào RESTful resource thì sử dụng ``` member ``` và ``` collection ```
 
@@ -92,7 +92,7 @@ Viết theo cách này sẽ làm cho tất cả action của mọi controller c�
 match ':controller(/:action(/:id(.:format)))'
 ```
 
-##Controller
+## Controller
 
 *  Cố gắng gọt giũa nội dung của controller. Trong controller chỉ nên thực hiện việc lấy những data mà bên view cần, không code business logic ở đây. (Những cái đó nên viết trong model)
 
@@ -168,7 +168,7 @@ Ngăn chặn việc phát sinh nhiều xử lý khi mà người dùng thao tác
   before_action ->{@users = User.all} # lambda
 ```
 
-##Model
+## Model
 
 * Có thể sử dụng model không cần dựa trên ActiveRecord
 
@@ -193,7 +193,7 @@ class Message
 end
 ```
 
-###ActiveRecord
+### ActiveRecord
 
 * Phải sử dụng những database có sẵn, nếu không có lý do chính đáng thì không thay đổi những thứ mặc định của ActiveRecord như tên bảng hay là primary key.
 
@@ -286,7 +286,7 @@ end
 
 * Một khi đã dùng `has_many` hoặc `has_one` đối với một model thì nhất định phải khai báo `belongs_to` với model tương ứng.
 
-##ActiveResource
+## ActiveResource
 
 * Trong trường hợp cần trả về response theo định dạng khác ngoài XML hay là JSON thì có thể tự tạo ra định dạng khác theo như dưới đây. Để tạo ra một định dạng khác thì cần phải định nghĩa 4 method là ``` extension ```、``` mime_type ```、``` encode ```、``` decode ```
 
@@ -342,7 +342,7 @@ class User < ActiveResource::Base
 end
 ```
 
-##Migration
+## Migration
 
 =======
 * Quản lý phiên bản của ``` schema.rb ``` （hoặc là ``` structure.sql ```）
@@ -386,7 +386,7 @@ end
 
 * Không sử dụng class của model trong migration. Tại vì model class thì rất dễ bị thay đổi, khi đó xử lý của migration trước đây có thể bị ảnh hưởng.
 
-##View
+## View
 
 * Không gọi trực tiếp model trong view, mà phải sử dụng thông qua controller hoặc helper.
 
@@ -453,7 +453,7 @@ clientSideValidations.validators.remote['email'] = (element, options) ->
     return options.message || 'invalid e-mail format'
 ```
 
-##Đa ngôn ngữ
+## Đa ngôn ngữ
 
 * Không đặt các thiết lập phụ thuộc vào ngôn ngữ, quốc gia vào model, controller, view. Những thiết lập này đặt trong ``` config/locales ```.
 
@@ -508,7 +508,7 @@ I18n.t :record_invalid, :scope => [:activerecord, :errors, :messages]
 
 * Thông tin chi tiết có thể tham khảo tại [RailsGuide](http://guides.rubyonrails.org/i18n.html).
 
-##Asset
+## Asset
 
 Sử dụng asset pipeline
 
@@ -522,7 +522,7 @@ Sử dụng asset pipeline
 
 * Trong CSS khi viết url thì dùng asset_url.
 
-##Mailer
+## Mailer
 
 * Đối với mailer thì đặt tên giống như ``` SomethingMailer ```. Như thế sẽ hiểu được mail gửi nội dung gì và liên quan đến view nào.
 
@@ -585,7 +585,7 @@ config.action_mailer.delivery_method = :smtp
 
 * Cần tránh việc gửi mail khi trang đang được tạo. Bởi vì có thể xảy ra request timeout khi nhiều mail được gửi hoặc độ trễ của việc load trang. Để giải quyết vấn đề đó thì có thể dùng [delayed_job](https://github.com/tobi/delayed_job).
 
-##Bundler
+## Bundler
 
 * Những gem mà chỉ dùng trong môi trường development hoặc test thì phải viết trong nhóm tương ứng.
 
