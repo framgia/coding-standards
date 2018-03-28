@@ -17,7 +17,7 @@
 
 ### 準備
 
-1. Github（Bitbucket）上で、セントラルリポジトリをFramgiaアカウント(https://github.com/framgia)で Fork する（この節では、Fork によって作成されたリポジトリを Forkedリポジトリ と呼ぶ）。
+1. Github（Bitbucket）上で、セントラルリポジトリを自分のアカウントに Fork する（この節では、Fork によって作成されたリポジトリを Forkedリポジトリ と呼ぶ）。
 
 2. Forkedリポジトリをローカルに clone する。このとき、Forkedリポジトリが `origin` という名前で自動的に登録される。
     ```sh
