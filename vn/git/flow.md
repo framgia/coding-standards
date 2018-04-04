@@ -9,7 +9,10 @@ Flow tham khảo: [A successful Git branching model](http://nvie.com/posts/a-suc
 * Đã quyết định người review và người có quyền merge。
 
 ### Nguyên tắc
-* Mỗi pull-request tương ứng với một ticket và chỉ có một commit trong đó。
+* Mỗi pull-request tương ứng với một ticket。
+* Mỗi một pull-request không hạn chế số lượng commit
+* Gitflow đến thời điểm 2018/03/28 có quy định là 1 pull-request chỉ một commit sẽ không còn hiệu lực nnữa. Tuy nhiên với các dự án mà teamsize lớn hơn 10 người thì để nhằm mục đích cho thuận tiện cho việc confirm thì khuyến khích dùng squash and merge 。
+* Ngoài ra thì với gitflow trước đây ( trước thời điểm 2018/03/28) thì có cho phép dùng force push, tuy nhiên do khi sử dụng force push sẽ xoá hết lịch sử thay đổi do vậy gitlow hiện tại không khuyến khích sử dụng force push. Trong trường hợp cần sử dụng force push thì cần có sự đồng thuận từ team.
 * Nội dung của commit là `refs [Loại ticket] #[Số ticket] [Nội dung ticket]` （Ví dụ: `refs bug #1234 Sửa lỗi cache`）。
 * Tại môi trường local(trên máy lập trình viên), tuyệt đối không được thay đổi code khi ở branch master。Nhất định phải thao tác trên branch khởi tạo để làm task。
 
@@ -29,6 +32,41 @@ Flow tham khảo: [A successful Git branching model](http://nvie.com/posts/a-suc
     ```
 
 ### Quy trình
+
+Từ đây, Central Repository và Forked Repository sẽ được gọi lần lượt là `upstream` và `origin`。
+
+1. Đồng bộ hóa branch master tại local với upstream。
+    ```sh
+    $ git checkout master
+    $ git pull upstream master
+    ```
+
+2. Tạo branch để làm task từ branch master ở local. Tên branch là số ticket của task（Ví dụ: `task/1234`）。
+    ```sh
+    $ git checkout master # <--- Không cần thiết nếu đang ở trên branch master
+    $ git checkout -b task/1234
+    ```
+
+3. Tiến hành làm task（Có thể commit bao nhiêu tùy ý）。
+
+4. Push code lên origin。
+
+    ```sh
+    $ git push origin task/1234
+    ```
+
+5. Tại origin trên Github（Bitbucket）、từ branch `task/1234` đã được push lên hãy gửi pull-request đối với branch master của upstream.
+
+6. Hãy gửi link URL của trang pull-request cho reviewer trên chatwork để tiến hành review code。
+
+    6.1. Trong trường hợp reviewer có yêu cầu sửa chữa, hãy thực hiện các bước 3. 〜 5.。
+    6.2. Tiếp tục gửi lại URL cho reviewer trên chatwork để tiến hành việc review code。
+
+7. Nếu trên 2 người reviewer đồng ý với pull-request, người reviewer cuối cùng sẽ thực hiện việc merge pull-request。
+8. Quay trở lại 1。
+
+
+### Đối với dự án áp dụng quy định tương ứng với 1 pull-request chỉ cho phép 1 commit
 
 Từ đây, Central Repository và Forked Repository sẽ được gọi lần lượt là `upstream` và `origin`。
 
@@ -88,7 +126,7 @@ Từ đây, Central Repository và Forked Repository sẽ được gọi lần l
 10. Nếu trên 2 người reviewer đồng ý với pull-request, người reviewer cuối cùng sẽ thực hiện việc merge pull-request。
 11. Quay trở lại 1。
 
-### Khi xảy ra conflict trong quá trình rebase
+#### Khi xảy ra conflict trong quá trình rebase
 
 Khi xảy ra conflict trong quá trình rebase, sẽ có hiển thị như dưới đây (tại thời điểm này sẽ bị tự động chuyển về một branch vô danh)
 ```sh
