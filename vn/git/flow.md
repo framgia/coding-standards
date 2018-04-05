@@ -63,6 +63,8 @@ Từ đây, Central Repository và Forked Repository sẽ được gọi lần l
     6.2. Tiếp tục gửi lại URL cho reviewer trên chatwork để tiến hành việc review code.
 
 7. Nếu trên 2 người reviewer đồng ý với pull-request, người reviewer cuối cùng sẽ thực hiện việc merge pull-request.
+   Revewer xác nhận sự đồng ý bằng comment LGTM.
+   
 8. Quay trở lại 1.
 
 
@@ -124,6 +126,8 @@ Từ đây, Central Repository và Forked Repository sẽ được gọi lần l
     9.3 Tiếp tục gửi lại URL cho reviewer trên chatwork để tiến hành việc review code.
 
 10. Nếu trên 2 người reviewer đồng ý với pull-request, người reviewer cuối cùng sẽ thực hiện việc merge pull-request.
+    Revewer xác nhận sự đồng ý bằng comment LGTM.
+
 11. Quay trở lại 1.
 
 #### Khi xảy ra conflict trong quá trình rebase
