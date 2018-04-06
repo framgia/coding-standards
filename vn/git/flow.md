@@ -11,9 +11,16 @@ Flow tham khảo: [A successful Git branching model](http://nvie.com/posts/a-suc
 ### Nguyên tắc
 * Mỗi pull-request tương ứng với một ticket.
 * Mỗi một pull-request không hạn chế số lượng commit
+* Pull-request title phải đặt sao cho tương ứng với title của task với format `refs [Loại ticket] #[Số ticket] [Nội dung ticket]` （Ví dụ: `refs bug #1234 Sửa lỗi cache`）.
+* Đối với commit title, trong trường hợp pull-request đó chỉ có 1 commit thì có thể đặt commit title tương tự như trên là `refs [Loại ticket] #[Số ticket] [Nội dung ticket]` （Ví dụ: `refs bug #1234 Sửa lỗi cache`）.\
+  Tuy nhiên với trường hợp 1 ppull-request có chứa nhiêù commit thì cần phải ghi rõ trong nội dung commit title là trong commit đó xử lý đối ứng vấn đề gì.
+    * Ví dụ:
+        1. Pull-request title: `refs bug #1234 Sửa lỗi cache`
+        2. Trong trường hợp pull-request có 2 commit thì nội dung commit title của 2 commit sẽ tương ứng như sau
+            * `Tạo method thực hiện việc clear cache trong Model`
+            * `Tại controller gọi method ở Model để thực hiện việc clear cache`
 * Gitflow đến thời điểm 2018/03/28 có quy định là 1 pull-request chỉ một commit sẽ không còn hiệu lực nữa. Tuy nhiên với các dự án mà teamsize lớn hơn 10 người thì để nhằm mục đích cho thuận tiện cho việc confirm thì khuyến khích dùng squash and merge .
 * Ngoài ra thì với gitflow trước đây ( trước thời điểm 2018/03/28) thì có cho phép dùng force push, tuy nhiên do khi sử dụng force push sẽ xoá hết lịch sử thay đổi do vậy gitlow hiện tại không khuyến khích sử dụng force push. Trong trường hợp cần sử dụng force push thì cần có sự đồng thuận từ team.
-* Nội dung của commit là `refs [Loại ticket] #[Số ticket] [Nội dung ticket]` （Ví dụ: `refs bug #1234 Sửa lỗi cache`）.
 * Tại môi trường local(trên máy lập trình viên), tuyệt đối không được thay đổi code khi ở branch master.Nhất định phải thao tác trên branch khởi tạo để làm task.
 
 ### Chuẩn bị
