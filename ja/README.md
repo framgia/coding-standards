@@ -2,8 +2,8 @@
 
 ## Ruby
 
-####[標準スタイル](./ruby/standard.md)
-####[参考サイト](./ruby/references.md)
+- [標準スタイル](./ruby/standard.md)
+- [参考サイト](./ruby/references.md)
 
 ## Ruby on Rails
 
