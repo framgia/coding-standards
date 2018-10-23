@@ -1,8 +1,8 @@
-#Các quy dịnh về viết code Ruby (Tập các kiểu chuẩn)
+# Các quy dịnh về viết code Ruby (Tập các kiểu chuẩn)
 
-##Giao diện (Layout)
+## Giao diện (Layout)
 
-##Mã hóa (Encoding)
+## Mã hóa (Encoding)
 * Chỉ sử dụng UTF-8
 
 * Về cơ bản, không viết các source code yêu cầu các chú thích mã hóa script
@@ -14,7 +14,7 @@
 * Vì các ký tự hai byte về cơ bản để dùng cho người sử dụng, nên không nên nhúng chúng trong mã nguồn mà nên được mô tả trong các tập tin locale.
 
 
-##Các chuẩn cơ bản
+## Các chuẩn cơ bản
 * Lề (indent) là 2 khoảng trắng (white space)
 * Không dùng tab
 * Không để khoảng trắng ở cuối dòng
@@ -117,7 +117,7 @@ end
 * Sau ký tự comment out ``` # ``` đặt 1 khoảng trắng
 
 ```ruby
-#this is bad comment
+# this is bad comment
 
 # this is good comment
 ```
@@ -180,7 +180,7 @@ def some_method2
 end
 ```
 
-##Các tiêu chuẩn về ngữ pháp
+## Các tiêu chuẩn về ngữ pháp
 
 * Không sử dụng ``` () ``` trong định nghĩa method, Thế nhưng trong trường hợp dưới đây có thể dùng ``` () ```
   * Tham số của method quá nhiều nên xuống dòng để đảm bảo không quá 80 kí tự.
@@ -455,13 +455,13 @@ products.each {|prod| prod.maintain!}
 * Trong trường hợp tạo biến số như Mảng rỗng hay Hash rỗng thì dùng ``` Array.new ```, ``` Hash.new ```.
 
 ```ruby
-#Cách viết không đúng
+# Cách viết không đúng
   @users = []
 
-#Cách viết đúng
+# Cách viết đúng
   @users = Array.new
 
-#Cũng đúng
+# Cũng đúng
   @months_of_birth_date = User.all.inject([]){|months, user| months << user.birth_date.month}
 ```
 
@@ -469,7 +469,7 @@ products.each {|prod| prod.maintain!}
 
 Thể hiện rõ ý đồ tạo object mới, nên nhìn vào dễ hiểu hơn.
 
-##Cách đặt tên
+## Cách đặt tên
 
 * Tên method hoặc biến số thì dùng ``` snake_case ```
 
@@ -482,7 +482,7 @@ Thể hiện rõ ý đồ tạo object mới, nên nhìn vào dễ hiểu hơn.
 * Các method hủy hoặc method nguy hiểm thì đặt ``` ! ``` ở cuối như ``` Array#flatten! ```
 Khi định nghĩa method hủy, method không hủy như ``` Array#flatten ``` cũng được định nghĩa.
 
-##Class
+## Class
 
 * Trácnh sử dụng biến class ``` @@ ``` trừ khi thực sự cần thiết
 
@@ -597,7 +597,7 @@ class SomeClass
 end
 ```
 
-##Ngoại lệ
+## Ngoại lệ
 
 * Không dùng ngoại lệ để kiểm soát flow, những ngoại lệ có thể tránh được thì nên tránh.大域脱出には ``` throw / catch ``` を利用してよい
 
