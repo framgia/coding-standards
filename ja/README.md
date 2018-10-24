@@ -7,10 +7,10 @@
 
 ## Ruby on Rails
 
-####[標準スタイル](./rails/standard.md)
-####[テスト編](./rails/test.md)
-####[標準gem](./rails/gems.md)
-####[参考サイト](./rails/references.md)
+#### [標準スタイル](./rails/standard.md)
+#### [テスト編](./rails/test.md)
+#### [標準gem](./rails/gems.md)
+#### [参考サイト](./rails/references.md)
 
 ## HTML
 
@@ -18,10 +18,10 @@
 
 ## Javascript
 
-####[標準スタイル](./javascript/standard.md)
-####[参考サイト](./javascript/references.md)
+#### [標準スタイル](./javascript/standard.md)
+#### [参考サイト](./javascript/references.md)
 
 ## git
 
-####[標準フロー](./git/flow.md)
-####[参考サイト](./git/references.md)
+#### [標準フロー](./git/flow.md)
+#### [参考サイト](./git/references.md)

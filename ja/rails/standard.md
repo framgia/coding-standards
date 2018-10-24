@@ -1,6 +1,6 @@
-#Ruby on Rails コーデング規約（標準スタイル編）
+# Ruby on Rails コーデング規約（標準スタイル編）
 
-##設定
+## 設定
 
 * アプリケーション固有の設定は ``` config/initializers ``` に置く。ここに置いたcodeはアプリケーションが起動するときに実行される。
 
@@ -12,7 +12,7 @@
 
 * stagingのような新しい環境を作成した場合は、なるべく production と近づけるようにする。
 
-##ルーティング
+## ルーティング
 
 * RESTfulなリソースにactionを追加する必要があるときは、``` member ``` と ``` collection ``` を使う。
 
@@ -92,7 +92,7 @@ end
 match ':controller(/:action(/:id(.:format)))'
 ```
 
-##コントローラー
+## コントローラー
 
 * コントローラーはギリギリまで中身を削ること。view が必要とするデータの取得のみを行うべきで、決してビジネスロジックを記載してはいけない。（それはモデルで行うべきである）
 
@@ -167,7 +167,7 @@ end
   before_action ->{@users = User.all} # lambda
 ```
 
-##モデル
+## モデル
 
 * ActiveRecord 以外のモデルも自由に利用して良い。
 
@@ -192,7 +192,7 @@ class Message
 end
 ```
 
-###ActiveRecord
+### ActiveRecord
 
 * 既存のデータベースを利用しなければならない、等の正当な理由が無い場合はテーブル名やプライマリーキー等、ActiveRecordのデフォルトを変更してはいけない。
 
@@ -298,7 +298,7 @@ end
 * `has_many` または `has_one` で指定されたモデルは必ず相手を `belongs_to` で指定する。
 
 
-##ActiveResource
+## ActiveResource
 
 * XML や JSON （もちろん HTML も）以外の既存のフォーマット以外のレスポンスを返す必要があるときは、下記のように独自のカスタムフォーマットを作成して利用する。カスタムフォーマットを実装するには、``` extension ```、``` mime_type ```、``` encode ```、``` decode ``` の4つのメソッドを定義する必要がある。
 
@@ -354,7 +354,7 @@ class User < ActiveResource::Base
 end
 ```
 
-##マイグレーション
+## マイグレーション
 
 =======
 * ``` schema.rb ``` （または ``` structure.sql ```）はバージョン管理する
@@ -398,7 +398,7 @@ end
 
 * モデルのクラスをマイグレーション内で使ってはいけない。モデルのクラスは常に進化するので、モデルを使っている箇所の変更により、将来のある時点でマイグレーション処理が止まってしまう可能性がある。
 
-##ビュー
+## ビュー
 
 * ビューの中でモデルを直接呼んではいけない。コントローラーにインスタンス化させるか、ヘルパー内で利用する。
 
@@ -415,13 +415,13 @@ end
 * ``` <% ``` 、 ``` <%= ``` と ``` %> ``` の内側にホワイトスペースを1つ入れる。
 
 ```ruby
-#bad
+# bad
 <%foo%>
 <% bar%>
 <%=bar%>
 <%=bar %>
 
-#good
+# good
 <% foo %>
 <%= bar %>
 ```
@@ -465,7 +465,7 @@ clientSideValidations.validators.remote['email'] = (element, options) ->
     return options.message || 'invalid e-mail format'
 ```
 
-##国際化
+## 国際化
 
 * モデル、ビュー、コントローラーいずれの中でも特定の言語や国に依存した設定を含めてはいけない。それらの文章等は ``` config/locales ``` ディレクトリ内のロケールファイルに記述すること。
 
@@ -520,7 +520,7 @@ I18n.t :record_invalid, :scope => [:activerecord, :errors, :messages]
 
 * 詳細は [RailsGuide](http://guides.rubyonrails.org/i18n.html)に従う。
 
-##アセット
+## アセット
 
 asset pipeline を利用する
 
@@ -534,7 +534,7 @@ asset pipeline を利用する
 
 * CSS の中に url を記載するときは asset_url を使うこと。
 
-##メイラー
+## メイラー
 
 * メイラーは ``` SomethingMailer ``` のような名前にする。Mailerという接尾語を外せば、それがどのようなメールを送ってどのviewが関連するのかが一目瞭然なようにする。
 
@@ -597,7 +597,7 @@ config.action_mailer.delivery_method = :smtp
 
 * ページを作成している途中でメールを送るのは避けるべきである。それはページ読み込みの遅延や複数のメールを送った時には、リクエストタイムアウトの原因になることがある。これらの問題を解決するために、[delayed_job](https://github.com/tobi/delayed_job)を使うと良い。
 
-##バンドラー
+## バンドラー
 
 * Gemfile には ruby バージョンを記載すること。
 
