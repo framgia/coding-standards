@@ -1,8 +1,8 @@
-#Rules about writing Ruby code (Standard)
+# Rules about writing Ruby code (Standard)
 
-##Layout
+## Layout
 
-##Encoding
+## Encoding
 * Use UTF-8 only
 
 * Basically, do not write code that need encoding script comments
@@ -14,7 +14,7 @@
 * 2-bytes characters should not be in source code, they should be in locale files.
 
 
-##Basic
+## Basic
 * Indentation is 2 white spaces
 * Do not use tab
 * Do not leave trailing white spaces
@@ -117,7 +117,7 @@ end
 * Add 1 white space after comment out character ``` # ```
 
 ```ruby
-#this is a bad comment
+# this is a bad comment
 
 # this is a good comment
 ```
@@ -180,7 +180,7 @@ def some_method2
 end
 ```
 
-##Syntax
+## Syntax
 
 * Do not use ``` () ``` in method definition
   * If parameters of method are too many, break them into new lines to ensure a line has less than 80 characters. In that case we should use ``` () ``` to avoid syntax error.
@@ -469,7 +469,7 @@ products.each {|prod| prod.maintain!}
 
 Clearly show intention of creating a new object
 
-##Naming
+## Naming
 
 * Method name or variable name use ``` snake_case ```
 
@@ -482,7 +482,7 @@ Clearly show intention of creating a new object
 * Destroy method or dangerous method should add `!` at the end, such as ``` Array#flatten! ```
 When define destroy method, un-destroy method like ``` Array#flatten ``` should be defined as well.
 
-##Class
+## Class
 
 * Avoid using class variables ``` @@ ``` unless it is really necessary
 
@@ -597,7 +597,7 @@ class SomeClass
 end
 ```
 
-##Exception
+## Exception
 
 * Do not use exception to control the flow. Exceptions which can be avoided should be avoided.
 

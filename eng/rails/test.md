@@ -1,11 +1,11 @@
-#Rules about writing Ruby on Rails code (test)
+# Rules about writing Ruby on Rails code (test)
 
 Best practice to add a new feature maybe BDD. Usually when use Cucumber, start with writing test in high level, then adjust code following test specification.
 First write specification of views related to feature, then create related view following this specification.
 Next write specification of controller to pass needed data to above views, then create controller following this specification.
 Last write specification and create model.
 
-##Cucumber
+## Cucumber
 
 * Incompleted scenarios should be tagged `@wip` (work in progress). Those scenarios will not be counted and will not display error. When the feature is created and run, if you want to test these scenarios, you can remove tag `@wip`.
 
@@ -112,7 +112,7 @@ We can separate steps into files using standard type. We can separate each featu
     ```
 * Matcher of Capybara does not use ``` should_not ``` in positive but use in negative matcher. So scenarios will be executed in timeout of ajax action. [You can find more information in README of Capybara.](https://github.com/jnicklas/capybara)
 
-##RSpec
+## RSpec
 
 * Expect only 1 result for 1 example
 
@@ -272,7 +272,7 @@ We can separate steps into files using standard type. We can separate each featu
     end
   ```
 
-###Models
+### Models
 * Do not mock model in its own model spec.
 * Use factory_girl to create object without mock.
 * Can mock other models, or children objects.
@@ -391,7 +391,7 @@ We can separate steps into files using standard type. We can separate each featu
 
 * Put spec of helper in `spec/helpers`.
 
-###Controllers
+### Controllers
 
 * Use mock for instance of model class. Use stub for model's methods. This is to avoid results of controller spec affecting implementation of model.
 * Controller should only test below behaviors
@@ -477,7 +477,7 @@ We can separate steps into files using standard type. We can separate each featu
    end
    ```
 
-###Mailers
+### Mailers
 
 * Inside spec for mailer, all models should be mocked. Mailer does not depend on model.
 * In spec of mailer, test for the below behaviors
