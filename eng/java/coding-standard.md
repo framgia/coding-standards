@@ -689,6 +689,9 @@ If an expression containing a binary operator appears before the ```?``` in the 
 #### 7.5.4 Special Comments
 Use ```XXX``` in a comment to flag something that is bogus but works. Use ```FIXME``` to flag something that is bogus and broken.
 
+#### 7.5.5 Date format
+To format the year part of a date as `yyyy`, use `yyyy`.
+
 ## 8 TL;DR
 If you are using IntelliJ IDEA, you can import file ```java-formatter.xml``` which includes these auto-format.
 Or import from 

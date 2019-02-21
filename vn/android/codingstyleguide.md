@@ -442,6 +442,10 @@ public Observable<Location> syncLocations() {
 }
 ```
 
+### 2.14 Date format
+
+Để format phần năm của ngày tháng dưới dạng `yyyy`, sử dụng `yyyy`.
+
 ## 3 XML style rules
 
 ### 3.1 Sử dụng thẻ tự đóng

@@ -1,8 +1,8 @@
-﻿##Swift coding convention
+## Swift coding convention
 
-###Define variables, constants
+### Define variables, constants
 
-###Common convention for variables, constants
+### Common convention for variables, constants
 Can be written in a single line if they have relevance.
 ```sh
 let row: Int, column: Int
@@ -65,7 +65,7 @@ let text = data["text"] as String
 let text: String = data["text"] as String
 ```
 
-###Definition of variable
+### Definition of variable
 There are many ways to write definition of empty array, associative array along with their initialization so we should refer to Apple standard only.
 
 @see [Collection Types](https://developer.apple.com/library/prerelease/mac/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html)
@@ -106,7 +106,7 @@ class Hoge {
 }
 ```
 
-###Definition of constant
+### Definition of constant
 In case of variable definition, consider whether it can be defined as a constant or not. Unless it have to be defined as a variable no matter what, define it as a constant.
 ```sh
 let notChangeString = "Hoge"
@@ -127,7 +127,14 @@ Definition of expression can be written on right-hand side.
 let kGoogleAnalyticsTrackingID = NSBundle.mainBundle().objectForInfoDictionaryKey("GoogleAnalyticsTrackingID") as String
 ```
 
-###String
+### Date format
+To format the year part of a date as `yyyy`, use `yyyy`.
+```sh
+let df = DateFormatter()
+df.dateFormat = "yyyy-MM-dd"
+```
+
+### String
 Swift / String and ObjC / NSString are two different classes. Use Swift / String for string.
 ```sh
 // ◯
@@ -183,9 +190,9 @@ String(format: "%.01f", Float(someCGFloat))
 // ☓ Must be converted to Float, or it will become 0.0 which is incorrect
 let someCGFloat: CGFloat = 0.25
 NSString(format: "%.01f", Float(someCGFloat))
-```sh
+```
 
-###Numeric value
+### Numeric value
 Use Swift’s numerical type for Integer. In iOS SDK > API > ObjC, NSInteger, NSUInteger have been replaced by Int, UInt.
 ```sh
 // Example
@@ -211,7 +218,7 @@ var flg: Bool?
 var index: Int?
 ```
 
-###nil
+### nil
 Nil in Swift is nil, nil in ObjC is an object pointer which does not exist. That is the difference.
 You can assign nil to any data type by unwrapping variable.
 ```sh
@@ -224,7 +231,7 @@ let hash: [String: String?] = ["hoge": hoge, "fuga": "not nil"]
 println(hash)
 // -> [hoge: nil, fuga: Optional("not nil")]
 ```
-###Function
+### Function
 In case return value’s data type is void, data type is omitted.
 ```sh
 // ◯
@@ -273,7 +280,7 @@ func stringFromDate(date NSDate) -> String
 let text = stringFromDate(date)
 ```
 
-###Closure
+### Closure
 Do not abbreviate closure argument.
 ```sh
 // ◯
@@ -344,9 +351,9 @@ let funcClosure = { (text: String) -> String in
 }
 ```
 
-##Control statements
+## Control statements
 
-###If statement
+### If statement
 Do not use ( ) for the evaluation formula after if.
 ```sh
 // ◯
@@ -355,7 +362,7 @@ if a == b { }
 // ☓
 if (a == b) { }
 ``` 
-###for & for-in statement
+### for & for-in statement
 Use for-in statement to state loop process.
 ```sh
 // ◯
@@ -394,7 +401,7 @@ for temp in self.view.subviews {
 }
 ```
 
-###Switch statement
+### Switch statement
 Write break when there is no process in case-process.
 ```sh
 switch section {
@@ -406,9 +413,9 @@ switch section {
     break // do nothing
 }
 ```
-##Statement convention
+## Statement convention
 
-###Bracket
+### Bracket
 
 Write open bracket in the same line with method or control statements’ bracket.
 ```sh
@@ -440,7 +447,7 @@ else {
 }
 ```
 
-###Semicolon
+### Semicolon
 Do not write semicolon at the end of statement.
 ```sh
 // ◯
@@ -450,10 +457,10 @@ println("hoge")
 println("hoge");
 ```
 
-###File ending
+### File ending
 Ending file by inserting line break.
 
-###Enum
+### Enum
 Write enum and case by pascal case.
 
 When case is int and sequence begins from 0, do not write data type of enum and case.
@@ -509,9 +516,9 @@ class NetworkManager {
 }
 ```
 
-##Class, Struct
+## Class, Struct
 
-###Init
+### Init
 In case inheriting from NSObject, state override for int, call super.init().
 ```sh
 class ArticleData: NSObject {    
@@ -528,11 +535,11 @@ class ArticleData {
     }
 }
 ```
-###Convenience init
+### Convenience init
 
 TODO:
 
-###Property
+### Property
 Do not use Optional Type or Implicitly Unwrapped Optional Type as property when using init to initialize.
 
 By whether or not there is a change of property, use let or var to define. 
@@ -576,10 +583,10 @@ class ArticleData {
 
 TODO: didSet
 
-###self
+### self
 TODO:
 
-###Description
+### Description
 In case class inherited from NSObject, override description property.
 ```sh
 class DataModel: NSObject {
@@ -596,32 +603,32 @@ extension DataModel: Printable {
 }
 ```
 
-##Access control
+## Access control
 TODO
 
-##Delegate
+## Delegate
 TODO
 
-##Protocol
+## Protocol
 TODO
 
-##Extension
+## Extension
 TODO
 
-##ObjC
-###Id type
+## ObjC
+### Id type
 TODO
 
-##Deligate
+## Delegate
 TODO
 
-###Define
+### Define
 TODO
 
-##Macro
+## Macro
 TODO
 
-##Interface Builder Outlet, Action
+## Interface Builder Outlet, Action
 Outlet is defined by weak and unwrap.  If you want to automatically generate the property from the street board, add private modifier.
 
 In case remove view from parent view and you want to use this view inherently, state strong instead of weak. In case you want to use this property from external class, do not add private modifier.
@@ -652,10 +659,10 @@ The type of action’s argument defines action’s original class.
     println("button tapped!")
 }
 ```
-##Circular referenece problem
+## Circular referenece problem
 TODO
 
-##Macro comment
+## Macro comment
 ### #pragma mark
 Swift
 ```sh
@@ -685,7 +692,7 @@ Build setting -> Swift Complier Custom Flags -> -DEBUG (yes, including the –D 
 // PRODUCTION CODE
 #endif
 ```
-##Export log
+## Export log
 Use NSLog for exporting log due to these standpoints.
 * NSLog is thread safe, println is not.
 * NSlog is exported to device console, println is not.
@@ -702,7 +709,7 @@ However, println has following merits against NSLog.
 
 * Export appropriate string even when variable is not formatted as string.
 
-##Singleton
+## Singleton
 Singleton is defined by static constant of struct.
 ```sh
 // ◯
@@ -745,7 +752,7 @@ class Singleton {
 }
 ```
 
-##Reference
+## Reference
 *[The Swift Programming Language](https://developer.apple.com/library/prerelease/mac/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html)
 
 *[Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)
