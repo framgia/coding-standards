@@ -47,20 +47,6 @@ A source file consists of, in order:
 4. Exactly one top-level class
 5. Exactly one blank line separates each section that is present.
 
-Examples:
-```java
-package com.mediado.bookstore.service.impl;
-
-import com.mediado.bookstore.common.CommonConstant;
-
-/**
- * Created by FRAMGIA\le.ha.tu on 21/09/2016.
- */
-@Service
-public class EconPaymentServiceImpl implements PaymentService {
-    
-}
-```
 ### 2.1 License or copyright information, if present
 If license or copyright information belongs in a file, it belongs here.
 
