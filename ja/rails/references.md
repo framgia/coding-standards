@@ -1,4 +1,4 @@
-##Ruby on Rails コーデング規約（参考サイト）
+## Ruby on Rails コーデング規約（参考サイト）
 
 * [Ruby on Rails Guides](http://guides.rubyonrails.org/contributing_to_ruby_on_rails.html#follow-the-coding-conventions)
 * [bbatsov / rails-style-guide](https://github.com/bbatsov/rails-style-guide)
