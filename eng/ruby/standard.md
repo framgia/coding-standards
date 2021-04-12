@@ -795,6 +795,9 @@ end
 
 If mistakenly write `==` to be `=`, the comparison will return SyntaxError
 
+## Date format
+To format the year part of a date as `yyyy`, use `%Y`.
+
 ## Others
 
 * Do not use ``` __END___ ```

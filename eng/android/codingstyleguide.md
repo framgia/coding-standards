@@ -429,6 +429,10 @@ public Observable<Location> syncLocations() {
 }
 ```
 
+### 2.14 Date format
+
+To format the year part of a date as `yyyy`, use `yyyy`.
+
 ## 3 XML style rules
 
 ### 3.1 Use self closing tags

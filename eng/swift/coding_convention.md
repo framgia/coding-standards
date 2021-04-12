@@ -1,4 +1,4 @@
-﻿## Swift coding convention
+## Swift coding convention
 
 ### Define variables, constants
 
@@ -127,6 +127,13 @@ Definition of expression can be written on right-hand side.
 let kGoogleAnalyticsTrackingID = NSBundle.mainBundle().objectForInfoDictionaryKey("GoogleAnalyticsTrackingID") as String
 ```
 
+### Date format
+To format the year part of a date as `yyyy`, use `yyyy`.
+```sh
+let df = DateFormatter()
+df.dateFormat = "yyyy-MM-dd"
+```
+
 ### String
 Swift / String and ObjC / NSString are two different classes. Use Swift / String for string.
 ```sh
@@ -183,9 +190,9 @@ String(format: "%.01f", Float(someCGFloat))
 // ☓ Must be converted to Float, or it will become 0.0 which is incorrect
 let someCGFloat: CGFloat = 0.25
 NSString(format: "%.01f", Float(someCGFloat))
-```sh
+```
 
-###Numeric value
+### Numeric value
 Use Swift’s numerical type for Integer. In iOS SDK > API > ObjC, NSInteger, NSUInteger have been replaced by Int, UInt.
 ```sh
 // Example
@@ -612,7 +619,7 @@ TODO
 ### Id type
 TODO
 
-## Deligate
+## Delegate
 TODO
 
 ### Define

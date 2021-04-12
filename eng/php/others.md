@@ -69,3 +69,4 @@ $normalString = 'A String';
 $specialString = "This is {$normalString}";
 ```
 - There MUST be one space before and after each operator (such as `+`, `-`, `*`, `/`, `.`, `>`, `<`, `==` ...)
+- To format the year part of a date as `yyyy`, use `Y`.

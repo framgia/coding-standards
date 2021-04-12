@@ -70,3 +70,4 @@ $normalString = 'A String';
 $specialString = "This is {$normalString}";
 ```
 - Cần có 1 space trước và sau các toán tử như `+`, `-`, `*`, `/`, `.`, `>`, `<`, `==` ...
+- Để format phần năm của ngày tháng dưới dạng `yyyy`, sử dụng `Y`.

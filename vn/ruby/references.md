@@ -1,4 +1,4 @@
-##Các quy định về viết code Ruby(Các trang tham khảo)
+## Các quy định về viết code Ruby(Các trang tham khảo)
 
 
 * [Ruby Styleguide](https://github.com/styleguide/ruby)

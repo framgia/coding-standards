@@ -47,20 +47,6 @@ A source file consists of, in order:
 4. Exactly one top-level class
 5. Exactly one blank line separates each section that is present.
 
-Examples:
-```java
-package com.mediado.bookstore.service.impl;
-
-import com.mediado.bookstore.common.CommonConstant;
-
-/**
- * Created by FRAMGIA\le.ha.tu on 21/09/2016.
- */
-@Service
-public class EconPaymentServiceImpl implements PaymentService {
-    
-}
-```
 ### 2.1 License or copyright information, if present
 If license or copyright information belongs in a file, it belongs here.
 
@@ -688,6 +674,9 @@ If an expression containing a binary operator appears before the ```?``` in the 
 ```
 #### 7.5.4 Special Comments
 Use ```XXX``` in a comment to flag something that is bogus but works. Use ```FIXME``` to flag something that is bogus and broken.
+
+#### 7.5.5 Date format
+To format the year part of a date as `yyyy`, use `yyyy`.
 
 ## 8 TL;DR
 If you are using IntelliJ IDEA, you can import file ```java-formatter.xml``` which includes these auto-format.

@@ -403,13 +403,13 @@ end
 * Thêm 1 space bên trong các ``` <% ``` , ``` <%= ``` と ``` %> ```.
 
 ```ruby
-#Cách viết không tốt
+# Cách viết không tốt
 <%foo%>
 <% bar%>
 <%=bar%>
 <%=bar %>
 
-#Cách viết tốt
+# Cách viết tốt
 <% foo %>
 <%= bar %>
  ```

@@ -1,8 +1,8 @@
-#Các quy định về viết code Ruby on Rails (Phần viết test)
+# Các quy định về viết code Ruby on Rails (Phần viết test)
 
 Phương pháp tốt nhất để cài đặt thêm một chức năng mới có lẽ là BDD. Thông thường thì hay sử dụng Cucumber, bắt đầu bằng việc viết test chức năng ở mức cao, sau đó điều chỉnh việc cài đặt (codding) chức năng theo đặc tả test. Đầu tiên sẽ viết các đặc tả của view liên quan đến chức năng, rồi cài đặt view liên quan dựa trên đặc tả này. Tiếp theo tạo đặc tả của controller để trao những data cần thiết cho các view ở trên, rồi cài đặt controler dựa trên các đặc tả này. Cuối cùng là viết các đặc tả cho model và cài đặt các model này.
 
-##Cucumber
+## Cucumber
 
 * Những scenario chưa hoàn thành thì gắn tag là  `@wip` (work in progress). Những scenario đó sẽ không được đếm và không hiện thị lỗi. Khi mà cài đặt và chạy các feature muốn test scenario này, có thể bỏ tag `@wip`.
 
@@ -109,7 +109,7 @@ Format này hay được dùng nhưng không phải là bắt buộc, có thể 
 * Matcher của Capybara không sử dụng ``` should_not ``` trong khẳng định mà dùng tại matcher phủ định. Vì vậy kịch bản sẽ được thực hiện lại  trong khoảng thời gian timeout của ajax action.
 [Có thể tham khảo cụ thể tại README của Capybara.](https://github.com/jnicklas/capybara)
 
-##RSpec
+## RSpec
 
 * Đối với 1 example thì chỉ nên kỳ vọng 1 kết quả đạt được.
 
@@ -270,7 +270,7 @@ end
     end
   ```
 
-###Models
+### Models
 * Không mock chính bản thân mình trong spec model của mình.
 * Sử dụng factory_girl khi tạo object không mock.
 * Có thể mock các model khác, hoặc các object con.
@@ -389,7 +389,7 @@ end
 
 * Chia spec của helper và spec của view ra, đặt spec của helper trong `spec/helpers`.
 
-###Controllers
+### Controllers
 
 * Trong spec của model nếu cần instance của class model thì dùng mock. Định nghĩa các method của model bằng stub. Nhằm không để kết quả chạy spec của controller ảnh hưởng đến việc cài đặt (implement) model.
 * Controller nên có trách nhiệm, chỉ test những behavior dưới đây.
@@ -475,7 +475,7 @@ end
    end
    ```
 
-###Mailers
+### Mailers
 
 * Bên trong spec của mailer thì tất cả model đều mock. Mailer không phụ thuộc vào model.
 * Trong spec của mailer tiến hành kiểm tra những điều sau.
