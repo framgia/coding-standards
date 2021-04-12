@@ -753,12 +753,12 @@ class Singleton {
 ```
 
 ## Reference
-*[The Swift Programming Language](https://developer.apple.com/library/prerelease/mac/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html)
+* [The Swift Programming Language](https://developer.apple.com/library/prerelease/mac/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html)
 
-*[Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)
+* [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)
 
-*[The Official raywenderlich.com Swift Style Guide](https://github.com/raywenderlich/swift-style-%0Aguide)
+* [The Official raywenderlich.com Swift Style Guide](https://github.com/raywenderlich/swift-style-%0Aguide)
 
-*[Transitioning from Objective-C to Swift](http://b2cloud.com.au/tutorial/transitioning-from-objective-c-to-swift/)
+* [Transitioning from Objective-C to Swift](http://b2cloud.com.au/tutorial/transitioning-from-objective-c-to-swift/)
 
-*[Morizotter Blog](http://blog.morizotter.com/)
+* [Morizotter Blog](http://blog.morizotter.com/)

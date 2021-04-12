@@ -1,4 +1,4 @@
-##Rules about writing Ruby on Rails code (Reference links)
+## Rules about writing Ruby on Rails code (Reference links)
 
 * [Ruby Styleguide](https://github.com/styleguide/ruby)
 * [Prelude](https://github.com/bbatsov/ruby-style-guide)

@@ -1,6 +1,6 @@
-#Rules about writing Ruby on Rails code (Standard)
+# Rules about writing Ruby on Rails code (Standard)
 
-##Configurations
+## Configurations
 
 * Initializers of application are put in ``` config/initializers ```. Code written in here will be run when the application initializes.
 
@@ -12,7 +12,7 @@
 
 * In case of creating new environment like staging, try to configure it to be similar with production environment.
 
-##Routing
+## Routing
 
 * When adding more actions into RESTful resource, use ``` member ``` and ``` collection ```.
 
@@ -92,7 +92,7 @@ All actions of every controllers can be accessed by GET request.
 match ':controller(/:action(/:id(.:format)))'
 ```
 
-##Controller
+## Controller
 
 * Try to shorten controller's code. In controller we should only get data for view, do not put business logic here (business logic should be in model).
 
@@ -167,7 +167,7 @@ Prevent extra processing when user refresh the browser.
   before_action ->{@users = User.all} # lambda
 ```
 
-##Model
+## Model
 
 * Model can be used without ActiveRecord.
 
@@ -192,7 +192,7 @@ class Message
 end
 ```
 
-###ActiveRecord
+### ActiveRecord
 
 * Must use existing database, do not change ActiveRecord defaults such as table name or primary key if there are no good reasons.
 
@@ -285,7 +285,7 @@ end
 
 * If use `has_many` or `has_one` in a model, must define `belongs_to` in the corresponding model.
 
-##ActiveResource
+## ActiveResource
 
 * In case of returning response in format different from XML or JSON, you can define that format same as below. To create a new format you have to define 4 methods ``` extension ```、``` mime_type ```、``` encode ```、``` decode ```
 
@@ -341,7 +341,7 @@ class User < ActiveResource::Base
 end
 ```
 
-##Migration
+## Migration
 
 =======
 * Monitoring versions of ``` schema.rb ``` (or ``` structure.sql ```).
@@ -385,7 +385,7 @@ end
 
 * Do not use class of model in migration. Model class can be changed, so operations of old migrations might be affected.
 
-##View
+## View
 
 * Do not call model in view directly, call through controller or helper.
 
@@ -408,7 +408,7 @@ end
 <%=bar%>
 <%=bar %>
 
-#good
+# good
 <% foo %>
 <%= bar %>
  ```
@@ -452,7 +452,7 @@ clientSideValidations.validators.remote['email'] = (element, options) ->
     return options.message || 'invalid e-mail format'
 ```
 
-##Multi languages
+## Multi languages
 
 * Do not set configurations depended on languages, nations in model, controller, view. These configurations should be in ``` config/locales ```.
 
@@ -507,7 +507,7 @@ I18n.t :record_invalid, :scope => [:activerecord, :errors, :messages]
 
 * For more information [RailsGuide](http://guides.rubyonrails.org/i18n.html).
 
-##Asset
+## Asset
 
 Use asset pipeline
 
@@ -521,7 +521,7 @@ Use asset pipeline
 
 * In CSS, use asset_url to write url.
 
-##Mailer
+## Mailer
 
 * For mailer, name it like ``` SomethingMailer ```. This will be easier to know about the content of mail and which view it is related to.
 
@@ -584,7 +584,7 @@ config.action_mailer.delivery_method = :smtp
 
 * Avoid sending mail when page is being created. It may cause request timeout when too many mails are sent at the same time or the delay of page loading. To solve those problems we can use [delayed_job](https://github.com/tobi/delayed_job).
 
-##Bundler
+## Bundler
 
 * Gems used only in development environment or test environment must be written in corresponding group.
 
