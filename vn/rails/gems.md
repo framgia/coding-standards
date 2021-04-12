@@ -1,12 +1,12 @@
-#Danh sách các gem kiểu chuẩn trong Ruby on Rails
+# Danh sách các gem kiểu chuẩn trong Ruby on Rails
 
 Một trong những nguyên tắc quan trọng nhất khi lập trình đó là "Don't Repeat Yourself!". Khi phải đối mặt với vấn đề gì đấy thì trước khi bản thân giải quết vấn đề đó cần phải tìm hiểu xem tồn tại những cách giải quyết nào. Dưới đây là danh sách những gem rất có giá trị, những cái có ích trong rất nhiều dự án Rails. Tất cả đều hoạt động đối với Rails 3.1.
 
-##Việc tạo màn hình quản lý
+## Việc tạo màn hình quản lý
 
 * [active_admin](https://github.com/gregbell/active_admin) - Giúp tạo màn hình quản lý một cách đơn giản. Ngoài ra cũng có thể nhanh chóng tạo ra các xử lý CRUD của các model và có thể tuỳ chỉnh một cách linh hoạt.
 
-##Môi trường phát triển, cải thiện môi trường test
+## Môi trường phát triển, cải thiện môi trường test
 
 **Chú ý: điều này không phù hợp vớ môi trường production**
 
@@ -28,25 +28,25 @@ Một trong những nguyên tắc quan trọng nhất khi lập trình đó là 
 
 * [rspec-rails](https://github.com/rspec/rspec-rails) - Giúp cho dễ dàng sử dụng RSpec trong Rails.
 
-##Cải thiện hiệu năng
+## Cải thiện hiệu năng
 
 * [bullet](https://github.com/flyerhzm/bullet) - Được thiết kế để giúp tăng hiệu năng của ứng dụng bằng việc giảm số query. Nó sẽ theo dõi nhưng câu query của bạn trong quá trình phát triển và chỉ ra nơi nên thêm eager loading (N+1 queries), hoặc nơi không cần thiết eager loading hoặc nên sử dụng counter cache.
 
-##Upload file
+## Upload file
 
 * [Paperclip](https://github.com/thoughtbot/paperclip) - Có thể đính file trong ActiveRecord.
 
-##Tìm kiếm text
+## Tìm kiếm text
 
 * [sunspot](https://github.com/sunspot/sunspot) - Hệ thống tìm kiếm text sử dụng SOLR.
 
-##Quản lý phân quyền
+## Quản lý phân quyền
 
 * [cancan](https://github.com/ryanb/cancan) - Có thể giới hạn khả năng truy cập tài nguyên của người dùng. Tất cả quyền hạn thì được quản lý trong một file và có thể xác thực trên toàn ứng dụng.
 
 * [devise](https://github.com/plataformatec/devise) - Hầu như đã chuẩn bị sẵn hết tất cả chức năng cần thiết.
 
-##View template
+## View template
 
 * [haml-rails](https://github.com/indirect/haml-rails) - Giúp có thể sử dụng HAML trong Rails.
 
@@ -54,19 +54,19 @@ Một trong những nguyên tắc quan trọng nhất khi lập trình đó là 
 
 * [slim](http://slim-lang.com) - Slim không chỉ hơn ERB mà còn được cho rằng tốt hơn cả HAML. Lý do ngần ngại sử dụng Slim có chăng chỉ là chưa được hỗ trợ bởi nhiều editor hay IDE. Ngoài ra, hiệu năng của Slim khá là tốt.
 
-##Hỗ trợ phía client
+## Hỗ trợ phía client
 
 * [client_side_validations](https://github.com/bcardarella/client_side_validations) - Tự động tạo ra validation của Javascript chạy trên client dựa trên các validation của các model định nghĩa tại server.
 
-##SEO
+## SEO
 
 * [friendly_id](https://github.com/norman/friendly_id) - Giúp có thể chỉ định các object thông qua các thuộc tính được miêu tả dễ hiểu thay cho id của model.
 
-##Phân trang
+## Phân trang
 
 * [kaminari](https://github.com/amatsuda/kaminari) - giúp phân trang một cách linh hoạt.
 
-##Chỉnh sửa ảnh
+## Chỉnh sửa ảnh
 
 * [minimagick](https://github.com/probablycorey/mini_magick) - Ruby wrapper của ImageMagick
 
@@ -91,7 +91,7 @@ Một trong những nguyên tắc quan trọng nhất khi lập trình đó là 
 
 * [email-spec](https://github.com/bmabey/email-spec) - Dễ dàng thực hiện test email bằng RSpec hoặc Cucumber.
 
-##Những gem không khuyến khích dùng
+## Những gem không khuyến khích dùng
 
 Những gem này vần có lỗi hoặc là có những gem tốt hơn. Tốt nhất nên tránh dùng những gem này.
 
