@@ -13,14 +13,12 @@
 
 * Vì các ký tự hai byte về cơ bản để dùng cho người sử dụng, nên không nên nhúng chúng trong mã nguồn mà nên được mô tả trong các tập tin locale.
 
-
 ## Các chuẩn cơ bản
 * Lề (indent) là 2 khoảng trắng (white space)
 * Không dùng tab
 * Không để khoảng trắng ở cuối dòng
 * Trước và sau các toán tử, dấu hai chấm, sau dấu phẩy và dấu chấm phẩy, để 1 khoảng trắng.
 * Trước dấu phẩy và dấu chấm phẩy không để khoảng trắng.
-
 
 ```ruby
 sum = 1
@@ -78,7 +76,6 @@ How are you?"
   # bad
       foo = "From this valley they say you are going,\nWe will miss your bright eyes and sweet smile,\nFor they say you are taking the sunshine\nThat has brightened our pathways a while."
 ```
-
 
 * Đặt khoảng trắng vào sau các đối số
 
@@ -795,6 +792,9 @@ end
 ** Lý do **
 
 Khi mà nhầm `==` thành bằng `=` thì phép so sánh sẽ không được gán mà trả về SyntaxError
+
+## Date format
+Để format phần năm của ngày tháng dưới dạng `yyyy`, sử dụng `%Y`.
 
 ## Vấn đề khác
 
