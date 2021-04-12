@@ -1,1 +1,1 @@
-##Rules about writing Ruby on Rails code (Reference links)
+## Rules about writing Ruby on Rails code (Reference links)

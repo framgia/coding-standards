@@ -1,15 +1,15 @@
-#List of standardized gems in Ruby on Rails
+# List of standardized gems in Ruby on Rails
 
 One of the principles of software development is DRY - Don't Repeat Yourself.
 When facing with a problem, before trying to solve it by yourself, first researching if there are any existing solutions.
 Below is a list of valuable gems which have proved to be useful in many Rails projects.
 All gems work with Rails 3.1.
 
-##Creating admin panel
+## Creating admin panel
 
 * [active_admin](https://github.com/gregbell/active_admin) - Help creating admin panel in a simple way. It can quickly create CRUD functions of models and give a flexible customization.
 
-##Development environment, test environment improvement
+## Development environment, test environment improvement
 
 **These are not suitable for production environment**
 
@@ -31,25 +31,25 @@ All gems work with Rails 3.1.
 
 * [rspec-rails](https://github.com/rspec/rspec-rails) - For using RSpec in Rails.
 
-##Performance improvement
+## Performance improvement
 
 * [bullet](https://github.com/flyerhzm/bullet) - Improve performance of application by reducing number of queries. It monitors your queries and notify you where you should add eager loading (n + 1 queries), where eager loading is unnecessary or where you should use counter cache.
 
-##Upload file
+## Upload file
 
 * [Paperclip](https://github.com/thoughtbot/paperclip) - File attachment library that works with ActiveRecord.
 
-##Search
+## Search
 
 * [sunspot](https://github.com/sunspot/sunspot) - A library for using Solr search engine.
 
-##Authorization management
+## Authorization management
 
 * [cancan](https://github.com/ryanb/cancan) - Can restrict users' access to resources. All authorities are managed in one place and can be checked across the application.
 
 * [devise](https://github.com/plataformatec/devise) - Give you all necessary features for an application.
 
-##View template
+## View template
 
 * [haml-rails](https://github.com/indirect/haml-rails) - Help using HAML in Rails.
 
@@ -57,23 +57,23 @@ All gems work with Rails 3.1.
 
 * [slim](http://slim-lang.com) - Slim is considered better than ERB and HAML. Slim also has good performance. The main reason for not using Slim is it isn't widely supported by many editors or IDE.
 
-##Client side support
+## Client side support
 
 * [client_side_validations](https://github.com/bcardarella/client_side_validations) - Automatically create Javascript validations which run on client side based on validations defined in models in server.
-
-##SEO
+ 
+## SEO
 
 * [friendly_id](https://github.com/norman/friendly_id) - Help identify objects by friendly-reading attributes instead of id of models.
 
-##Pagination
+## Pagination
 
 * [kaminari](https://github.com/amatsuda/kaminari) - For flexible pagination.
 
-##Image manipulation
+## Image manipulation
 
 * [minimagick](https://github.com/probablycorey/mini_magick) - Ruby wrapper of ImageMagick
 
-##These gems should be standard or not is undecided
+## These gems should be standard or not is undecided
 
 * [simplecov-rcov](https://github.com/fguillen/simplecov-rcov) - RCov format for SimpleCov. Useful for using SimpleCov with Hudson continuous integration server.
 
@@ -93,7 +93,7 @@ All gems work with Rails 3.1.
 
 * [email-spec](https://github.com/bmabey/email-spec) - Easily testing email with RSpec and Cucumber.
 
-##Gems which are not recommended
+## Gems which are not recommended
 
 These gems have errors or there are better gems. You shouldn't use these if possible.
 

@@ -1,12 +1,12 @@
-#Ruby on Rails 標準 gem 一覧
+# Ruby on Rails 標準 gem 一覧
 
 最も大事なプログラミングの原則の１つに"Don't Repeat Yourself!"がある。もし、何か必要な作業に直面したら、それを自力で解決する前に何か解決方法が存在しないかを探すべきである。これは「とても価値のある」 gem の一覧で、多くの Rails プロジェクトで有意義なものだろう。全て Rails 3.1 で動作する。
 
-##管理画面作成
+## 管理画面作成
 
 * [active_admin](https://github.com/gregbell/active_admin) - 簡単に管理画面を作成できる。各モデルのCRUD処理も簡単に作成でき、カスタマイズも柔軟にできる。
 
-##開発環境、テスト環境改善
+## 開発環境、テスト環境改善
 
 **注意：これらは production に適用してはならない**
 
@@ -28,25 +28,25 @@
 
 * [rspec-rails](https://github.com/rspec/rspec-rails) - Rails で RSpec を利用しやすくする。
 
-##パフォーマンス改善
+## パフォーマンス改善
 
 * [bullet](https://github.com/flyerhzm/bullet) - 発行するクエリの数を減らすことでアプリケーションのパフォーマンスを向上するように設計されている。アプリケーションを監視して、先読み（N+1 queries）すべきところや、不要なのに先読みしているところ、カウンターキャッシュを利用すべきところを教えてくれる。
 
-##ファイルアップロード
+## ファイルアップロード
 
 * [Paperclip](https://github.com/thoughtbot/paperclip) - ActiveRecord にファイルを添付することができる。
 
-##全文検索
+## 全文検索
 
 * [sunspot](https://github.com/sunspot/sunspot) - SOLR を利用した全文検索システム。
 
-##権限管理
+## 権限管理
 
 * [cancan](https://github.com/ryanb/cancan) - ユーザーがリソースにアクセスすることを制限することができるようになる。全ての権限を一つのファイルで管理して、アプリケーション全体で認証を利用可能にする。
 
 * [devise](https://github.com/plataformatec/devise) - ほぼ全ての機能を備えた認証ソリューション。
 
-##ビューテンプレート
+## ビューテンプレート
 
 * [haml-rails](https://github.com/indirect/haml-rails) - Rails で HAML を利用できるようにする。
 
@@ -54,19 +54,19 @@
 
 * [slim](http://slim-lang.com) - Slim は ERB はもとより、HAML よりも優れていると言われるテンプレート言語である。Slim の使用をためらう理由があるとしたら、メジャーなエディターや IDE が十分にサポートしていない位である。また、パフォーマンスが著しく良い。
 
-##クライアントサイドサポート
+## クライアントサイドサポート
 
 * [client_side_validations](https://github.com/bcardarella/client_side_validations) - サーバーサイドに実装したモデルのバリデーションからクライアントサイドで動く Javascript のバリデーションを自動生成する。
 
-##SEO対策
+## SEO対策
 
 * [friendly_id](https://github.com/norman/friendly_id) - モデルの id の代わりに人が理解しやすい、記述的な属性でオブジェクトを指定刷ることができる。
 
-##ページネーション
+## ページネーション
 
 * [kaminari](https://github.com/amatsuda/kaminari) - 柔軟なページネーションが可能。
 
-##画像編集
+## 画像編集
 
 * [minimagick](https://github.com/probablycorey/mini_magick) - ImageMagick の Ruby ラッパー。
 
@@ -106,7 +106,7 @@
 
 * [email-spec](https://github.com/bmabey/email-spec) - RSpec や Cucumber で email のテストを行いやすくする。
 
-##非推奨 gem
+## 非推奨 gem
 
 これらの gem は問題を抱えているか、他に優れた代替 gem があるものである。これらの gem の使用は避けるべきである。
 

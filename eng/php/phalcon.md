@@ -2,11 +2,11 @@
 
 This documentation was created based on [Framgia Hyakkaten Project - Coding Standard(Vietnamese)](https://github.com/framgia/hkt/blob/master/docs/coding_standard.md).
 
-##1. PHP Version
+## 1. PHP Version
 
 * PHP 5.4 or higher.
 
-##2. Naming rule
+## 2. Naming rule
 
 * Class's name should be written in UpperCamelCase. Function's name should be written in LowerCamelCase. Private function name should be started with ```_```.
 
@@ -22,11 +22,11 @@ Variable example: ```$user_id```, ```$is_admin```, ```private $_status```.
 
 Sample: ```A_CONSTANT_VARIABLE```
 
-####3. Indentation
+#### 3. Indentation
 
 Use 4 spaces for indentation. (DO NOT USE HARD Tab)
 
-##4. String
+## 4. String
 
 Use single quote for normal string, double quotes for string which contain php variable.
 ```php
@@ -34,7 +34,7 @@ $str = 'This is a string';
 echo "result = {$result}";
 ```
 
-##5. Control Structures
+## 5. Control Structures
 Control structures contain ```if```, ```for```, ```foreach```, ```while```, ```switch```,...
 Below is an example of ```if```.
 ```php
@@ -53,7 +53,7 @@ Some notes:
 * Inline assignment should not be used inside of the control structure.
 * In case of ```switch``` control structure, ```case``` must have the same indentation level as the control structure.
 
-##6. Function
+## 6. Function
 * Do not use space between function name and the open parenthesis.
 * Do not use space between the open parenthesis and the first variable.
 * Use space between comma and next varialbe.
@@ -85,7 +85,7 @@ $this->someObject->subObject->callThisFunctionWithALongName(
 );
 ```
 
-##7. Class
+## 7. Class
 * Opening curly bracket ```{``` must be placed in new line
 ```php
 class FooBar
@@ -94,7 +94,7 @@ class FooBar
 }
 ```
 
-##8. Function declaration
+## 8. Function declaration
 * Opening curly bracket ```{``` must be placed in new line.
 * Try to make your function return something.
 ```php
@@ -105,7 +105,7 @@ function fooBar()
 }
 ```
 
-##9. Array
+## 9. Array
 * Do not use ```array()```, use ```[]``` instead. 
 
 When dividing array to multiple lines, you can place ```,``` in the final line
@@ -117,16 +117,16 @@ $some_array =  [
 ];
 ```
 
-##10. PHP Code Tags
+## 10. PHP Code Tags
 * Always you long tags ```<?php  ?>```, instead of short tag ```<? ?>```.
 * You can use ```<?= ?>```.
 * If your file contains only php code, do not use close tag ```?>```.
 
-##11. Comments
+## 11. Comments
 * Use comment style of C (```/*  */```) or C++ (```//```).
 * DO NOT use Perl/Shell style (```#```).
 
-##12. Class comment
+## 12. Class comment
 * Write comment for each variable declared inside class. Comment should be placed righ before declaring variable.
 
 Structure: ```@var ClassName (VariableName) Your comment here```
@@ -162,7 +162,7 @@ public static function model($className = __CLASS__)
 
 # MVC
 
-##13. Model and Database
+## 13. Model and Database
 
 * Table name should be plural and underscored. For examples: ```users```, ```big_people```, ```news```.
 * All tables should have primary key named ```id```.
@@ -170,13 +170,13 @@ public static function model($className = __CLASS__)
 * Join table should be named by the two related table, seperated by underscored. For example: ```students_subjects```
 * Model class corresponding to table should be plural and CameCased. For example: ```Users```, ```BigPeople```, ```News```.
 
-##14. Controller
+## 14. Controller
 
 * Controller which corresponding to a model, should be named same as model's name, followed by Controller. For example: ```UsersController```.
 * Action name should be cameBack and followed by Action. For example: ```indexAction```.
 
 
-##15. View
+## 15. View
 
 * File name should be correspond to action name, and written in ```snake_case```
 * Use Volt template engine.

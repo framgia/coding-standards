@@ -114,7 +114,7 @@ end
 * Sau ký tự comment out ``` # ``` đặt 1 khoảng trắng
 
 ```ruby
-#this is bad comment
+# this is bad comment
 
 # this is good comment
 ```
@@ -452,13 +452,13 @@ products.each {|prod| prod.maintain!}
 * Trong trường hợp tạo biến số như Mảng rỗng hay Hash rỗng thì dùng ``` Array.new ```, ``` Hash.new ```.
 
 ```ruby
-#Cách viết không đúng
+# Cách viết không đúng
   @users = []
 
-#Cách viết đúng
+# Cách viết đúng
   @users = Array.new
 
-#Cũng đúng
+# Cũng đúng
   @months_of_birth_date = User.all.inject([]){|months, user| months << user.birth_date.month}
 ```
 

@@ -117,7 +117,7 @@ end
 * Add 1 white space after comment out character ``` # ```
 
 ```ruby
-#this is a bad comment
+# this is a bad comment
 
 # this is a good comment
 ```
