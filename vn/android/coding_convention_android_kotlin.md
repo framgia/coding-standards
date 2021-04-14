@@ -990,11 +990,11 @@ Kotlin cung cấp nhiều chức năng khác nhau để thực thi một khối 
 
 #### Resources files
 
-Resources file names are written in __lowercase_underscore__.
+Tên của file resource sẽ được viết theo dạng __lowercase_underscore__.
 
 ##### Drawable files
 
-Naming conventions for drawables:
+Cách đặt tên cho file drawables:
 
 
 | Asset Type   | Prefix            |        Example               |
@@ -1008,7 +1008,7 @@ Naming conventions for drawables:
 | Notification | `notification_`    | `notification_bg.9.png`     |
 | Tabs         | `tab_`            | `tab_pressed.9.png`         |
 
-Naming conventions for icons (taken from [Android iconography guidelines](http://developer.android.com/design/style/iconography.html)):
+Cách đặt tên cho các icon (taken from [Android iconography guidelines](http://developer.android.com/design/style/iconography.html)):
 
 | Asset Type                      | Prefix             | Example                      |
 | --------------------------------| ----------------   | ---------------------------- |
@@ -1019,7 +1019,7 @@ Naming conventions for icons (taken from [Android iconography guidelines](http:/
 | Tab icons                       | `ic_tab`           | `ic_tab_recent.png`          |
 | Dialog icons                    | `ic_dialog`        | `ic_dialog_info.png`         |
 
-Naming conventions for selector states:
+Cách đặt trên cho các state selector
 
 | State           | Suffix          | Example                     |
 |--------------|-----------------|-----------------------------|
@@ -1032,7 +1032,7 @@ Naming conventions for selector states:
 
 #### Layout files
 
-Layout files should match the name of the Android components that they are intended for but moving the top level component name to the beginning. For example, if we are creating a layout for the `SignInActivity`, the name of the layout file should be `activity_sign_in.xml`.
+File layout đặt tên phải khớp với Android component tạo ra nó và đặt theo dạng __component_name_screen__. Ví dụ, để tạo một file layout cho `SignInActivity`, bạn nên đặt tên là `activity_sign_in.xml`.
 
 | Component        | Class Name             | Layout Name                   |
 | ---------------- | ---------------------- | ----------------------------- |
@@ -1042,49 +1042,49 @@ Layout files should match the name of the Android components that they are inten
 | AdapterView item | ---                    | `item_person.xml`             |
 | Partial layout   | ---                    | `partial_stats_bar.xml`       |
 
-A slightly different case is when we are creating a layout that is going to be inflated by an `Adapter`, e.g to populate a `ListView`. In this case, the name of the layout should start with `item_`.
+Một điểm đặt biệt là khi ta sử dụng `Adapter`, e.g phổ biến trong một `ListView`. Trong trường hợp này, tên sẽ được bắt đầu bằng `item_`.
 
-Note that there are cases where these rules will not be possible to apply. For example, when creating layout files that are intended to be part of other layouts. In this case you should use the prefix `partial_`.
+Lưu ý rằng có những trường hợp sẽ không thể áp dụng các quy tắc này. Ví dụ, khi tạo các layout nhằm trở thành một phần của các layout khác. Trong trường hợp này chúng ta nên đặt tiền tố cho file là `partial_`.
 
 #### Menu files
 
-Similar to layout files, menu files should match the name of the component. For example, if we are defining a menu file that is going to be used in the `UserActivity`, then the name of the file should be `activity_user.xml`
+Tương tự như layout, menu phải khớp với tên của Component. Một ví dụ, nếu ban define ra menu được sử dụng trong `UserActivity`, thì tên của file nên được đặt là `activity_user.xml`
 
-A good practice is to not include the word `menu` as part of the name because these files are already located in the `menu` directory.
+Một thực tiễn là chúng ta không nên chưa cả từ `menu` trong nội dung tên file vì nó đã nằm trong thư mục `menu` rồi.
 
 #### Values files
 
-Resource files in the values folder should be __plural__, e.g. `strings.xml`, `styles.xml`, `colors.xml`, `dimens.xml`, `attrs.xml`
+file resource trong thư mục values nên được bắt đầu theo dạng __plural__, e.g. `strings.xml`, `styles.xml`, `colors.xml`, `dimens.xml`, `attrs.xml`
 
 ## 2 Code guidelines
 
 ### 2.1 Limit variable scope
 
-_The scope of local variables should be kept to a minimum (Effective Java Item 29). By doing so, you increase the readability and maintainability of your code and reduce the likelihood of error. Each variable should be declared in the innermost block that encloses all uses of the variable._
+_Phạm vi của các biến cục bộ nên được giữ ở mức tối thiểu (Effective Java Item 29). Bằng cách làm như vậy, bạn tăng khả năng đọc và khả năng maintain của code của bạn và giảm khả năng xảy ra lỗi. Mỗi biến phải được khai báo trong khối trong cùng bao quanh tất cả các mục đích sử dụng của biến ._
 
-_Local variables should be declared at the point they are first used. Nearly every local variable declaration should contain an initializer. If you don't yet have enough information to initialize a variable sensibly, you should postpone the declaration until you do._ - ([Android code style guidelines](https://source.android.com/source/code-style.html#limit-variable-scope))
+_Các biến cục bộ nên được khai báo tại thời điểm chúng được sử dụng lần đầu tiên. Gần như mọi khai báo biến cục bộ nên chứa một bộ khởi tạo. Nếu bạn chưa có đủ thông tin để khởi tạo một biến một cách hợp lý, bạn nên hoãn việc khai báo cho đến khi bạn thực hiện._ - ([Android code style guidelines](https://source.android.com/source/code-style.html#limit-variable-scope))
 
 ### 2.2 Order import statements
 
-If you are using an IDE such as Android Studio, you don't have to worry about this because your IDE is already obeying these rules. If not, have a look below.
+Nếu bạn đang sử dụng một IDE chẳng hạn như Android Studio, bạn không phải lo lắng về điều này vì IDE của bạn đã tuân theo các quy tắc này. Nếu không, hãy xem bên dưới.
 
-The ordering of import statements is:
+Thứ tự của các import là:
 
-1. Android imports
-2. Imports from third parties (com, junit, net, org)
-3. java and javax
-4. Same project imports
+1. Android import
+2. Import từ phía bên thứ 3 (com, junit, net, org)
+3. java và javax
+4. import tương tự trong project
 
-To exactly match the IDE settings, the imports should be:
+Để khớp chính xác với cài đặt IDE, các mục nhập phải là:
 
-* Alphabetically ordered within each grouping, with capital letters before lower case letters (e.g. Z before a).
-* There should be a blank line between each major grouping (android, com, junit, net, org, java, javax).
+* Được sắp xếp theo thứ tự bảng chữ cái trong mỗi nhóm, với các chữ cái viết hoa trước các chữ cái thường (ví dụ: Z trước a).
+* Phải có một dòng trống giữa mỗi nhóm chính (android, com, junit, net, org, java, javax).
 
-More info [here](https://source.android.com/source/code-style.html#limit-variable-scope)
+Thêm thông tin tại [đây](https://source.android.com/source/code-style.html#limit-variable-scope)
 
 ### 2.3 Logging guidelines
 
-Use the logging methods provided by the `Log` class to print out error messages or other information that may be useful for developers to identify issues:
+Sử dụng phương thức logging được cung cấp `Log` class để tìm ra các thông báo lỗi hoặc các thông tin hữu ích cho việc phát triển:
 
 * `Log.v(tag: String, msg: String)` (verbose)
 * `Log.d(tag: String, msg: String)` (debug)
@@ -1094,9 +1094,9 @@ Use the logging methods provided by the `Log` class to print out error messages 
 
 ### 2.4 String constants, naming, and values
 
-Many elements of the Android SDK such as `SharedPreferences`, `Bundle`, or `Intent` use a key-value pair approach so it's very likely that even for a small app you end up having to write a lot of String constants.
+Một số thành phần của Android SDK như là `SharedPreferences`, `Bundle`, hoặc `Intent` sử dụng key-values, vì vậy, rất có thể ngay cả đối với một ứng dụng nhỏ, bạn vẫn phải viết nhiều String constant.
 
-When using one of these components, you __must__ define the keys as a `const val` fields and they should be prefixed as indicated below.
+Khi bạn sử dụng một Component, bạn __phải__ define một key có dạng `const val` và nó phải đặt trước một dấu gạch dưới.
 
 | Element            | Field Name Prefix |
 | -----------------  | ----------------- |
@@ -1105,8 +1105,6 @@ When using one of these components, you __must__ define the keys as a `const val
 | Fragment Arguments | `ARGUMENT_`         |
 | Intent Extra       | `EXTRA_`            |
 | Intent Action      | `ACTION_`           |
-
-Note that the arguments of a Fragment - `Fragment.getArguments()` - are also a Bundle. However, because this is a quite common use of Bundles, we define a different prefix for them.
 
 Example:
 
@@ -1123,11 +1121,9 @@ const val ACTION_OPEN_USER = "com.myapp.action.ACTION_OPEN_USER";
 
 ### 2.5 Arguments in Fragments and Activities
 
-When data is passed into an `Activity` or `Fragment` via an `Intent` or a `Bundle`, the keys for the different values __must__ follow the rules described in the section above.
+Khi bạn truyền data từ `Activity` hoặc `Fragment` thông qua `Intent` hoặc một `Bundle`, Các key khác nhau cho các value khác nhau __phải__ tuân theo các quy tắc được mô tả trong phần trên.
 
-When an `Activity` or `Fragment` expects arguments, it should provide a `public static` method that facilitates the creation of the relevant `Intent` or `Fragment`.
-
-In the case of Activities the method is usually called `getStartIntent()`:
+Trong trường hợp của Activities method được gọi là `getStartIntent()`:
 
 ```kotlin
 fun getStartIntent(context: Context?, user: User?): Intent? {
@@ -1137,7 +1133,7 @@ fun getStartIntent(context: Context?, user: User?): Intent? {
     }
 ```
 
-For Fragments it is named `newInstance()` and handles the creation of the Fragment with the right arguments:
+Trong Fragment sử dụng từ `newInstance()` và sẽ handle tạo ra một fragment và biến số truyền vào của nó:
 
 ```kotlin
 fun newInstance(user: User): UserFragment{
@@ -1150,29 +1146,29 @@ fun newInstance(user: User): UserFragment{
     }
 ```
 
-__Note 1__: These methods should go at the top of the class before `onCreate()`.
+__Note 1__: Các phương thức này nên ở đầu class trước `onCreate()`.
 
-__Note 2__: If we provide the methods described above, the keys for extras and arguments should be `private` because there is not need for them to be exposed outside the class.
+__Note 2__: Nếu chúng tôi cung cấp các method được mô tả ở phía trên thì các thành phần tiếp theo nên là _private_ vì phạm vi sử dụng của nó không cần thiết phải hiển thị bên ngoài lớp
 
 ### 2.6 Line length limit
 
-Code lines should not exceed __100 characters__. If the line is longer than this limit there are usually two options to reduce its length:
+Các dòng code không được hiển thị quá __100 ký tự__. Nếu bạn thấy số dòng nhiều hơn giới hạn cho phép, có 2 cách để giải quyết vấn đề về độ dài
 
-* Extract a local variable or method (preferable).
-* Apply line-wrapping to divide a single line into multiple ones.
+* Extract một biến hoặc một phương thức (thích hợp hơn).
+* Apply line-wrapping để chia một dòng thành nhiều dòng.
 
-There are two __exceptions__ where it is possible to have lines longer than 100:
+Đây là hai __ngoại lệ__ nơi có thể có các dòng dài hơn 100:
 
-* Lines that are not possible to split, e.g. long URLs in comments.
-* `package` and `import` statements.
+* Các dòng không thể tách, ví dụ: URL dài trong nhận xét.
+* Các câu lệnh `package` và `import`.
 
 ### 2.7 Line-wrapping strategies
 
-There isn't an exact formula that explains how to line-wrap and quite often different solutions are valid. However there are a few rules that can be applied to common cases.
+Không có công thức chính xác giải thích cách line-wrap và thường thì các giải pháp khác nhau đều hợp lệ. Tuy nhiên có một vài quy tắc có thể áp dụng cho các trường hợp thông thường.
 
 __Break at operators__
 
-When the line is broken at an operator, the break comes __before__ the operator. For example:
+Khi một dòng bị ngắt quãng ở một toán tử, ngắt quãng sẽ bắt đầu __trước__ một toán tử. Ví dụ:
 
 ```kotlin
 val longName: Int = (anotherVeryLongVariable + anEvenLongerOne - thisRidiculousLongOne
@@ -1181,7 +1177,7 @@ val longName: Int = (anotherVeryLongVariable + anEvenLongerOne - thisRidiculousL
 
 __Assignment Operator Exception__
 
-An exception to the `break at operators` rule is the assignment operator `=`, where the line break should happen __after__ the operator.
+Một ngoại lệ cho `break at operators` là toán tử `=`, khi đó sẽ ngắt dòng __sau__ toán tử.
 
 ```kotlin
 val longName: Int = 
@@ -1190,7 +1186,7 @@ val longName: Int =
 
 __Method chain case__
 
-When multiple methods are chained in the same line - for example when using Builders - every call to a method should go in its own line, breaking the line before the `.`
+Khi nhiều phương thức được sử dụng trên cùng một dòng - ví dụ như sử dụng Glide - mỗi lệnh gọi phương thức đều được ngắt dòng trước dấu `.`
 
 ```kotlin
 Glide.with(this).load("https://...").into(driverLicenseBinding.backSideImg)
@@ -1206,7 +1202,7 @@ Glide.with(this)
 
 ### 2.8 RxJava chains styling
 
-Rx chains of operators require line-wrapping. Every operator must go in a new line and the line should be broken before the `.`
+Rx chains của các operator yêu cầu dùng line-wrapping. Mọi toán tử phải bắt đầu vào một dòng mới và dòng phải được ngắt trước dấu `.`
 
 ```kotlin
 fun syncLocations(): Observable<Location?>? {
@@ -1228,9 +1224,9 @@ fun syncLocations(): Observable<Location?>? {
 
 ### 3.1 Use self closing tags
 
-When an XML element doesn't have any contents, you __must__ use self closing tags.
+Khi một phần tử XML không có bất kỳ nội dung nào, bạn __phải__ sử dụng đóng tags ở cuối phần tử đó.
 
-This is good:
+Dưới đây là chuẩn:
 
 ```xml
 <TextView
@@ -1239,7 +1235,7 @@ This is good:
     android:layout_height="wrap_content" />
 ```
 
-This is __bad__ :
+Đó thật sự __tồi__ :
 
 ```xml
 <!-- Don\'t do this! -->
@@ -1250,14 +1246,13 @@ This is __bad__ :
 </TextView>
 ```
 
-
 ### 3.2 Resources naming
 
-Resource IDs and names are written in __lowercase_underscore__.
+Resource IDs và names được viết dưới dạng __lowercase_underscore__.
 
 #### ID naming
 
-IDs should be prefixed with the name of the element in lowercase underscore. For example:
+IDs nên được đặt trước tên của phần tử bằng dấu gạch dưới và viết thường. Ví dụ:
 
 
 | Element            | Prefix            |
@@ -1267,7 +1262,7 @@ IDs should be prefixed with the name of the element in lowercase underscore. For
 | `Button`             | `button_`           |
 | `Menu`               | `menu_`             |
 
-Image view example:
+Ví dụ về Image view example:
 
 ```xml
 <ImageView
@@ -1276,7 +1271,7 @@ Image view example:
     android:layout_height="wrap_content" />
 ```
 
-Menu example:
+Ví dụ về Menu:
 
 ```xml
 <menu>
@@ -1288,30 +1283,28 @@ Menu example:
 
 #### Strings
 
-String names start with a prefix that identifies the section they belong to. For example `registration_email_hint` or `registration_name_hint`. If a string __doesn't belong__ to any section, then you should follow the rules below:
+Tên chuỗi bắt đầu bằng tiền tố xác định phần mà chúng thuộc về. Ví dụ `registration_email_hint` hoặc `registration_name_hint`. Nếu một string __không thuộc về__ bất cứ section nào, bạn có thể tham khảo rule bên dưới:
 
 
 | Prefix             | Description                           |
 | -----------------  | --------------------------------------|
-| `error_`             | An error message                      |
-| `msg_`               | A regular information message         |
-| `title_`             | A title, i.e. a dialog title          |
-| `action_`            | An action such as "Save" or "Create"  |
+| `error_`             | Một error message                      |
+| `msg_`               | Một message thông báo thông thường         |
+| `title_`             | Một title, i.e. một dialog title          |
+| `action_`            | Mô tả action "Save" hoặc "Create"  |
 
 
 
 #### Styles and Themes
 
-Unlike the rest of resources, style names are written in __UpperCamelCase__.
+Không giống như resources, style names được đặt tên theo dạng __UpperCamelCase__.
 
 ### 3.3 Attributes ordering
 
-As a general rule you should try to group similar attributes together. A good way of ordering the most common attributes is:
+Để thuận tiện bạn nên nhóm các thuộc tính lại với nhau. Dưới đây là môt quy chuẩn về thứ tự các thuộc tính trong file .xml
 
 1. View Id
 2. Style
 3. Layout width and layout height
 4. Other layout attributes, sorted alphabetically
 5. Remaining attributes, sorted alphabetically
-
-
