@@ -23,9 +23,10 @@ Các bản gốc bằng tiếng Anh có thể được tham khảo tại reposit
 
 ## Android
 
-#### [Cấu trúc của một Dự Án](./android/standard.md)
-#### [Coding Style Guide](./android/codingstyleguide.md)
-#### [Others](./android/others.md)
+####[Cấu trúc của một Dự Án](./android/standard.md)
+####[Coding Style Guide](./android/codingstyleguide.md)
+####[Coding convention with Kotlin](./android/coding_convention_android_kotlin.md)
+####[Others](./android/others.md)
 
 ## HTML
 
