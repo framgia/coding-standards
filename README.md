@@ -14,6 +14,7 @@
 - [Ruby](./vn/README.md#ruby)
 - [Ruby on Rails](./vn/README.md#ruby-on-rails)
 - [git](./vn/README.md#git)
+- [HTML-CSS](./vn/html_css/standard.md)
 
 ### [English](./eng/README.md)
 
