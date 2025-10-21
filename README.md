@@ -8,9 +8,9 @@ Please refer to the official and up-to-date documentation below.
 
 ## 1. Coding Standards
 
-All coding standards (Ruby, PHP, JS, Android, iOS, etc.) are now managed in the **engineer-excellence** repository:
+All coding standards (Ruby, PHP, JS, Android, iOS, etc.) are now published in the **Coding Standards** page:
 
-➡️ **[https://github.com/sun-asterisk/engineer-excellence](https://github.com/sun-asterisk/engineer-excellence)**
+➡️ **[https://coding-standards.sun-asterisk.vn/](https://coding-standards.sun-asterisk.vn/)**
 
 ---
 
